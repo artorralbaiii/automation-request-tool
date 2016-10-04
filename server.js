@@ -1,22 +1,48 @@
-/*eslint-env node*/
+"use strict";
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
+// Custom Packages
+var configuration = require('./configuration');
 
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
+// Vendor Packages
 var express = require('express');
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var session = require('express-session');
 
 // create a new express server
 var app = express();
 
+// Database Connection
+mongoose.connect(configuration.mongodbUri, function(err){
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('Connected to database...'); 			
+	}
+});
+
+// Parse incoming request as JSON.
+app.use(bodyParser.urlencoded({extended: false, keepExtensions: true}));
+app.use(bodyParser.json());
+
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
+
+app.use(session({ 
+	secret: configuration.secretKey, 
+	cookie: { maxAge: 60*60*1000 }, 
+	saveUninitialized : true, 
+	resave : true
+}));
+
+// API Router
+var api = require('./app/routes/api.js')(app, express);
+app.use('/api', api);
+
+app.get('*', function(req, res){
+	res.sendFile(__dirname + '/public/app/views/index.html');
+});
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();

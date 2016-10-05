@@ -77,17 +77,17 @@ exports.newDocument = function(req, res) {
 // Update User
 exports.updateDocumentById = function(req, res) {
 	if (req.session.user) {	
-		userModel.findOne({_id: req.params.id}, function(err , doc){
+		userModel.findOne({_id: req.params.id}, function(err , data){
 			if (err) {
 				res.json({
 					err: err.message
 				});
 			} else {
-				doc.email = req.body.email;
-				doc.fullname = req.body.fullname;
-				doc.admin = req.body.admin;
+				data.email = req.body.email;
+				data.fullname = req.body.fullname;
+				data.admin = req.body.admin;
 
-				doc.save(function(err){
+				data.save(function(err){
 					res.json({
 						err: null,
 						message: 'User successfully updated.'
@@ -105,16 +105,16 @@ exports.updateDocumentById = function(req, res) {
 
 // Authentication
 exports.login = function(req, res) {
-	userModel.findOne({email: req.body.email}).select('password').exec(function(err, doc){
+	userModel.findOne({email: req.body.email}).select('password').exec(function(err, data){
 		if (err) {
 			res.json({
 				err: err.message
 			});
 		} else {
 					
-			if (doc.comparePassword(req.body.password)) {
+			if (data.comparePassword(req.body.password)) {
 				req.session.regenerate(function(){
-					req.session.user = doc._id;
+					req.session.user = data._id;
 					res.json({
 						err: null
 					});					

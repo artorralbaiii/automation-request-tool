@@ -1,3 +1,5 @@
+'use strict'
+
 var userModel = require('../models/user.model.js');
 
 // Get all users
@@ -9,17 +11,18 @@ exports.allEntries = function(req, res) {
 				res.json({
 					err: err.message
 				});
-			} else {
+				return;
+			}  else {
 				res.json({
 					err: null,
 					data: data
 				});
 			}
 		});
-	} else {
+	}  else {
 		res.json({
-			err: 'Not authorized!'
-		});
+			err: 'Not authorized.'
+		});		
 	}
 }
 
@@ -31,7 +34,7 @@ exports.getDocumentById = function(req, res) {
 				res.json({
 					err: err.message
 				});
-			} else {
+			} else {	
 				res.json({
 					err: null,
 					data: data
@@ -40,7 +43,7 @@ exports.getDocumentById = function(req, res) {
 		});
 	} else {
 		res.json({
-			err: 'Not authorized!'
+			err: 'Not authorized.'
 		});
 	}
 }
@@ -63,13 +66,13 @@ exports.newDocument = function(req, res) {
 			} else {
 				res.json({
 					err: null,
-					message: 'New user is created.'
+					message: 'New record successfully created.'
 				});
 			}
 		});
 	} else {
 		res.json({
-			err: 'Not authorized!'
+			err: 'Not authorized.'
 		});
 	}
 }
@@ -82,7 +85,7 @@ exports.updateDocumentById = function(req, res) {
 				res.json({
 					err: err.message
 				});
-			} else {
+			} else {			
 				data.email = req.body.email;
 				data.fullname = req.body.fullname;
 				data.admin = req.body.admin;
@@ -90,14 +93,14 @@ exports.updateDocumentById = function(req, res) {
 				data.save(function(err){
 					res.json({
 						err: null,
-						message: 'User successfully updated.'
-					})
+						message: 'Record successfully updated.'
+					});
 				});
-			}
+			} 
 		});
-	} else {
+	} else {	
 		res.json({
-			err: 'Not authorized!'
+			err: 'Not authorized.'
 		});
 	}
 }
@@ -110,13 +113,13 @@ exports.login = function(req, res) {
 			res.json({
 				err: err.message
 			});
-		} else {
-					
+		} else {		
 			if (data.comparePassword(req.body.password)) {
 				req.session.regenerate(function(){
 					req.session.user = data._id;
 					res.json({
-						err: null
+						err: null,
+						message: 'Authenticated.'
 					});					
 				});
 			} else {

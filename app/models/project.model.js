@@ -4,15 +4,15 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
 var projectSchema = new schema({
-	projectId: {type: String, required: true, index: {unique: true}},
-	isDeployed: {type: Boolean, required: true, default: false},
-	requester: {type: String, required: true},
+	projectId: {type: String, require: true, index: {unique: true}},
+	isDeployed: {type: Boolean, default: false},
+	requester: {type: schema.Types.ObjectId , ref: 'User', require: true},
 	developers: [{type: schema.Types.ObjectId, ref: 'User'}],
 	description: {type: String},
 	version: {type: String},
-	businessOwner: {type: schema.Types.ObjectId},
+	businessOwner: {type: schema.Types.ObjectId, ref: 'User'},
 	supports: [{type: schema.Types.ObjectId, ref: 'User'}],
-	changeRequests: [{type: schema.Types.ObjctId, ref: 'ChangeRequest'}],
+	changeRequests: [{type: schema.Types.ObjectId, ref: 'ChangeRequest'}],												 
 	problemRequests: [{type: schema.Types.ObjectId, ref: 'ProblemRequest'}]
 }, {timestamps: true});
 

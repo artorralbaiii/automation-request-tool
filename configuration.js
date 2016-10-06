@@ -3,6 +3,6 @@ module.exports = {
 	secretKey: 'BTuxMrP48k^AEMVH',
 	generateId : function() {
 		var d = new Date();
-		return d.getMonth() + '' + d.getDate() + '' + d.getYear() + '' + d.getHours() + '' + d.getMinutes() + '' d.getSeconds();
+		return d.getMonth() + '' + d.getDate() + '' + d.getYear() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
 	}
 }

@@ -30,6 +30,7 @@ module.exports = function(app, express) {
 	api.get('/problems/:id', problemRequestController.getDocumentById);
 	api.post('/problems', problemRequestController.newDocument);
 	api.put('/problems/:id', problemRequestController.updateDocumentById);
-
+	api.delete('/problems/:id', problemRequestController.remove);
+	
 	return api;
 }

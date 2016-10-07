@@ -7,7 +7,7 @@ var approvalsSchema = new schema(commonObjects.approvalsObject);
 var problemRequestSchema = new schema({
 	problemNumber: {type: String, require: true, index: {unique: true}},
 	status: {type: String, require: true},
-	approvals: approvalsSchema,
+	approvals: [approvalsSchema],
 	problemSummary: {type: String},
 	reportedBy: {type: schema.Types.ObjectId, ref: 'User'},
 	dateReported: {type: Date, default: Date.now},
@@ -17,7 +17,7 @@ var problemRequestSchema = new schema({
 	problemType: {type: String},
 	analysis: {type: String},
 	action: {type: String},
-	project: {type: schema.Types.ObjectId}
+	project: {type: schema.Types.ObjectId, ref: 'Project'}
 }, {timestamps: true});
 
 module.exports = mongoose.model('ProblemRequest', problemRequestSchema);

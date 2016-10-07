@@ -1,56 +1,54 @@
+var projectModel = require('../models/project.model.js');
 var problemRequestModel = require('../models/problemrequest.model.js');
-var configuration = require('../../configuration');
+var common = require('./common.functions');
+
+const NOT_AUTHORIZED = 'Not authorized.';
 
 // Get all Problem Requests
 exports.allEntries = function(req, res) {
 	if (req.session && req.session.user) {
-		problemRequestModel.find({}, function(err, data){
-			if (err) {
-				res.json({
-					err: err.message
-				});
-			} else {			
-				res.json({
-					err: null,
-					data: data
-				});
-			}
-		});
+		problemRequestModel.find({})
+			.populate('reportedBy assignedSupport project approvals.approver')
+			.exec(function(err, data){
+				if (err) {
+					common.errHandler(res, err);
+				} else {			
+					res.json({
+						err: null,
+						data: data
+					});
+				}
+			});
 	} else {	
-		res.json({
-			err: 'Not authorized.'
-		});
+		common.errHandler(res, null, NOT_AUTHORIZED);
 	}
 }
 
 // Get Problem Request by ID
 exports.getDocumentById = function(req, res) {
 	if (req.session && req.session.user) {
-		problemRequestModel.findOne({_id: req.params.id}, function(err, data){
-			if (err) {
-				res.json({
-					err: err.message
-				});
-			} else {			
-				res.json({
-					err: null,
-					data: data
-				});
-			}
-		});
+		problemRequestModel.findOne({_id: req.params.id})
+			.populate('reportedBy assignedSupport project approvals.approver')
+			.exec( function(err, data){
+				if (err) {
+					common.errHandler(res, err);
+				} else {			
+					res.json({
+						err: null,
+						data: data
+					});
+				}
+			});
 	} else {	
-		res.json({
-			err: 'Not authorized.'
-		});
+		common.errHandler(res, null, NOT_AUTHORIZED);
 	}
 }
-
 
 // Create Problem Request
 exports.newDocument = function(req, res) {
 	if (req.session && req.session.user) {
 		var problem = new problemRequestModel({
-			problemNumber: configuration.generateId(),
+			problemNumber: common.generateId(),
 			status: req.body.status,
 			approvals: req.body.approvals,
 			problemSummary: req.body.problemSummary,
@@ -62,25 +60,41 @@ exports.newDocument = function(req, res) {
 			problemType: req.body.problemType,
 			anlaysis: req.body.anlaysis,
 			action: req.body.action,
-			project: req.body.projectid
+			project: req.body.project
 		});
 
 		problem.save(function(err){
 			if(err) {
-				res.json({
-					err: err.message
-				});
+				common.errHandler(res, err);
 			} else {
-				res.json({
-					err: null,
-					message: 'New record successfully created.'
-				});				
+				projectModel.findOne({_id: req.body.project})
+					.select('problemRequests')
+					.exec(function(err, data){
+						if (err) {
+							common.errHandler(res, err);
+						} else {
+							if (data) {
+								data.problemRequests.push(problem._id);
+
+								data.save(function(err){
+									if (err){
+										common.errHandler(res, err);
+									} else {
+										res.json({
+											err: null,
+											message: 'New record successfully created.'
+										});													
+									}
+								});								
+							} else {
+								common.errHandler(res, null, 'Project not found.');	
+							}
+						}
+					});
 			}
 		});
 	} else {	
-		res.json({
-			err: 'Not authorized.'
-		});
+		common.errHandler(res, null, NOT_AUTHORIZED);
 	}
 }
 
@@ -89,9 +103,7 @@ exports.updateDocumentById = function(req, res) {
 	if (req.session && req.session.user) {
 		problemRequestModel.findOne({_id: req.params.id}, function(err, data){
 			if (err) {
-				res.json({
-					err: err.message
-				});
+				common.errHandler(res, err);				
 			} else {
 				data.status = req.body.status;
 				data.approvals = req.body.approvals;
@@ -108,9 +120,7 @@ exports.updateDocumentById = function(req, res) {
 
 				data.save(function(err) {
 					if (err) {
-						res.json({
-							err: err.message
-						});
+						common.errHandler(res, err);
 					} else {
 						res.json({
 							err: null,
@@ -121,11 +131,39 @@ exports.updateDocumentById = function(req, res) {
 			}
 		});
 	} else {	
-		res.json({
-			err: 'Not authorized.'
-		})
+		common.errHandler(res, null, NOT_AUTHORIZED);
 	}
 }
 
-
-
+// Delete Document
+exports.remove = function(req, res) {
+	if (req.session && req.session.user) {
+		common.removeDocument(req, res, problemRequestModel, function( projectId ){
+			projectModel.findOne({_id: projectId})
+				.select('problemRequests')
+				.exec(function(err, data){
+					if (err) {
+						common.errHandler(res, err);
+					} else {
+						if (data) {
+							data.problemRequests.pop(projectId);
+							data.save(function(err){
+								if (err) {
+									common.errHandler(res, err);
+								} else {
+									res.json({
+										err: null,
+										message: 'Document successfully deleted.'
+									});									
+								}
+							});
+						} else {
+							common.errHandler(res, null, 'Project not found.');
+						}
+					}
+			});
+		});
+	} else {
+		common.errHandler(res, null, NOT_AUTHORIZED);
+	}
+}

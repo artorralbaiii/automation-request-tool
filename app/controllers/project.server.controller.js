@@ -67,7 +67,7 @@ exports.newDocument = function(req, res) {
 	var project = new projectModel({
 		projectId: common.generateId('PRJ'),
 		isDeployed: req.body.isDeployed,
-		requester: req.session.user,
+		requester: req.body.requester,
 		developers: req.body.developers,
 		description: req.body.description,
 		version: req.body.version,

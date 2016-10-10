@@ -15,7 +15,7 @@ module.exports = {
 	errHandler : errHandlerFunction,
 	generateId : function(pre) {
 		var d = new Date();
-		var prefix = (prefix ? pre + '-' : '' );
+		var prefix = (pre ? pre + '-' : '' );
 
 		return prefix + d.getMonth() + '' + d.getDate() + '' + d.getYear() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
 	},

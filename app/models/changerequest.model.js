@@ -6,7 +6,7 @@ var approvalsSchema = new schema(commonObjects.approvalsObject);
 
 var changeRequestSchema = new schema({
 	changeNumber: {type: String, require: true, index: {unique: true}},
-	status: {type: String, require:true},
+	status: {type: String, require:true, default: 'Draft'},
 	approvals: [approvalsSchema],
 	requestSummary: {type: String},
 	requestedBy: {type: schema.Types.ObjectId, ref: 'User'},

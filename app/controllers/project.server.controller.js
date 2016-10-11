@@ -72,7 +72,8 @@ exports.newDocument = function(req, res) {
 		description: req.body.description,
 		version: req.body.version,
 		businessOwner: req.body.businessOwner,
-		supports: req.body.supports
+		supports: req.body.supports,
+		modifiedBy: req.session.user
 	});
 
 	project.save(function(err){
@@ -80,7 +81,7 @@ exports.newDocument = function(req, res) {
 			common.errHandler(res, err);
 			return;
 		} 
-		
+
 		res.json({
 			err: null,
 			message: 'New project is created.'
@@ -106,15 +107,14 @@ exports.updateDocumentById = function(req, res) {
 
 		data.save(function(err) {
 			if (err) {
-				res.json({
-					err: err.message
-				});
-			} else {
-				res.json({
-					err: null,
-					message: 'Record successfully updated.'
-				});
+				common.errHandler(res, err);
+				return;
 			}
+
+			res.json({
+				err: null,
+				message: 'Record successfully updated.'
+			});
 		});
 	});
 }

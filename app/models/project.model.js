@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
+var common = require('./common.objects');
 
 var projectSchema = new schema({
 	projectId: {type: String, require: true, index: {unique: true}},
@@ -13,7 +14,8 @@ var projectSchema = new schema({
 	businessOwner: {type: schema.Types.ObjectId, ref: 'User'},
 	supports: [{type: schema.Types.ObjectId, ref: 'User'}],
 	changeRequests: [{type: schema.Types.ObjectId, ref: 'ChangeRequest'}],												 
-	problemRequests: [{type: schema.Types.ObjectId, ref: 'ProblemRequest'}]
+	problemRequests: [{type: schema.Types.ObjectId, ref: 'ProblemRequest'}],
+	modifiedBy: {type: schema.Types.ObjectId, ref: 'User'}
 }, {timestamps: true});
 
 module.exports = mongoose.model('Project', projectSchema);

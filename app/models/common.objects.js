@@ -1,12 +1,15 @@
 'use strict'
 
-var schema = require('mongoose').Schema;
+var auditModel = require('./audittrail.model');
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
 
 module.exports = {
 	approvalsObject: {
 		approvalType: {type: String},
 		approver: {type: schema.Types.ObjectId, ref: 'User'},
 		status: {type: String},
-		dateApproved: {type: Date}
+		dateAction: {type: Date},
+		comments: {type: String}
 	}
 }

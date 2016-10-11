@@ -19,6 +19,7 @@ module.exports = {
 
 		return prefix + d.getMonth() + '' + d.getDate() + '' + d.getYear() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
 	},
+	
 	removeDocument: function(req, res, model, callback) {
 		model.findOneAndRemove({_id: req.params.id}, function(err, data){
 			if (err) {

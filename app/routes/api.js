@@ -6,6 +6,7 @@ var userController = require('../controllers/user.server.controller');
 var projectController = require('../controllers/project.server.controller');
 var changeRequestController = require('../controllers/changerequest.server.controller');
 var problemRequestController = require('../controllers/problemrequest.server.controller');
+var settingsController = require('../controllers/settings.server.controller');
 var common = require('../controllers/common.functions');
 
 var verifySession = function(req, res, next) {
@@ -62,6 +63,10 @@ module.exports = function(app, express) {
 	api.post('/problems', verifySession, problemRequestController.newDocument);
 	api.put('/problems/:id', verifySession, problemRequestController.updateDocumentById);
 	api.delete('/problems/:id', verifySession, problemRequestController.remove);
+
+	//Settings Resource
+	api.get('/settings', verifySession, verifyAdmin, settingsController.getDocument ); 
+	api.post('/settings/:id', verifySession, verifyAdmin, settingsController.update ); 
 	
 	return api;
 }

@@ -27,7 +27,7 @@ exports.pageEntries = function(req, res) {
 		.skip(parseInt(req.params.offset))
 		.limit(parseInt(req.params.limit))
 		.populate('requestedBy tester project approvals.approver')
-		.exec(function(err, docs){
+		.exec(function(err, data){
 
 			if (err) {
 				common.errHandler(res, err);
@@ -36,8 +36,8 @@ exports.pageEntries = function(req, res) {
 
 			var result = {};
 
-			result.count = docs.length;
-			result.data = docs;
+			result.count = data.length;
+			result.data = data;
 
 			res.json({
 				err: null,

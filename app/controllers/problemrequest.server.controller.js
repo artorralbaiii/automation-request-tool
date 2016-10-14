@@ -1,7 +1,9 @@
 'use strict'
 
-var projectModel = require('../models/project.model.js');
-var problemRequestModel = require('../models/problemrequest.model.js');
+var projectModel = require('../models/project.model');
+var problemRequestModel = require('../models/problemrequest.model');
+var userModel = require('../models/user.model');
+var mailController = require('./mail.server.controller');
 var common = require('./common.functions');
 
 // Get all Problem Requests
@@ -26,7 +28,7 @@ exports.pageEntries = function(req, res) {
 		.skip(parseInt(req.params.offset))
 		.limit(parseInt(req.params.limit))
 		.populate('reportedBy assignedSupport project approvals.approver')
-		.exec(function(err, docs){
+		.exec(function(err, data){
 
 			if (err) {
 				common.errHandler(res, err);
@@ -35,8 +37,8 @@ exports.pageEntries = function(req, res) {
 
 			var result = {};
 
-			result.count = docs.length;
-			result.data = docs;
+			result.count = data.length;
+			result.data = data;
 
 			res.json({
 				err: null,
@@ -66,7 +68,6 @@ exports.newDocument = function(req, res) {
 	var problem = new problemRequestModel({
 		problemNumber: common.generateId('PR'),
 		status: req.body.status,
-		approvals: req.body.approvals,
 		problemSummary: req.body.problemSummary,
 		reportedBy: req.body.reportedBy,
 		dateReported: req.body.dateReported,
@@ -102,7 +103,7 @@ exports.newDocument = function(req, res) {
 							common.errHandler(res, err);
 							return;
 						}
-							
+															
 						res.json({
 							err: null,
 							message: 'New record successfully created.'
@@ -121,8 +122,9 @@ exports.updateDocumentById = function(req, res) {
 		if (err) {
 			common.errHandler(res, err);				
 		} else {
+
+			data.previousStatus = data.status; 
 			data.status = req.body.status;
-			data.approvals = req.body.approvals;
 			data.problemSummary = req.body.problemSummary;
 			data.reportedBy = req.body.reportedBy;
 			data.dateReported = req.body.dateReported;
@@ -175,6 +177,26 @@ exports.remove = function(req, res) {
 				} else {
 					common.errHandler(res, null, 'Project not found.', 409);
 				}
+		});
+	});
+}
+
+// Workflow
+exports.changeStatus = function(req, res) {	
+	problemRequestModel.findOne({_id: req.params.id}, function(err, data) {
+		data.previousStatus = data.status;
+		data.status = req.params.status;
+
+		data.save(function(err){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			res.json({
+				err: null,
+				message: 'Status successfully updated.' 
+			});
 		});
 	});
 }

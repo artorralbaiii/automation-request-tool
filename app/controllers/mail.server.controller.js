@@ -4,7 +4,6 @@ var settingsController = require('./settings.server.controller');
 
 exports.sendEmail = function(noteid, recipient){
 	var recipientAddress;
-	console.log(recipient);
 
 	if (recipient) {
 		if (Array.isArray(recipient)) {

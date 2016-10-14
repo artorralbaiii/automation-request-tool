@@ -65,21 +65,26 @@ exports.getDocumentById = function(req, res) {
 
 // Create New Change Request
 exports.newDocument = function(req, res){
-	var changeRequest = new changeRequestModel({
-		changeNumber: common.generateId('CR'),
-		status: req.body.status,
-		approvals: req.body.approvals,
-		requestSummary: req.body.requestSummary,
-		requestedBy: req.body.requestedBy,
-		dateRequested: req.body.dateRequested,
-		targetDeployment: req.body.targetDeployment,
-		detailedDescription: req.body.detailedDescription,
-		tester: req.body.tester,
-		uatResult: req.body.uatResult,
-		uatCompletionDate: req.body.uatCompletionDate,
-		comments: req.body.comments,
-		project: req.body.project
-	});
+	var changeRequest = new changeRequestModel();
+
+	changeRequest.changeNumber= common.generateId('CR');
+	changeRequest.status= req.body.status;
+	changeRequest.requestSummary= req.body.requestSummary;
+	changeRequest.requestedBy= req.body.requestedBy;
+	changeRequest.dateRequested= req.body.dateRequested;
+	changeRequest.targetDeployment= req.body.targetDeployment;
+	changeRequest.detailedDescription= req.body.detailedDescription;
+	changeRequest.tester= req.body.tester;
+	changeRequest.project= req.body.project;
+	changeRequest.approvals['Business Owner'].approver = req.body.businessOwner;
+	changeRequest.approvals['Technical Lead'].approver = req.body.technicalLead;
+	changeRequest.approvals['Service Line'].approver = req.body.serviceLine;
+
+	if (req.body.status === 'Request Assessment' &&
+		req.body.requestedBy === req.body.businessOwner ) {
+		changeRequest.approvals['Business Owner'].status = 'Approved';
+		changeRequest.approvals['Business Owner'].dateAction = Date.now;
+	}
 
 	changeRequest.save(function(err){
 		if (err) {
@@ -116,7 +121,6 @@ exports.newDocument = function(req, res){
 	});													
 }
 
-
 // Update Change Request by Id
 exports.updateDocumentById = function(req, res) {
 	changeRequestModel.findOne({_id: req.params.id}, function(err, data){
@@ -126,6 +130,7 @@ exports.updateDocumentById = function(req, res) {
 			return;
 		} 			
 		
+		data.previousStatus= data.status;
 		data.status= req.body.status;
 		data.approvals= req.body.approvals;
 		data.requestSummary= req.body.requestSummary;
@@ -184,3 +189,69 @@ exports.remove = function(req, res) {
 	});
 }
 
+//  Update status
+exports.changeStatus = function(req, res) {
+	changeRequestModel.findOne({_id: req.params.id}, function(err, data){
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		if (!data) {
+			common.errHandler(res, null, 'Change request not found.', 409);
+			return;
+		} 
+
+		data.previousStatus = data.status;
+		data.status = req.params.status;
+		data.approvals = req.body.approvals;
+
+		if (req.params.status === 'Completed') {
+			data.uatCompletionDate = Date.now;
+			data.uatResult = req.body.uatResult;
+			data.comments = req.body.comments;
+		}
+		
+		data.save(function(err){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			res.json({
+				err: null,
+				message: 'Status successfully updated.' 
+			});
+
+		});
+	});
+}
+
+exports.approval = function(req, res) {
+	changeRequestModel.findOne({_id: req.params.id}, function(err, data){
+
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		data.approvals[req.body.action].status = 'Approved';
+		data.approvals[req.body.action].dateAction = Date.now;
+
+		if (req.body.action === 'Service Line') {
+			data.status = 'Ongoing'
+		}
+
+		data.save(function(err){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			res.json({
+				err: null,
+				message: 'Approval saved.'
+			});
+		});
+	});
+}

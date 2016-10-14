@@ -184,6 +184,18 @@ exports.remove = function(req, res) {
 // Workflow
 exports.changeStatus = function(req, res) {	
 	problemRequestModel.findOne({_id: req.params.id}, function(err, data) {
+		
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		if (!data) {
+			common.errHandler(res, null, 'Problem request not found.', 409);
+			return;
+		}
+
+
 		data.previousStatus = data.status;
 		data.status = req.params.status;
 

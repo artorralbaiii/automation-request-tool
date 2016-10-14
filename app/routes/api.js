@@ -54,6 +54,8 @@ module.exports = function(app, express) {
 	api.get('/changes/:offset/:limit', verifySession, changeRequestController.pageEntries);	
 	api.post('/changes', verifySession, changeRequestController.newDocument);
 	api.put('/changes/:id', verifySession, changeRequestController.updateDocumentById);
+	api.put('/changes/:id/status/:status', verifySession, changeRequestController.changeStatus);
+	api.put('/changes/:id/approval', verifySession, changeRequestController.approval);
 	api.delete('/changes/:id', verifySession, changeRequestController.remove);
 
 	// Problem Request resource
@@ -62,6 +64,7 @@ module.exports = function(app, express) {
 	api.get('/problems/:offset/:limit', verifySession, problemRequestController.pageEntries);	
 	api.post('/problems', verifySession, problemRequestController.newDocument);
 	api.put('/problems/:id', verifySession, problemRequestController.updateDocumentById);
+	api.put('/problems/:id/status/:status', verifySession, problemRequestController.changeStatus);
 	api.delete('/problems/:id', verifySession, problemRequestController.remove);
 
 	//Settings Resource

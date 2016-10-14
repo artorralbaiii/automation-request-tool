@@ -1,3 +1,5 @@
+'use strict'
+
 var errHandlerFunction = function(res, err, msg, statusCode) {
 
 		if (statusCode) {
@@ -17,7 +19,12 @@ module.exports = {
 		var d = new Date();
 		var prefix = (pre ? pre + '-' : '' );
 
-		return prefix + d.getMonth() + '' + d.getDate() + '' + d.getYear() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
+		return prefix + d.getYear() + '' +
+		       ('0' + d.getMonth()).slice(-2)  + '' +
+		       ('0' + d.getDay()).slice(-2) + '' +
+		       ('0' + d.getHours()).slice(-2)  + '' + 
+		       ('0' + d.getMinutes()).slice(-2) + '' +
+		       ('0' + d.getSeconds()).slice(-2);
 	},
 	
 	removeDocument: function(req, res, model, callback) {

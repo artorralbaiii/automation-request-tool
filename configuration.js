@@ -18,35 +18,47 @@ module.exports = {
 				previous: null
 			}
 		],
-		'ChangeRequest': [
+		'ChangeRequest': [		
+			{
+				status: 'Draft',
+				noteId: 'noteRejected',
+				recipient: 'processOwner',
+				previous: 'Request Assessment'
+			},
 			{
 				status: 'Request Assessment',
 				noteId: 'noteApproval',
+				recipient: 'processOwner',
 				previous: null
 			},
 			{
 				status: 'Ongoing',
-				noteId: 'noteApproval',
+				noteId: 'noteToDeveloper',
+				recipient: 'processOwner',
 				previous: 'Request Assessment'
 			},
 			{
 				status: 'Ongoing',
 				noteId: 'noteReturnedToDeveloper',
+				recipient: 'processOwner',
 				previous: 'UAT'
 			},
 			{
 				status: 'UAT',
 				noteId: 'noteToTester',
+				recipient: 'processOwner',
 				previous: null
 			},
 			{
 				status: 'Completed',
 				noteId: 'noteCompleted',
+				recipient: 'processOwner',
 				previous: null
 			},
 			{
 				status: 'Requesting Additional Information',
 				noteId: 'noteRejected',
+				recipient: 'processOwner',
 				previous: null
 			}
 		]

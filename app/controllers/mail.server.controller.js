@@ -3,12 +3,12 @@
 var settingsController = require('./settings.server.controller');
 
 exports.sendEmail = function(noteid, recipient){
-	var recipientAddress;
+	var recipientAddress='';
 
 	if (recipient) {
 		if (Array.isArray(recipient)) {
 			recipient.forEach(function(item, index) {
-				recipientAddress += item.email;
+				recipientAddress += item.email + ';';
 			});
 		} else {
 			recipientAddress = recipient.email;

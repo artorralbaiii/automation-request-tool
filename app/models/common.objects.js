@@ -7,19 +7,19 @@ var schema = mongoose.Schema;
 module.exports = {
 	approvalsObject: {
 		'BusinessOwner' : {
-			approver: {type: schema.Types.ObjectId, ref: 'User'},
+			approver: [{type: schema.Types.ObjectId, ref: 'User'}],
 			status: {type: String, default: 'Pending'},
 			dateAction: {type: Date},
 			comments: {type: String}				
 		},
 		'TechnicalLead' : {
-			approver: {type: schema.Types.ObjectId, ref: 'User'},
+			approver: [{type: schema.Types.ObjectId, ref: 'User'}],
 			status: {type: String, default: 'Pending'},
 			dateAction: {type: Date},
 			comments: {type: String}				
 		},
 		'ServiceLine' : {
-			approver: {type: schema.Types.ObjectId, ref: 'User'},
+			approver: [{type: schema.Types.ObjectId, ref: 'User'}],
 			status: {type: String, default: 'Pending'},
 			dateAction: {type: Date},
 			comments: {type: String}				

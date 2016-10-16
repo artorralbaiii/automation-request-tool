@@ -28,7 +28,7 @@ problemRequestSchema.post('save', function(doc){
 		doc.status !== 'Draft' ) {
 		commonObjects.processWorkflow('ProblemRequest', doc, function(noteid, recipient){
 
-			problemModel.findOne(doc)
+			problemModel.findOne({_id: doc._id})
 			.select(recipient)
 			.populate(recipient, 'email -_id')
 			.exec(function(err, data){

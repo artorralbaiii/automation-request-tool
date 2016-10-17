@@ -38,7 +38,8 @@ module.exports = function(app, express) {
 	api.post('/users/authenticate', userController.login);
 	api.post('/users', verifySession, verifyAdmin, userController.newDocument);
 	api.put('/users/:id', verifySession, userController.updateDocumentById);
-	api.delete('/users/:id', verifySession, verifyAdmin, userController.remove);
+	api.put('/users/:id/changepassword', verifySession, userController.changePassword);
+	api.delete('/users/:id', verifySession, userController.remove);
 
 	// Project resource
 	api.get('/projects', verifySession, projectController.allEntries);

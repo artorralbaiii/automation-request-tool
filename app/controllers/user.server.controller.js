@@ -141,3 +141,30 @@ exports.isAdmin = function(req, res) {
 		isAdmin: req.session.admin
 	});
 }
+
+exports.changePassword = function(req, res) {
+	userModel.findOne({_id: req.params.id}, function(err, data){
+
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		data.password = req.body.password;
+
+		data.save(function(err){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			res.json({
+				err: null,
+				message: 'Password successfully changed.'
+			});
+
+		});
+	});
+}
+
+

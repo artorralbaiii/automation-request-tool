@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
 	<title>ART | Automation Request Tool</title>
+
+	<!-- Vendor CSS -->
+	<link rel="stylesheet" href="app/css/vendor/normalize.css">
+	<link rel="stylesheet" href="app/css/vendor/bootstrap.min.css">
+
+	<!-- Application CSS -->
+	<link rel="stylesheet" href="app/css/main.css">
 </head>
 <body>
 
-<h1>Welcome to Automation Request Tool!</h1>
+<!-- Navigation Bar -->
+<art-navbar></art-navbar>
+
+<main class="container" ng-view>
+	
+</main>
+
+<!-- Vendor Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- Core Modules -->
+<script src="app/app.js"></script>
+<script src="app/app.router.js"></script>
+
+<!-- Directives -->
+<script src="app/directives/directive.module.js"></script>
+<script src="app/directives/navbar.directive.js"></script>
 
 </body>
 </html>

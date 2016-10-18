@@ -1,4 +1,12 @@
+/*NAV*/
+
 .navbar-brand 
 {
     padding-top: 2.5px;
+}
+
+/*LOGIN*/
+
+.login-form input {
+	font-size: 20px;
 }

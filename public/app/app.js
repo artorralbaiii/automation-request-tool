@@ -8,12 +8,14 @@
          */
 
          'app.router',
-         'app.directives'
+         'app.directives',
          
 		/*
-         * Feature areas
+         * Feature, areas
          */
 
+         'app.controller',
+         'app.service'
 
 
 	]);

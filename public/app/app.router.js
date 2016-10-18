@@ -9,6 +9,12 @@
 				templateUrl : 'app/views/pages/home.page.html'			
 			})
 
+			.when('/login', {
+				templateUrl : 'app/views/pages/login.page.html',
+				controller: 'Login',
+				controllerAs: 'vm'			
+			})
+
 			.otherwise({redirectTo : '/'});
 
 

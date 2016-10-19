@@ -32,7 +32,7 @@ module.exports = function(app, express) {
 
 	// User Resource
 	api.get('/users', verifySession, verifyAdmin, userController.allEntries);
-	api.get('/users/admin', verifySession, userController.isAdmin);
+	api.get('/users/session', verifySession, userController.getSession);
 	api.get('/users/:id', verifySession, userController.getDocumentById);
 	api.get('/users/:offset/:limit', verifySession, verifyAdmin, userController.pageEntries);	
 	api.post('/users/authenticate', userController.login);

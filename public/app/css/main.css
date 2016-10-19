@@ -10,3 +10,8 @@
 .login-form input {
 	font-size: 20px;
 }
+
+p.error {
+	color: #FF0000;
+	font-style: italic;
+}

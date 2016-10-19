@@ -12,7 +12,8 @@
 			.when('/login', {
 				templateUrl : 'app/views/pages/login.page.html',
 				controller: 'Login',
-				controllerAs: 'vm'			
+				controllerAs: 'vm',
+				title: 'ART | Login'	
 			})
 
 			.otherwise({redirectTo : '/'});

@@ -17,15 +17,23 @@
 
 			//////////
 
-			function authenticate(creds) {
+			function authenticate(creds, callback) {
 				$http.post('/api/users/authenticate', {
 					email: creds.email,
 					password: creds.password
 				})
 				.success(function(data){
+
 					console.log(data);
+
+					if (data.err) {
+						callback(data.err);
+					} else {
+						callback();
+					}
 				})
 				.catch(function(message) {
+					callback(message);
 					console.log('[dataservice] Error: ' + message);
 				});
 			}

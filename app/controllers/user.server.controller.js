@@ -109,7 +109,7 @@ exports.login = function(req, res) {
 		}
 	
 		if (!data) {
-			common.errHandler(res, null, 'Invalid email.');
+			common.errHandler(res, null, 'Invalid email.', 200);
 			return;
 		}
 
@@ -124,7 +124,7 @@ exports.login = function(req, res) {
 				});					
 			});
 		} else {
-			common.errHandler(res, null, 'Invalid password.');
+			common.errHandler(res, null, 'Invalid password.', 200);
 		}
 	});
 }
@@ -135,10 +135,10 @@ exports.remove = function(req, res) {
 }
 
 // Get Role
-exports.isAdmin = function(req, res) {
+exports.getSession = function(req, res) {
 	res.json({
 		err: null,
-		isAdmin: req.session.admin
+		isAdmin: req.session
 	});
 }
 

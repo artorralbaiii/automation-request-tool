@@ -17,9 +17,10 @@
 				</a>
 
 				<ul class="dropdown-menu">
+					<li ng-show="vm.session.admin"><a href="#">Manage Users</a></li>
 					<li><a href="#">Change Password</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#">Logout</a></li>
+					<li><a href="#" ng-click="vm.logout()">Logout</a></li>
 				</ul>
 
 			</li>

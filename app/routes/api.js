@@ -39,7 +39,8 @@ module.exports = function(app, express) {
 	api.post('/users', verifySession, verifyAdmin, userController.newDocument);
 	api.put('/users/:id', verifySession, userController.updateDocumentById);
 	api.put('/users/:id/changepassword', verifySession, userController.changePassword);
-	api.delete('/users/:id', verifySession, userController.remove);
+	api.delete('/users/logout', userController.logout);
+	api.delete('/users/:id', verifySession, verifyAdmin, userController.remove);
 
 	// Project resource
 	api.get('/projects', verifySession, projectController.allEntries);
@@ -47,7 +48,7 @@ module.exports = function(app, express) {
 	api.get('/projects/:offset/:limit', verifySession, projectController.pageEntries);	
 	api.post('/projects', verifySession, projectController.newDocument);
 	api.put('/projects/:id', verifySession, projectController.updateDocumentById);
-	api.delete('/projects/:id', verifySession, projectController.remove);
+	api.delete('/projects/:id', verifySession, verifyAdmin, projectController.remove);
 
 	// Change Request resource
 	api.get('/changes', verifySession, changeRequestController.allEntries);
@@ -57,7 +58,7 @@ module.exports = function(app, express) {
 	api.put('/changes/:id', verifySession, changeRequestController.updateDocumentById);
 	api.put('/changes/:id/status/:status', verifySession, changeRequestController.changeStatus);
 	api.put('/changes/:id/approval', verifySession, changeRequestController.approval);
-	api.delete('/changes/:id', verifySession, changeRequestController.remove);
+	api.delete('/changes/:id', verifySession, verifyAdmin, changeRequestController.remove);
 
 	// Problem Request resource
 	api.get('/problems', verifySession, problemRequestController.allEntries);
@@ -66,7 +67,7 @@ module.exports = function(app, express) {
 	api.post('/problems', verifySession, problemRequestController.newDocument);
 	api.put('/problems/:id', verifySession, problemRequestController.updateDocumentById);
 	api.put('/problems/:id/status/:status', verifySession, problemRequestController.changeStatus);
-	api.delete('/problems/:id', verifySession, problemRequestController.remove);
+	api.delete('/problems/:id', verifySession, verifyAdmin, problemRequestController.remove);
 
 	//Settings Resource
 	api.get('/settings', verifySession, verifyAdmin, settingsController.getDocument); 

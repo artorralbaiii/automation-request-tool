@@ -3,29 +3,42 @@
 	angular.module('app.controller')
 		.controller('Nav', Nav);
 
-		Nav.$inject = ['sessionService'];
+		Nav.$inject = ['$rootScope' ,'$location','sessionService', 'dataService'];
 
 		//////////
 
-		function Nav(sessionService){
+		function Nav($scope, $location, sessionService, dataService){
 			var vm = this;
 
 			vm.showMenu = false;
 			vm.session = null;
+			vm.logout = logout;
 
 			activate();
 
 			//////////
 
 			function activate() {
-
 				vm.session = sessionService.getSession();
 
-				if (vm.session) {
+			}
+
+			function logout(){
+				dataService.logout()
+					.then(function(response){
+						if (!response.data.err) {
+							$location.path('/login');
+							vm.showMenu = false;
+						}
+					});
+			}
+
+			$scope.$on('LOGIN', function(event, data){
+				if(data) {
+					vm.session = data;
 					vm.showMenu = true;
 				}
-
-			}
+			});
 
 		}
 

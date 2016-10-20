@@ -33,22 +33,20 @@
 			});
 	};
 
-	function appRun($rootScope, $location, dataService, sessionService) {
+	function appRun($rootScope, $location, dataService) {
 		$rootScope.$on('$routeChangeStart', function(event){
 
 			dataService.getSession()
 				.then(function(response){
 					if (response.data.session.user) {
-						sessionService.setSession(JSON.stringify(response.data.session));
+						$rootScope.$broadcast('LOGIN', response.data.session);
 					} else {
 						event.preventDefault();
-						sessionService.setSession(null);
 						$location.path('/login');
 					}
 				})
 				.catch(function(err){
 					if (err.status === 401) {
-						sessionService.setSession(null);
 						$location.path('/login');
 					}
 				});

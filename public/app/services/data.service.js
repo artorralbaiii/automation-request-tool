@@ -11,7 +11,8 @@
 
 			var service = {
 				authenticate: authenticate,
-				getSession: getSession
+				getSession: getSession,
+				logout: logout
 			}
 
 			return service;
@@ -38,6 +39,10 @@
 
 			function getSession() {
 				return $http.get('/api/users/session');
+			}
+
+			function logout() {
+				return $http({ method: 'DELETE', url: '/api/users/logout' });
 			}
 
 		}

@@ -171,3 +171,23 @@ exports.changePassword = function(req, res) {
 }
 
 
+exports.logout = function(req, res) {
+
+	req.session.destroy(function(err){
+		if (err) {
+			res.json({
+				err: err.message
+			});
+
+			return;
+		}
+
+		res.json({
+			err: null,
+			message: 'Logged out.'
+		});
+
+	});
+
+}
+

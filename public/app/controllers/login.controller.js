@@ -4,85 +4,56 @@
 	angular.module('app.controller')
 		.controller('Login', Login);
 
-		Login.$inject = ['dataservice', '$location'];
+		Login.$inject = ['dataService', '$location'];
 
-		function Login(dataservice, $location) {
+		function Login(dataService, $location) {
 			var vm = this;
 
 			vm.title = 'ART | Login';
+			vm.loginCaption = 'Login';
+			vm.authenticating = false;
 			vm.formData = {};
-			vm.validation = {};
+			vm.validation = [];
 			vm.authenticate = authenticate;
 			vm.validate = validate;
 
 			//////////
 
 			function authenticate(frm) {
+				vm.validation = [];
 
 				if (frm.$valid) {
-					dataservice.authenticate(vm.formData, function(err){
+					vm.loginCaption = 'Submitting...';
+					vm.authenticating = true;
+					dataService.authenticate(vm.formData, function(err){
+						vm.loginCaption = 'Login';
+						vm.authenticating = false;
+
 						if (err) {
-
-
-							if (err.indexOf('email')) {
-								vm.validation.email = err;
-								frm.email.$setValidity(err, false);
-								console.log("Pass");
-								console.log(frm);
-							}
-
-							if (err.indexOf('password')) {
-								vm.validation.password = err;
-								// frm.password.$setValidity(err, false);
-							}
-
+							vm.validation.push(err);
 							return;
 						}
 
 						$location.path('/');
 
 					});										
+				} else {
+					vm.validate(frm);
 				}	
 
 			};
 
-			function validate(frm, caller) {
+			function validate(frm) {
 
-				var defaultCondition = frm[caller].$dirty || frm.$submitted;
-				var result = false;
-				console.log(frm.email.$invalid);
-
-				switch (caller) {
-
-					case 'email': {
-
-						if (defaultCondition) {
-							if (frm.email.$error.required) {
-								vm.validation.email = 'Please enter your email.';
-								result = true;	
-							} 						
-						}
-
-						return result;
-
-						break;
-					}
-
-					case 'password': {
-
-						if (defaultCondition) {
-							if (frm.password.$error.required) {
-								vm.validation.password = 'Please enter your password.';
-								result = true;			
-							}							
-						}
-
-						return result;
-
-						break;
-					}
-
+				if (frm.email.$error.required) {
+					vm.validation.push('Please enter your email.');
+				} else if (frm.email.$invalid) {
+					vm.validation.push('Please enter a valid email.'); 
 				}
+
+				if (frm.password.$error.required) {
+					vm.validation.push('Please enter your password.');
+				}							
 			}
 
 		}

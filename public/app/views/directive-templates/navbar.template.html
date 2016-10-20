@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" ng-href="/"><img src="app/img/IBMLogo.jpg" /></a>
+		</div>
+
+
+		<ul class="nav navbar-nav navbar-right" ng-show="vm.showMenu">
+			<li class="dropdown">
+				<a class="dropdown-toggle"
+				   data-toggle="dropdown"
+				   role="button"
+				   aria-haspopup="true"
+				   aria-expanded="false">
+				{{vm.session.fullname}}
+				<span class="caret"></span>
+				</a>
+
+				<ul class="dropdown-menu">
+					<li><a href="#">Change Password</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+
+			</li>
+		</ul>
+
+	</div>
+</nav>

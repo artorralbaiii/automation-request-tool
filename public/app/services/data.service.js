@@ -3,14 +3,15 @@
 	'use strict'
 
 	angular.module('app.service')
-		.factory('dataservice', dataservice);
+		.factory('dataService', dataService);
 
-		dataservice.$inject = ['$http'];
+		dataService.$inject = ['$http'];
 
-		function dataservice($http) {
+		function dataService($http) {
 
 			var service = {
-				authenticate: authenticate
+				authenticate: authenticate,
+				getSession: getSession
 			}
 
 			return service;
@@ -22,12 +23,9 @@
 					email: creds.email,
 					password: creds.password
 				})
-				.success(function(data){
-
-					console.log(data);
-
-					if (data.err) {
-						callback(data.err);
+				.then(function(response){
+					if (response.data.err) {
+						callback(response.data.err);
 					} else {
 						callback();
 					}
@@ -36,6 +34,10 @@
 					callback(message);
 					console.log('[dataservice] Error: ' + message);
 				});
+			};
+
+			function getSession() {
+				return $http.get('/api/users/session');
 			}
 
 		}

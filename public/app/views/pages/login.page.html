@@ -1,11 +1,14 @@
 <div class="row login-form">
 	<div class="col-md-6 col-md-offset-3">
-		<h2 class="center"><b>Log in to Automation Request Tool</b></h2>
+		<h3 class="center"><b>Log in to Automation Request Tool</b></h3>
 
 		<form name="loginForm" ng-submit="vm.authenticate(loginForm);" novalidate>
 
-			<p ng-show="vm.validate(loginForm, 'email');" 
-			   class="pull-right error">{{vm.validation.email}}</p>
+			<div data-ng-show="(vm.validation.length > 0)" class="alert alert-warning">
+				<ul class="validation-messages">
+					<li data-ng-repeat="validation in vm.validation">{{validation}}</li>
+				</ul>			
+			</div>
 
 			<div class="form-group">
 				<label for="email"></label>
@@ -16,9 +19,6 @@
 					   placeholder="Email..."
 					   required >
 			</div>
-
-			<p ng-show="vm.validate(loginForm, 'password');" 
-			   class="pull-right error">{{vm.validation.password}}</p>
 
 			<div class="form-group">
 				<label for="password"></label>
@@ -31,9 +31,10 @@
 			</div>
 
 			<input type="submit" 
-				   value="Login"
-				   class="form-control btn btn-success" >
-
+				   value="{{vm.loginCaption}}"
+				   class="form-control btn btn-success" 
+				   data-ng-disabled="vm.authenticating"
+				   >
 		</form>
 
 	</div>

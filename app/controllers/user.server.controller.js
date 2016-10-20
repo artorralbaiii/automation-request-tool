@@ -102,20 +102,23 @@ exports.updateDocumentById = function(req, res) {
 
 // Authentication
 exports.login = function(req, res) {
-	userModel.findOne({email: req.body.email}).select('password admin').exec(function(err, data){
+	userModel.findOne({email: req.body.email})
+	.select('password admin fullname')
+	.exec(function(err, data){
 		if (err) {
 			common.errHandler(res, err);
 			return;
 		}
 	
 		if (!data) {
-			common.errHandler(res, null, 'Invalid email.', 200);
+			common.errHandler(res, null, 'Email is not registered.', 200);
 			return;
 		}
 
 		if (data.comparePassword(req.body.password)) {
 			req.session.regenerate(function(){
 				req.session.user = data._id;
+				req.session.fullname = data.fullname;
 				req.session.admin = data.admin;
 
 				res.json({
@@ -138,7 +141,7 @@ exports.remove = function(req, res) {
 exports.getSession = function(req, res) {
 	res.json({
 		err: null,
-		isAdmin: req.session
+		session: req.session
 	});
 }
 

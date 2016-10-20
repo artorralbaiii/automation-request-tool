@@ -8,7 +8,9 @@
         function artNavbar(){
         	var directive = {
         		restrict: 'E',
-        		templateUrl: 'app/views/partials/navbar.partial.html'
+        		templateUrl: 'app/views/directive-templates/navbar.template.html',
+                controller: 'Nav',
+                controllerAs: 'vm'
         	};
 
         	return directive;

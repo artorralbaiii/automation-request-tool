@@ -25,6 +25,10 @@
 					title: 'ART | Login'	
 				})
 
+				.when('/changepassword', {
+					templateUrl: 'app/views/pages/changepassword.page.html'
+				})
+
 				.otherwise({redirectTo : '/'});
 
 			$locationProvider.html5Mode({

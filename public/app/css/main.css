@@ -25,6 +25,21 @@ p.validation-message {
 	margin-bottom: 0px;
 }
 
+/*MANAGE USER PAGE*/
+.action-bar {
+  margin-bottom: 10px;
+}
+
+table tr td a .fa {
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.user-form {
+  font-size: 14px;
+}
 
 /*LOADING*/
 

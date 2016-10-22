@@ -37,7 +37,7 @@ exports.pageEntries = function(req, res) {
 
 			res.json({
 				err: null,
-				data: result
+				users: result
 			});
 	});	
 }

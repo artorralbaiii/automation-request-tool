@@ -1,7 +1,72 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12"><h1>Manage Users</h1></div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<general-error data-ng-show="(vm.generalErrors.length > 0)" errors="vm.generalErrors"></general-error>
+		
+		<div class="well">
+			<form class="form-horizontal user-form" name="frmUser" novalidate data-ng-submit="vm.submit(frmUser);">
+				<fieldset>
+
+					<div class="form-group">
+						<p data-ng-show="vm.validate('fullname', frmUser);" 
+						   class="validation-message pull-right">{{vm.validation.fullname}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="fullname" class="col-md-4 control-label">Name</label>
+						<div class="col-md-8">
+							<input class="form-control input-sm" 
+							       placeholder="Name..."
+							       type="text"
+							       name="fullname" 
+							       required 
+							       data-ng-model="vm.formData.fullname">
+
+							</input>
+						</div>	
+					</div>
+
+					<div class="form-group">
+						<p data-ng-show="vm.validate('email', frmUser);" 
+						   class="validation-message pull-right">{{vm.validation.fullname}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="email" class="col-md-4 control-label">Email</label>
+						<div class="col-md-8">
+							<input class="form-control input-sm" 
+							       placeholder="Email..."
+							       type="email"
+							       name="email" 
+							       required 
+							       data-ng-model="vm.formData.email">
+
+							</input>
+
+							<div class="checkbox">
+							  <label><input type="checkbox" data-ng-model="vm.formData.admin"> Admin</label>
+							</div>
+						</div>	
+					</div>
+				
+					<div class="form-group">
+	                    <div class="col-md-8 col-md-offset-4">
+	                      <button type="reset" class="btn btn-default btn-sm">Clear</button>
+	                      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+	                    </div>
+					</div>
+
+				</fieldset>
+			</form>				
+		</div>
+	</div>
+
+	<div class="col-md-8">
 		<div class="table-responsive">
-			<table class="table table-striped table-condensed">
+			<table class="table table-striped table-condensed user-tbl">
 			
 				<thead>
 					<th>Name</th>
@@ -16,8 +81,8 @@
 						<td>{{user.email}}</td>
 						<td>{{(user.admin ? 'Yes' : 'No')}}</td>						
 						<td>
-							<a class="btn btn-default pull-right">Delete</a>					
-							<a class="btn btn-primary pull-right">Edit</a>
+							<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							<a><i class="fa fa-trash" aria-hidden="true"></i></a>					
 						</td>						
 					</tr>
 
@@ -26,4 +91,5 @@
 			</table>			
 		</div>
 	</div>
+
 </div>

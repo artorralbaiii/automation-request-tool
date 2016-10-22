@@ -40,21 +40,6 @@
 							return dataService.getUsers(0, 5);
 						}
 					}
-					// resolve: {
-					// 	Users: {
-					// 		pageOffset: 0,
-					// 		pageLimit: 10,
-					// 		data: function(dataService) {
-					// 			return dataService.getUsers
-					// 					.then(function(response){
-					// 						return response.data.data;
-					// 					})
-					// 					.catch(function(){
-					// 						return null
-					// 					});
-					// 		}
-					// 	}
-					// }
 				})
 
 				.otherwise({redirectTo : '/'});

@@ -8,6 +8,8 @@ var errHandlerFunction = function(res, err, msg, statusCode) {
 			res.status(500);
 		}
 
+		console.log((msg ? msg : err));
+
 		res.json({
 			err: (msg ? msg : err.message)
 		});

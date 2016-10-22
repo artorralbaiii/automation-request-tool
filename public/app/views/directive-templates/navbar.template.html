@@ -18,7 +18,7 @@
 
 				<ul class="dropdown-menu">
 					<li ng-show="vm.session.admin"><a href="#">Manage Users</a></li>
-					<li><a data-ng-href="/changepassword">Change Password</a></li>
+					<li><a data-ng-href="/#/changepassword/{{vm.session.user}}/">Change Password</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a ng-click="vm.logout()">Logout</a></li>
 				</ul>

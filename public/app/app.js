@@ -8,7 +8,7 @@
          */
 
          'app.router',
-         'app.directives',
+         'app.directive',
          
 		/*
          * Feature, areas

@@ -25,16 +25,15 @@
 					title: 'ART | Login'	
 				})
 
-				.when('/changepassword', {
-					templateUrl: 'app/views/pages/changepassword.page.html'
+				.when('/changepassword/:userid', {
+					templateUrl: 'app/views/pages/changepassword.page.html',
+					controller: 'ChangePassword',
+					controllerAs: 'vm'
 				})
 
 				.otherwise({redirectTo : '/'});
 
-			$locationProvider.html5Mode({
-				enabled : true,
-				requireBase : false
-			});
+		
 	};
 
 	function appRun($rootScope, $location, dataService) {

@@ -14,3 +14,13 @@
 ul.validation-messages {
 	font-style: italic;
 }
+
+/*CHANGE PASSWORD*/
+
+p.validation-message {
+	color: #ff0000;
+	font-style: italic;
+	padding-bottom: 0px;
+	padding-right: 15px;
+	margin-bottom: 0px;
+}

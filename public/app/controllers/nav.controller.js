@@ -3,25 +3,18 @@
 	angular.module('app.controller')
 		.controller('Nav', Nav);
 
-		Nav.$inject = ['$rootScope' ,'$location','sessionService', 'dataService'];
+		Nav.$inject = ['$rootScope' ,'$location', 'dataService'];
 
 		//////////
 
-		function Nav($scope, $location, sessionService, dataService){
+		function Nav($scope, $location, dataService){
 			var vm = this;
 
 			vm.showMenu = false;
 			vm.session = null;
 			vm.logout = logout;
 
-			activate();
-
 			//////////
-
-			function activate() {
-				vm.session = sessionService.getSession();
-
-			}
 
 			function logout(){
 				dataService.logout()

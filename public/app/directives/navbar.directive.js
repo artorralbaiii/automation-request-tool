@@ -2,8 +2,10 @@
     'use strict';
 
     angular
-        .module('app.directives')
+        .module('app.directive')
         .directive('artNavbar', artNavbar);
+
+        //////////
 
         function artNavbar(){
         	var directive = {

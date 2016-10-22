@@ -146,12 +146,16 @@ exports.getSession = function(req, res) {
 }
 
 exports.changePassword = function(req, res) {
-	userModel.findOne({_id: req.params.id}, function(err, data){
+	userModel.findOne({_id: req.params.id})
+	.select('password')
+	.exec(function(err, data){
 
 		if (err) {
 			common.errHandler(res, err);
 			return;
 		}
+
+		console.log('Password: ' + req.body.password);
 
 		data.password = req.body.password;
 

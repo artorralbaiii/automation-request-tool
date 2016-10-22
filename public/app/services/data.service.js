@@ -11,6 +11,7 @@
 
 			var service = {
 				authenticate: authenticate,
+				changePassword: changePassword,
 				getSession: getSession,
 				logout: logout
 			}
@@ -43,6 +44,14 @@
 
 			function logout() {
 				return $http({ method: 'DELETE', url: '/api/users/logout' });
+			}
+
+			function changePassword(id, password) {
+				return $http({
+					method: 'PUT',
+					url: '/api/users/' + id + '/changepassword',
+					data: {password: password}
+				});
 			}
 
 		}

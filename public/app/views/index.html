@@ -16,11 +16,13 @@
 	<!-- Application CSS -->
 	<link rel="stylesheet" href="app/css/main.css">
 </head>
-<body>
+<body data-ng-controller="MainController as main">
 
 <!-- Navigation Bar -->
 <art-navbar></art-navbar>
 
+<!-- Spinner -->
+<div class="loading" data-ng-show="main.loading">Loading&#8230;</div>
 <main class="container" ng-view>
 	
 </main>
@@ -44,10 +46,12 @@
 
 <!-- Controllers -->
 <script src="app/controllers/controller.module.js"></script>
+<script src="app/controllers/main.controller.js"></script>
 <script src="app/controllers/login.controller.js"></script>
 <script src="app/controllers/home.controller.js"></script>
 <script src="app/controllers/nav.controller.js"></script>
 <script src="app/controllers/changepassword.controller.js"></script>
+<script src="app/controllers/user.controller.js"></script>
 
 <!-- Services -->
 <script src="app/services/service.module.js"></script>

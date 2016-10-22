@@ -13,6 +13,7 @@
 				authenticate: authenticate,
 				changePassword: changePassword,
 				getSession: getSession,
+				getUsers: getUsers,
 				logout: logout
 			}
 
@@ -52,6 +53,10 @@
 					url: '/api/users/' + id + '/changepassword',
 					data: {password: password}
 				});
+			}
+
+			function getUsers(offset, limit) {
+				return $http.get('/api/users/' + offset + '/' + limit);
 			}
 
 		}

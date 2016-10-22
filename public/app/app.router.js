@@ -31,9 +31,34 @@
 					controllerAs: 'vm'
 				})
 
-				.otherwise({redirectTo : '/'});
+				.when('/users', {
+					templateUrl: 'app/views/pages/users.page.html',
+					controller: 'User',
+					controllerAs: 'vm',
+					resolve: {
+						Users : function(dataService) {
+							return dataService.getUsers(0, 5);
+						}
+					}
+					// resolve: {
+					// 	Users: {
+					// 		pageOffset: 0,
+					// 		pageLimit: 10,
+					// 		data: function(dataService) {
+					// 			return dataService.getUsers
+					// 					.then(function(response){
+					// 						return response.data.data;
+					// 					})
+					// 					.catch(function(){
+					// 						return null
+					// 					});
+					// 		}
+					// 	}
+					// }
+				})
 
-		
+				.otherwise({redirectTo : '/'});
+				
 	};
 
 	function appRun($rootScope, $location, dataService) {

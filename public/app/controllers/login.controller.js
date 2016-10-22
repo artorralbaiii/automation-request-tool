@@ -23,7 +23,7 @@
 				vm.validation = [];
 
 				if (frm.$valid) {
-					vm.loginCaption = 'Submitting...';
+					vm.loginCaption = 'Authenticating...';
 					vm.authenticating = true;
 					dataService.authenticate(vm.formData, function(err){
 						vm.loginCaption = 'Login';

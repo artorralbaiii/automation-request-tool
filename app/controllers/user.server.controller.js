@@ -66,7 +66,7 @@ exports.newDocument = function(req, res) {
 		admin: req.body.admin
 	});
 
-	user.save(function(err){
+	user.save(function(err, data){
 		if (err) {
 			common.errHandler(res, err);
 			return;
@@ -74,7 +74,8 @@ exports.newDocument = function(req, res) {
 
 		res.json({
 			err: null,
-			message: 'New record successfully created.'
+			message: 'New record successfully created.',
+			data: data
 		});
 	});
 }
@@ -94,7 +95,8 @@ exports.updateDocumentById = function(req, res) {
 		data.save(function(err){
 			res.json({
 				err: null,
-				message: 'Record successfully updated.'
+				message: 'Record successfully updated.',
+				data: data
 			});
 		});
 	});

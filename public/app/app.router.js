@@ -37,7 +37,7 @@
 					controllerAs: 'vm',
 					resolve: {
 						Users : function(dataService) {
-							return dataService.getUsers(0, 5);
+							return dataService.getUsers();
 						}
 					}
 				})

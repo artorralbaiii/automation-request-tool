@@ -12,9 +12,11 @@
 			var service = {
 				authenticate: authenticate,
 				changePassword: changePassword,
+				createUser: createUser,
 				getSession: getSession,
 				getUsers: getUsers,
-				logout: logout
+				logout: logout,
+				updateUser: updateUser
 			}
 
 			return service;
@@ -55,8 +57,20 @@
 				});
 			}
 
-			function getUsers(offset, limit) {
-				return $http.get('/api/users/' + offset + '/' + limit);
+			function getUsers() {
+				return $http.get('/api/users');
+			}
+
+			function updateUser(data) {
+				return $http({
+					method: 'PUT',
+					url: '/api/users/' + data._id,
+					data: data
+				});
+			}
+
+			function createUser(data) {
+				return $http.post('/api/users', data);
 			}
 
 		}

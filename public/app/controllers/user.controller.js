@@ -13,8 +13,9 @@
 		$rootScope.$emit('UNLOAD');
 
 		vm.users = Users.data.data;
-		vm.pageOffset = Users.pageOffset;
-		vm.pageLimit = Users.pageLimit;
+		vm.currentPage = 1;
+		vm.pageSize = 5;
+		vm.searchText = '';
 		vm.generalErrors = [];
 		vm.formData = {};
 		vm.buttonLabel = { submit: 'Submit', cancel: 'Clear'};
@@ -24,6 +25,7 @@
 		vm.validation = {};
 		vm.resetForm = resetForm;
 		vm.deleteUser = deleteUser;
+
 		//////////
 
 		function getUsers(){
@@ -37,7 +39,6 @@
 		}
 
 		function editUser(user, index) {
-			vm.formData.index = index;	
 			vm.formData._id = user._id;
 			vm.formData.fullname = user.fullname;
 			vm.formData.email = user.email;
@@ -77,7 +78,8 @@
 							vm.generalErrors.push(response.data.err);	
 							return;
 						}
-						vm.users[vm.formData.index] = response.data.data;
+
+						vm.users[_.findIndex(vm.users, {_id: response.data.data._id})] = response.data.data;
 						toastr.success('User successfully updated.', 'Success!');
 						resetForm(frm);
 					})
@@ -89,9 +91,9 @@
 
 		}
 
-		function deleteUser(id, index) {
+		function deleteUser(id, name, index) {
 			bootbox
-			 .confirm("Are you sure you want to delete?", function(result){
+			 .confirm("Are you sure you want to delete \"" + name + "\"?", function(result){
 			 	if (result) {
 				 	dataService.deleteDocument('users', id)
 				 	 .then(function(response){
@@ -99,7 +101,11 @@
 				 	 		toastr.error(response.data.err, 'Error!');
 				 	 		return;
 				 	 	}
-				 	 	vm.users.splice(index,1);
+
+				 	 	console.log(id);
+				 	 	console.log(vm.users.indexOf(id));
+
+				 	 	vm.users.splice(_.findIndex(vm.users, {_id: id}) ,1);
 						toastr.success('User successfully deleted.', 'Deleted!');
 				 	 })
 				 	 .catch(function(response){

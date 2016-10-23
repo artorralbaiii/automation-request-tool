@@ -62,7 +62,7 @@ exports.newDocument = function(req, res) {
 	var user = new userModel({
 		email: req.body.email,
 		fullname: req.body.fullname,
-		password: req.body.password,
+		password: req.body.email,
 		admin: req.body.admin
 	});
 
@@ -116,21 +116,27 @@ exports.login = function(req, res) {
 			common.errHandler(res, null, 'Email is not registered.', 200);
 			return;
 		}
+		
+		try {
+			if (data.comparePassword(req.body.password)) {
+				req.session.regenerate(function(){
 
-		if (data.comparePassword(req.body.password)) {
-			req.session.regenerate(function(){
-				req.session.user = data._id;
-				req.session.fullname = data.fullname;
-				req.session.admin = data.admin;
+					req.session.user = data._id;
+					req.session.fullname = data.fullname;
+					req.session.admin = data.admin;
 
-				res.json({
-					err: null,
-					message: 'Authenticated.'
-				});					
-			});
-		} else {
-			common.errHandler(res, null, 'Invalid password.', 200);
+					res.json({
+						err: null,
+						message: 'Authenticated.'
+					});					
+				});
+			} else {
+				common.errHandler(res, null, 'Invalid password.', 200);
+			}
+		} catch(err) {
+			common.errHandler(res, err);			
 		}
+
 	});
 }
 

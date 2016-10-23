@@ -13,6 +13,7 @@
 				authenticate: authenticate,
 				changePassword: changePassword,
 				createUser: createUser,
+				deleteDocument: deleteDocument,
 				getSession: getSession,
 				getUsers: getUsers,
 				logout: logout,
@@ -35,9 +36,9 @@
 						callback();
 					}
 				})
-				.catch(function(message) {
-					callback(message);
-					console.log('[dataservice] Error: ' + message);
+				.catch(function(response) {
+					callback(response.statusText);
+					console.log('[dataservice] Error: ' + response.statusText);
 				});
 			};
 
@@ -71,6 +72,13 @@
 
 			function createUser(data) {
 				return $http.post('/api/users', data);
+			}
+
+			function deleteDocument(resourceName, id) {
+				return $http({
+					method: 'DELETE',
+					url: '/api/' + resourceName + '/' + id
+				});
 			}
 
 		}

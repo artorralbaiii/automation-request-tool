@@ -39,11 +39,6 @@ module.exports = {
 				if (callback) {
 					callback(data.project);
 				} else {
-					if (data) {
-						errHandlerFunction(res, null, 'No documents found.', 409);
-						return;
-					}
-
 					res.json({
 						err: null,
 						message: 'Document successfully removed.'

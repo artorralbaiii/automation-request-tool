@@ -23,7 +23,7 @@
 		vm.validate = validate;
 		vm.validation = {};
 		vm.resetForm = resetForm;
-
+		vm.deleteUser = deleteUser;
 		//////////
 
 		function getUsers(){
@@ -43,6 +43,7 @@
 			vm.formData.email = user.email;
 			vm.formData.admin = user.admin;
 			vm.buttonLabel = { submit: 'Update', cancel: 'Cancel' }		
+			vm.deleteUser = deleteUser;
 		}
 
 		function resetForm(frm) {
@@ -86,6 +87,26 @@
 				}
 			}
 
+		}
+
+		function deleteUser(id, index) {
+			bootbox
+			 .confirm("Are you sure you want to delete?", function(result){
+			 	if (result) {
+				 	dataService.deleteDocument('users', id)
+				 	 .then(function(response){
+				 	 	if (response.data.err) {
+				 	 		toastr.error(response.data.err, 'Error!');
+				 	 		return;
+				 	 	}
+				 	 	vm.users.splice(index,1);
+						toastr.success('User successfully deleted.', 'Deleted!');
+				 	 })
+				 	 .catch(function(response){
+			 	 		toastr.error(response.data.err, 'Error!');
+				 	 });			 		
+			 	}
+			});
 		}
 
 		function validate(fld, frm) {

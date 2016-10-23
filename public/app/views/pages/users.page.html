@@ -82,8 +82,10 @@
 						<td>{{user.email}}</td>
 						<td>{{(user.admin ? 'Yes' : 'No')}}</td>						
 						<td>
-							<a data-ng-click="vm.editUser(user, $index);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-							<a><i class="fa fa-trash" aria-hidden="true"></i></a>					
+							<a data-ng-click="vm.editUser(user, $index);"><i 
+							   class="fa fa-pencil-square-o" 
+							   aria-hidden="true"></i></a>
+							<a data-ng-click="vm.deleteUser(user._id, $index);"><i class="fa fa-trash" aria-hidden="true"></i></a>					
 						</td>						
 					</tr>
 

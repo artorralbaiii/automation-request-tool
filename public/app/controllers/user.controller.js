@@ -20,6 +20,8 @@
 		vm.buttonLabel = { submit: 'Submit', cancel: 'Clear'};
 		vm.editUser = editUser;
 		vm.submit = submit;
+		vm.validate = validate;
+		vm.validation = {};
 
 		//////////
 
@@ -54,9 +56,22 @@
 
 		function validate(fld, frm) {
 
-			if (frm[fld].$dirty && frm.$submitted) {
-
+			var fldName = {
+				'fullname' : 'Name',
+				'email': 'Email'
 			}
+
+
+
+			if (frm[fld].$dirty || frm.$submitted) {
+				if (frm[fld].$error.required) {
+					vm.validation[fld] = 'Please enter ' + fldName[fld]  + '.';
+					console.log(vm.validation);
+					return true;
+				}
+			}
+
+			return false;
 
 		}
 

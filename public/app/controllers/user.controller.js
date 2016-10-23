@@ -15,10 +15,11 @@
 		vm.users = Users.data.users.data;
 		vm.pageOffset = Users.pageOffset;
 		vm.pageLimit = Users.pageLimit;
-		vm.formTitle = 'New User';
-		vm.showForm = false;
 		vm.generalErrors = [];
-		vm.toggleForm = toggleForm;
+		vm.formData = {};
+		vm.buttonLabel = { submit: 'Submit', cancel: 'Clear'};
+		vm.editUser = editUser;
+		vm.submit = submit;
 
 		//////////
 
@@ -30,11 +31,33 @@
 			.catch(function(response){
 				toastr.error(response.data.err, 'Error!');
 			})
+		}
+
+		function editUser(user) {
+			vm.formData.fullname = user.fullname;
+			vm.formData.email = user.email;
+			vm.formData.admin = user.admin;
+
+			vm.buttonLabel = {
+				submit: 'Update',
+				cancel: 'Cancel'
+			}		
+		}
+
+		function submit(frm) {
+
+			if (frm.$valid) {
+
+			}
 
 		}
 
-		function toggleForm() {
-			vm.showForm = !vm.showForm;
+		function validate(fld, frm) {
+
+			if (frm[fld].$dirty && frm.$submitted) {
+
+			}
+
 		}
 
 	}

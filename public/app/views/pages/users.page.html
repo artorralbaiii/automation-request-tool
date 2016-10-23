@@ -54,8 +54,8 @@
 				
 					<div class="form-group">
 	                    <div class="col-md-8 col-md-offset-4">
-	                      <button type="reset" class="btn btn-default btn-sm">Clear</button>
-	                      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+	                      <button type="reset" class="btn btn-default btn-sm">{{vm.buttonLabel.cancel}}</button>
+	                      <button type="submit" class="btn btn-primary btn-sm">{{vm.buttonLabel.submit}}</button>
 	                    </div>
 					</div>
 
@@ -81,7 +81,7 @@
 						<td>{{user.email}}</td>
 						<td>{{(user.admin ? 'Yes' : 'No')}}</td>						
 						<td>
-							<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							<a data-ng-click="vm.editUser(user);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							<a><i class="fa fa-trash" aria-hidden="true"></i></a>					
 						</td>						
 					</tr>

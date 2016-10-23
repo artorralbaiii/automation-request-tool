@@ -18,17 +18,21 @@
 					controllerAs: 'vm'		
 				})
 
-				.when('/login', {
-					templateUrl : 'app/views/pages/login.page.html',
-					controller: 'Login',
-					controllerAs: 'vm',
-					title: 'ART | Login'	
+				.when('/about', {
+					templateUrl: 'app/views/pages/about.page.html'
 				})
 
 				.when('/changepassword/:userid', {
 					templateUrl: 'app/views/pages/changepassword.page.html',
 					controller: 'ChangePassword',
 					controllerAs: 'vm'
+				})
+
+				.when('/login', {
+					templateUrl : 'app/views/pages/login.page.html',
+					controller: 'Login',
+					controllerAs: 'vm',
+					title: 'ART | Login'	
 				})
 
 				.when('/users', {

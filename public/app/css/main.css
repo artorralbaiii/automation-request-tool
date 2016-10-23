@@ -41,6 +41,12 @@ table tr td a .fa {
   font-size: 14px;
 }
 
+/*ABOUT & FAQ's*/
+
+pre {
+  word-wrap: break-word;
+}
+
 /*LOADING*/
 
 /* Absolute Center Spinner */
@@ -161,4 +167,18 @@ table tr td a .fa {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+/* FIX FOR BOOTSTRAP */
+
+hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 1px 0;
+  margin: 18px 0;
 }

@@ -1,0 +1,150 @@
+ <div class="panel-group">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-target="#about-workflow">Workflow Process <span class="caret"></span></a>
+      </h4>
+    </div>
+    <div id="about-workflow" class="panel-collapse collapse">
+      <div class="panel-body">
+      	
+      	<h3><strong>Change Request</strong></h3>
+		<div class="table-responsive">
+	      <table class="table table-striped">
+
+		  	<thead>
+		  		<th>Step</th>
+		  		<th>User</th>
+		  		<th>Action</th>
+		  		<th>Document Status</th>
+		  	</thead>	
+
+		  	<tbody>
+
+		  		<tr>
+		  			<td>1</td>
+		  			<td class="text-success">Requester</td>
+		  			<td><p class="text-justify">Create new Change Request document and fill-up the form. Once done, click Submit.</p></td>
+		  			<td><strong>Draft</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>2</td>
+		  			<td class="text-success">Business Owner</td>
+		  			<td><p class="text-justify">User receives an email notification regarding new change request. User shall click <span class="text-success">Approve</span> or <strong>Return for Revision</strong>
+		  			<br><br>
+					If user clicked <strong>Return for Revision</strong> a dialog box will appear prompting for a mandatory comment.
+					<br><br>
+					Note: If <span class="text-success">Business Owner</span> is also the <span class="text-success">Requester</span> , it is automatically tagged as <strong>Approved</strong> and will proceed to next step. No email notifcation will be sent too.</p></td>
+		  			<td><strong>Request Assessment</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>3a</td>
+		  			<td class="text-success">Technical Lead</td>
+		  			<td><p class="text-justify">If <span class="text-success">Business Owner</span> approved, user receives an email notification regarding new change request. User shall click <strong>Approve</strong> or <strong>Return for Revision</strong></p></td>
+		  			<td><strong>Request Assessment</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>3b</td>
+		  			<td class="text-success">Requester</td>
+		  			<td><p class="text-justify">If <span class="text-success">Business Owner</span> returned for revision, user receives an email notification for being returned. User shall revise the Change Request document. Return to step #2.</p></td>
+		  			<td><strong>Draft</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>4a</td>
+		  			<td class="text-success">Service Line</td>
+		  			<td class="text-justify">If <span class="text-success">Technical Lead</span> approved, user receives an email notification regarding new change request. User shall click <strong>Approve</strong> or <strong>Return for Revision</strong>.</td>
+		  			<td><strong>Request Assessment</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>4b</td>
+		  			<td class="text-success">Requester</td>
+		  			<td>If <span class="text-success">Technical Lead</span> returned for revision, user receives an email notification for being returned. User shall revise the Change Request document. Return to step #2.</td>
+		  			<td><strong>Draft</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>5</td>
+		  			<td class="text-success">Developer</td>
+		  			<td>If <span class="text-success">Service Line</span> approved, user receives an email notification that the new change request is approved and is now ready for development. User shall click <strong>Proceed to UAT</strong> once development is done.</td>
+		  			<td><strong>Ongoing</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>6</td>
+		  			<td class="text-success">Tester</td>
+		  			<td>User receives an email notification that the change request is ready for testing. If user has found any defects, user shall click <strong>Return to Developer<strong>. Otherwise, click <strong>Proceed to Deployment</strong>.</td>
+		  			<td><strong>UAT</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>7a</td>
+		  			<td class="text-success">Developer</td>
+		  			<td>User will be notified through email if there are defects found by the tester. Return to step #5.</td>
+		  			<td><strong>Ongoing</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>7b</td>
+		  			<td class="text-success">Developer</td>
+		  			<td>User will be notified through email if the change request passed User Acceptance Testing. User can now deploy the change request to production.</td>
+		  			<td><strong>Completed</strong></td>
+		  		</tr>
+
+		  	</tbody>
+
+	      </table>	
+	    </div>
+
+	    <hr /><br>
+
+	    <h3><strong>PROBLEM REPORT</strong></h3>
+		<div class="table-responsive">
+	      <table class="table table-striped">
+
+		  	<thead>
+		  		<th>Step</th>
+		  		<th>User</th>
+		  		<th>Action</th>
+		  		<th>Document Status</th>
+		  	</thead>	
+
+		  	<tbody>
+
+		  		<tr>
+		  			<td>1</td>
+		  			<td class="text-success">Requester</td>
+		  			<td><p class="text-justify">Create new Problem Report document and fill-up the form. Once done, click Submit.</p></td>
+		  			<td><strong>Draft</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>2</td>
+		  			<td class="text-success">Support</td>
+		  			<td><p class="text-justify">User receives an email notification that there is a reported problem. User shall investigate the issue and put those info in the resolution section of the document.
+					Once done, user shall click <strong>Mark as Complete</strong>.
+					<br></p>
+					Note: If the issue is a design problem, the user must create a Change Request document since the solution of the issue will be solved via that route.</p></td>
+		  			<td><strong>Ongoing</strong></td>
+		  		</tr>
+
+		  		<tr>
+		  			<td>3</td>
+		  			<td class="text-success">Requester</td>
+		  			<td><p class="text-justify">User will be notified through email once the issue has been resolved.</p></td>
+		  			<td><strong>Closed</strong></td>
+		  		</tr>
+
+		  	</tbody>
+
+	      </table>	
+		</div>
+
+      </div>
+    </div>
+  </div>
+</div>

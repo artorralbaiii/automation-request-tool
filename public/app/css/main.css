@@ -5,6 +5,29 @@
     padding-top: 2.5px;
 }
 
+
+/* HOME */
+.side-panel-list li {
+    display: block;
+}
+
+.side-panel-list li:before {    
+  font-family: 'FontAwesome';
+  content: '\f003';
+  margin:0 5px 0 -15px;
+}
+
+.side-panel-list a {
+  color: #0099ff;
+  text-decoration: none;
+}  
+
+.side-panel-list a:hover {
+  color: #ff6600;
+}  
+
+
+
 /*LOGIN*/
 
 .login-form input {

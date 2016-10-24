@@ -31,8 +31,13 @@
 				.when('/login', {
 					templateUrl : 'app/views/pages/login.page.html',
 					controller: 'Login',
-					controllerAs: 'vm',
-					title: 'ART | Login'	
+					controllerAs: 'vm'
+				})
+
+				.when('/project', {
+					templateUrl : 'app/views/pages/project-new.page.html',
+					controller: 'ProjectNew',
+					controllerAs: 'vm'
 				})
 
 				.when('/users', {

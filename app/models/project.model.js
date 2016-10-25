@@ -6,12 +6,13 @@ var common = require('./common.objects');
 
 var projectSchema = new schema({
 	projectId: {type: String, require: true, index: {unique: true}},
+	applicationName: {type: String, require: true},
 	isDeployed: {type: Boolean, default: false},
 	requester: {type: schema.Types.ObjectId , ref: 'User', require: true},
 	developers: [{type: schema.Types.ObjectId, ref: 'User'}],
 	description: {type: String},
 	version: {type: String},
-	businessOwner: {type: schema.Types.ObjectId, ref: 'User'},
+	businessOwner: [{type: schema.Types.ObjectId, ref: 'User'}],
 	supports: [{type: schema.Types.ObjectId, ref: 'User'}],
 	changeRequests: [{type: schema.Types.ObjectId, ref: 'ChangeRequest'}],												 
 	problemRequests: [{type: schema.Types.ObjectId, ref: 'ProblemRequest'}],

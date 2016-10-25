@@ -1,15 +1,23 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
 		<div class="well">
-			<form class="form-horizontal" name="frmProject" novalidate data-ng-submit="vm.submit(frm);">
+			<form class="form-horizontal" name="frmProject" novalidate data-ng-submit="vm.submit(frmProject);">
 				<fieldset>
+
 					<legend>Project | New</legend>
 
+
+
 					<div class="form-group">
-						<label for="applicationName" class="col-md-4 control-label">Application Name</label>
+						<p data-ng-show="vm.validate('applicationName', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.applicationName}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="applicationName" class="col-md-4 control-label">* Application Name</label>
 						<div class="col-md-8">
 							<input class="form-control" 
-							       placeholder="Application Name..."
+							       placeholder="Please enter application name..."
 							       type="text"
 							       name="applicationName" 
 							       required 
@@ -18,22 +26,27 @@
 					</div>
 
 					<div class="form-group">
-						<label for="description" class="col-md-4 control-label">App Purpose / Description</label>
+						<p data-ng-show="vm.validate('description', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.description}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="description" class="col-md-4 control-label">* App Purpose / Description</label>
 						<div class="col-md-8">
-							<input class="form-control" 
-							       placeholder="App Purpose / Description..."
-							       type="text"
-							       name="description" 
-							       required 
-							       data-ng-model="vm.formData.description" >
+							<textarea class="form-control" rows="5" name="description" required data-ng-model="vm.formData.description" placeholder="Please enter app urpose / description..."></textarea>
 						</div>	
 					</div>
 
 					<div class="form-group">
-						<label for="version" class="col-md-4 control-label">App Version</label>
+						<p data-ng-show="vm.validate('version', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.version}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="version" class="col-md-4 control-label">* App Version</label>
 						<div class="col-md-8">
 							<input class="form-control" 
-							       placeholder="App Version..."
+							       placeholder="Please enter app version..."
 							       type="text"
 							       name="version" 
 							       required 
@@ -47,14 +60,14 @@
 
 							<div class="radio">
 								<label>
-									<input data-ng-model="vm.formData.deployed" type="radio" 
-									       name="deployStatus" data-ng-value="true">Yes
+									<input data-ng-model="vm.formData.isDeployed" type="radio" 
+									       name="isDeployed" data-ng-value="true">Yes
 								</label>
 							</div>
 
 							<div class="radio">
 								<label>
-									<input data-ng-model="vm.formData.deployed" type="radio" name="deployStatus" data-ng-value="false">No
+									<input data-ng-model="vm.formData.isDeployed" type="radio" name="isDeployed" data-ng-value="false">No
 								</label>
 							</div>
 
@@ -62,18 +75,70 @@
 					</div>
 
 					<div class="form-group">
-						<label for="version" class="col-md-4 control-label">Business Owners</label>
+						<p data-ng-show="vm.validate('businessOwners', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.businessOwners}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="version" class="col-md-4 control-label">* Business Owner(s)</label>
 						<div class="col-md-8">
-							<ui-select multiple ng-model="vm.formData.businessOwners" theme="bootstrap">
-							    <ui-select-match placeholder="Select Business Owner...">
+							<ui-select multiple ng-model="vm.formData.businessOwners" name="businessOwners" theme="bootstrap">
+							    <ui-select-match placeholder="Select business owner...">
 							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
 							    </ui-select-match>
-							    <ui-select-choices repeat="user in vm.users | filter: $select.search track by user.fullname">
+							    <ui-select-choices refresh="vm.pullUsers($select.search)" refresh-delay="0" repeat="user in vm.users | filter: $select.search">
 							        <div ng-bind-html="user.fullname | highlight: $select.search"></div>
-							        <div ng-bind-html="user.email | highlight: $select.search"></div>
+							        <div class="text-muted" ng-bind-html="user.email"></div>
 							    </ui-select-choices>
 							</ui-select>
 						</div>	
+					</div>
+
+					<div class="form-group">
+						<p data-ng-show="vm.validate('developers', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.developers}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="version" class="col-md-4 control-label">* Developer(s)</label>
+						<div class="col-md-8">
+							<ui-select multiple ng-model="vm.formData.developers" name="developers" theme="bootstrap">
+							    <ui-select-match placeholder="Select developers...">
+							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
+							    </ui-select-match>
+							    <ui-select-choices refresh="vm.pullUsers($select.search)" refresh-delay="0" repeat="user in vm.users | filter: $select.search track by user.fullname">
+							        <div ng-bind-html="user.fullname | highlight: $select.search"></div>
+							        <div class="text-muted" ng-bind-html="user.email"></div>
+							    </ui-select-choices>
+							</ui-select>
+						</div>	
+					</div>
+
+					<div class="form-group">
+						<p data-ng-show="vm.validate('supports', frmProject);" 
+						   class="validation-message pull-right">{{vm.validation.supports}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="version" class="col-md-4 control-label">* Support(s)</label>
+						<div class="col-md-8">
+							<ui-select multiple ng-model="vm.formData.supports" name="supports" theme="bootstrap">
+							    <ui-select-match placeholder="Select supports...">
+							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
+							    </ui-select-match>
+							    <ui-select-choices refresh="vm.pullUsers($select.search)" refresh-delay="0" repeat="user in vm.users | filter: $select.search track by user.fullname">
+							        <div ng-bind-html="user.fullname | highlight: $select.search"></div>
+							        <div class="text-muted" ng-bind-html="user.email"></div>
+							    </ui-select-choices>
+							</ui-select>
+						</div>	
+					</div>
+
+					<div class="form-group">
+	                    <div class="col-md-8 col-md-offset-4">
+	                      <a data-ng-href="/#/" type="reset" class="btn btn-default">Cancel</a>
+	                      <button type="submit" class="btn btn-primary">Submit</button>
+	                    </div>
 					</div>
 
 				</fieldset>

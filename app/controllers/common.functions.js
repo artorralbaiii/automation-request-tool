@@ -23,9 +23,9 @@ module.exports = {
 		var d = new Date();
 		var prefix = (pre ? pre + '-' : '' );
 
-		return prefix + d.getYear() + '' +
-		       ('0' + d.getMonth()).slice(-2)  + '' +
-		       ('0' + d.getDay()).slice(-2) + '' +
+		return prefix + d.getFullYear() + '-' +
+		       ('0' + (d.getMonth() + 1)).slice(-2)  + '' +
+		       ('0' + d.getDate()).slice(-2) + '' +
 		       ('0' + d.getHours()).slice(-2)  + '' + 
 		       ('0' + d.getMinutes()).slice(-2) + '' +
 		       ('0' + d.getSeconds()).slice(-2);

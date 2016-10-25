@@ -34,6 +34,7 @@ module.exports = function(app, express) {
 	api.get('/users', verifySession, verifyAdmin, userController.allEntries);
 	api.get('/users/session', userController.getSession);
 	api.get('/users/:id', verifySession, userController.getDocumentById);
+	api.get('/users/:qry/search', verifySession, userController.getDocumentByKey);
 	api.get('/users/:offset/:limit', verifySession, verifyAdmin, userController.pageEntries);	
 	api.post('/users/authenticate', userController.login);
 	api.post('/users', verifySession, verifyAdmin, userController.newDocument);

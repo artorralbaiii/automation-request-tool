@@ -56,6 +56,24 @@ exports.getDocumentById = function(req, res) {
 		});
 	});
 }
+// Get user by key
+exports.getDocumentByKey = function(req, res) {
+	var pattern =  new RegExp(req.params.qry+'*', 'i'); 
+
+	userModel.find({fullname: pattern})
+	.select('_id fullname email')
+	.exec(function(err, data){
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		} 	
+		
+		res.json({
+			err: null,
+			data: data
+		});
+	});
+}
 
 // Create New User
 exports.newDocument = function(req, res) {

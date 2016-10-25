@@ -13,9 +13,11 @@
 				authenticate: authenticate,
 				changePassword: changePassword,
 				createUser: createUser,
+				createProject: createProject,
 				deleteDocument: deleteDocument,
 				getSession: getSession,
 				getUsers: getUsers,
+				getUsersByKey: getUsersByKey,
 				logout: logout,
 				updateUser: updateUser
 			}
@@ -24,6 +26,7 @@
 
 			//////////
 
+			// User Authentication
 			function authenticate(creds, callback) {
 				$http.post('/api/users/authenticate', {
 					email: creds.email,
@@ -42,14 +45,18 @@
 				});
 			};
 
-			function getSession() {
-				return $http.get('/api/users/session');
+			// Create Project
+
+			function createProject(data) {
+				return $http.post('/api/projects', data);
 			}
 
-			function logout() {
-				return $http({ method: 'DELETE', url: '/api/users/logout' });
+			// Create User
+			function createUser(data) {
+				return $http.post('/api/users', data);
 			}
 
+			// Change User Password 
 			function changePassword(id, password) {
 				return $http({
 					method: 'PUT',
@@ -58,10 +65,35 @@
 				});
 			}
 
+			// Delete Resource (GENERIC)
+			function deleteDocument(resourceName, id) {
+				return $http({
+					method: 'DELETE',
+					url: '/api/' + resourceName + '/' + id
+				});
+			}
+
+			// Get current session
+			function getSession() {
+				return $http.get('/api/users/session');
+			}
+			
+			// Get All Users
 			function getUsers() {
 				return $http.get('/api/users');
 			}
 
+			// Get User/s user key
+			function getUsersByKey(qry) {
+				return $http.get('/api/users/' + qry + '/search');				
+			}
+
+			// Logout | Remove Session 
+			function logout() {
+				return $http({ method: 'DELETE', url: '/api/users/logout' });
+			}
+
+			// Update user
 			function updateUser(data) {
 				return $http({
 					method: 'PUT',
@@ -70,16 +102,6 @@
 				});
 			}
 
-			function createUser(data) {
-				return $http.post('/api/users', data);
-			}
-
-			function deleteDocument(resourceName, id) {
-				return $http({
-					method: 'DELETE',
-					url: '/api/' + resourceName + '/' + id
-				});
-			}
 
 		}
 

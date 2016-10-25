@@ -6,7 +6,7 @@
 
 				<ul data-ng-if="(items.length > 0)" class="side-panel-list">
 					<li class="list-unstyled" data-ng-repeat="item in items">
-						<a href="#">
+						<a data-ng-href="/#/{{item.model}}">
 							({{item.id}}) - {{item.description | limitTo: 20}}{{(item.description.length > 20 ? '...' : '')}}
 						</a>
 					</li>

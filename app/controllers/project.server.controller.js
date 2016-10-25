@@ -64,14 +64,16 @@ exports.getDocumentById = function(req, res) {
 
 // Create new project
 exports.newDocument = function(req, res) {
+
 	var project = new projectModel({
 		projectId: common.generateId('PRJ'),
+		applicationName: req.body.applicationName,
 		isDeployed: req.body.isDeployed,
 		requester: req.body.requester,
 		developers: req.body.developers,
 		description: req.body.description,
 		version: req.body.version,
-		businessOwner: req.body.businessOwner,
+		businessOwner: req.body.businessOwners,
 		supports: req.body.supports,
 		modifiedBy: req.session.user
 	});
@@ -103,7 +105,8 @@ exports.updateDocumentById = function(req, res) {
 		data.version = req.body.version;
 		data.businessOwner = req.body.businessOwner;
 		data.supports = req.body.supports;
-		data.description = req.body.description,
+		data.description = req.body.description;
+		data.applicationName = req.body.applicationName;
 
 		data.save(function(err) {
 			if (err) {

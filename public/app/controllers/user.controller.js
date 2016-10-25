@@ -102,9 +102,6 @@
 				 	 		return;
 				 	 	}
 
-				 	 	console.log(id);
-				 	 	console.log(vm.users.indexOf(id));
-
 				 	 	vm.users.splice(_.findIndex(vm.users, {_id: id}) ,1);
 						toastr.success('User successfully deleted.', 'Deleted!');
 				 	 })

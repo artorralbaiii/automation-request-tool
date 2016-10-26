@@ -15,7 +15,13 @@
 				.when('/', {
 					templateUrl : 'app/views/pages/home.page.html',
 					controller: 'Home',
-					controllerAs: 'vm'		
+					controllerAs: 'vm',
+					resolve: {
+						Project: function(dataService, $rootScope) {
+							$rootScope.$emit('LOAD');
+							return dataService.getProjects();
+						}
+					}		
 				})
 
 				.when('/about', {
@@ -46,6 +52,7 @@
 					controllerAs: 'vm',
 					resolve: {
 						Users : function(dataService) {
+							$rootScope.$emit('LOAD');
 							return dataService.getUsers();
 						}
 					}

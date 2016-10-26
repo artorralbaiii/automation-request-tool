@@ -15,6 +15,7 @@
 				createUser: createUser,
 				createProject: createProject,
 				deleteDocument: deleteDocument,
+				getProjects: getProjects,
 				getSession: getSession,
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
@@ -71,6 +72,11 @@
 					method: 'DELETE',
 					url: '/api/' + resourceName + '/' + id
 				});
+			}
+
+			// Get projects
+			function getProjects() {
+				return $http.get('/api/projects');
 			}
 
 			// Get current session

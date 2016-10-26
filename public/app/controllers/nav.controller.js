@@ -13,7 +13,6 @@
 			vm.showMenu = false;
 			vm.session = null;
 			vm.logout = logout;
-			vm.navigate = navigate;
 
 			activate();
 
@@ -45,15 +44,6 @@
 							vm.showMenu = false;
 						}
 					});
-			}
-
-			function navigate(path) {
-				
-				if ($location.path() != path) {				
-					$rootScope.$emit('LOAD');
-				}
-
-				$location.path(path);
 			}
 
 			$rootScope.$on('LOGIN', function(event, data){

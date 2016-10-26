@@ -1,10 +1,54 @@
 <div class="row">
 	<div class="col-md-4">
-		<div class="container-fluid">
+		<art-side-panel title="'My Requests'" items="vm.myRequests"></art-side-panel>	
+		<art-side-panel title="'Awaiting My Action'" items="vm.awaitingMyAction"></art-side-panel>	
+	</div>
 
-			<art-side-panel title="'My Requests'" items="vm.myRequests"></art-side-panel>	
-			<art-side-panel title="'Awaiting My Action'" items="vm.awaitingMyAction"></art-side-panel>	
+	<div class="col-md-8">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-md-12">
+					<input class="form-control" 
+					       placeholder="Search..."
+					       type="text"
+					       name="search" 
+					       required 
+					       data-ng-model="vm.searchText" >
+				</div>	
+			</div>
+		</form>
 
+		<div class="table-responsive project-table">
+			<table class="table table-condensed">
+				<tbody>
+					<tr data-ng-repeat="project in vm.projects">
+						<td>
+							<div class="project-entry">
+								<strong><h3><a data-ng-href="/#/projects/{{project._id}}">{{project.applicationName}}</a></h3></strong>
+								<p><small>{{project.description}}</small></p>
+								<p><a data-toggle="collapse" data-target="#problem-entry-{{$index}}" href="">Problem Requests (0)</a></p>
+								<ul class="list-group collapse"  id="problem-entry-{{$index}}">
+								  <li class="list-group-item">Cras justo odio</li>
+								  <li class="list-group-item">Dapibus ac facilisis in</li>
+								  <li class="list-group-item">Morbi leo risus</li>
+								  <li class="list-group-item">Porta ac consectetur ac</li>
+								  <li class="list-group-item">Vestibulum at eros</li>
+								</ul>
+								<p><a data-toggle="collapse" data-target="#change-entry-{{$index}}" href="">Changes Requests (0)</a></p>
+								<ul class="list-group collapse" id="change-entry-{{$index}}">
+								  <li class="list-group-item">Cras justo odio</li>
+								  <li class="list-group-item">Dapibus ac facilisis in</li>
+								  <li class="list-group-item">Morbi leo risus</li>
+								  <li class="list-group-item">Porta ac consectetur ac</li>
+								  <li class="list-group-item">Vestibulum at eros</li>
+								</ul>
+							</div>						
+						</td>
+					</tr>				
+				</tbody>
+
+			</table>			
 		</div>
 	</div>
+
 </div>

@@ -4,12 +4,11 @@
 	angular.module('app.controller')
 		.controller('Login', Login);
 
-		Login.$inject = ['dataService', '$location'];
+		Login.$inject = ['dataService', '$location', '$rootScope'];
 
-		function Login(dataService, $location) {
+		function Login(dataService, $location, $rootScope) {
 			var vm = this;
 
-			vm.title = 'ART | Login';
 			vm.loginCaption = 'Login';
 			vm.authenticating = false;
 			vm.formData = {};

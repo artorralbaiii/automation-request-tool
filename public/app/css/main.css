@@ -1,3 +1,15 @@
+
+/*GENERIC*/
+
+a {
+  color: #0000e6;
+  text-decoration: none;
+}  
+
+a:hover {
+  color: #ff6600;
+}  
+
 /*NAV*/
 
 .navbar-brand 
@@ -17,14 +29,14 @@
   margin:0 5px 0 -15px;
 }
 
-.side-panel-list a {
+/*.side-panel-list a {
   color: #0099ff;
   text-decoration: none;
 }  
 
 .side-panel-list a:hover {
   color: #ff6600;
-}  
+}  */
 
 .project-entry {
   padding: 0 10px;

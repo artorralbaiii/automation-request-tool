@@ -21,10 +21,10 @@
 		<div class="table-responsive project-table">
 			<table class="table table-condensed">
 				<tbody>
-					<tr data-ng-repeat="project in vm.projects">
+					<tr data-ng-repeat="project in vm.projects | orderBy: 'applicationName'">
 						<td>
 							<div class="project-entry">
-								<strong><h3><a data-ng-href="/#/projects/{{project._id}}">{{project.applicationName}}</a></h3></strong>
+								<strong><h3><a class="text-primary" data-ng-href="/#/projects/{{project._id}}">{{project.applicationName}}</a></h3></strong>
 								<p><small>{{project.description}}</small></p>
 								<p><a data-toggle="collapse" data-target="#problem-entry-{{$index}}" href="">Problem Requests (0)</a></p>
 								<ul class="list-group collapse"  id="problem-entry-{{$index}}">

@@ -51,7 +51,7 @@
 					controller: 'User',
 					controllerAs: 'vm',
 					resolve: {
-						Users : function(dataService) {
+						Users : function(dataService, $rootScope) {
 							$rootScope.$emit('LOAD');
 							return dataService.getUsers();
 						}

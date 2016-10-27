@@ -8,9 +8,8 @@
 
 
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('applicationName', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.applicationName}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('applicationName', frmProject);" >
+						<p class="validation-message pull-right">{{vm.validation.applicationName}}</p>						
 					</div>
 
 					<div class="form-group">
@@ -25,9 +24,8 @@
 						</div>	
 					</div>
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('description', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.description}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('description', frmProject);" >
+						<p class="validation-message pull-right">{{vm.validation.description}}</p>						
 					</div>
 
 					<div class="form-group">
@@ -37,9 +35,8 @@
 						</div>	
 					</div>
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('version', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.version}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('version', frmProject);">
+						<p class="validation-message pull-right">{{vm.validation.version}}</p>						
 					</div>
 
 					<div class="form-group">
@@ -74,9 +71,40 @@
 						</div>	
 					</div>
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('businessOwners', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.businessOwners}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('serverName', frmProject);" >
+						<p class="validation-message pull-right">{{vm.validation.serverName}}</p>						
+					</div>
+
+					<div data-ng-show="vm.formData.isDeployed" class="form-group">
+						<label for="serverName" class="col-md-4 control-label">* Server Name</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       placeholder="Please enter server name..."
+							       type="text"
+							       name="serverName" 
+							       required 
+							       data-ng-model="vm.formData.serverName" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="vm.validate('filePath', frmProject);">
+						<p class="validation-message pull-right">{{vm.validation.filePath}}</p>						
+					</div>
+
+					<div data-ng-show="vm.formData.isDeployed" class="form-group">
+						<label for="filePath" class="col-md-4 control-label">* File Path</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       placeholder="Please enter app file path..."
+							       type="text"
+							       name="filePath" 
+							       required 
+							       data-ng-model="vm.formData.filePath" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="vm.validate('businessOwners', frmProject);">
+						<p class="validation-message pull-right">{{vm.validation.businessOwners}}</p>						
 					</div>
 
 					<div class="form-group">
@@ -94,9 +122,8 @@
 						</div>	
 					</div>
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('developers', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.developers}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('developers', frmProject);">
+						<p class="validation-message pull-right">{{vm.validation.developers}}</p>						
 					</div>
 
 					<div class="form-group">
@@ -114,9 +141,8 @@
 						</div>	
 					</div>
 
-					<div class="form-group">
-						<p data-ng-show="vm.validate('supports', frmProject);" 
-						   class="validation-message pull-right">{{vm.validation.supports}}</p>						
+					<div class="form-group" data-ng-show="vm.validate('supports', frmProject);">
+						<p class="validation-message pull-right">{{vm.validation.supports}}</p>						
 					</div>
 
 					<div class="form-group">

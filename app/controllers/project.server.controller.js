@@ -97,7 +97,9 @@ exports.newDocument = function(req, res) {
 		version: req.body.version,
 		businessOwners: req.body.businessOwners,
 		supports: req.body.supports,
-		modifiedBy: req.session.user
+		modifiedBy: req.session.user,
+		serverName: req.body.serverName,
+		filePath: req.body.filePath
 	});
 
 	project.save(function(err){
@@ -129,6 +131,8 @@ exports.updateDocumentById = function(req, res) {
 		data.supports = req.body.supports;
 		data.description = req.body.description;
 		data.applicationName = req.body.applicationName;
+		data.serverName = req.body.serverName;
+		data.filePath = req.body.filePath;
 
 		data.save(function(err) {
 			if (err) {

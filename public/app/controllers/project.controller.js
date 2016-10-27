@@ -83,7 +83,9 @@
 				version: 'Version',
 				businessOwners: 'Business Owner(s)',
 				developers: 'Developer(s)',
-				supports: 'Support(s)'
+				supports: 'Support(s)',
+				serverName: 'Server Name',
+				filePath: 'File Path'
 			};
 
 			if (frm[fld].$dirty || frm.$submitted) {
@@ -97,11 +99,20 @@
 					}
 					true;
 				} else if(frm[fld].$error.required) {
-					vm.validation[fld] = 'Please enter ' + fldName[fld]; 
-					return true;
+
+
+
+					if ( (fld === 'filePath' || fld === 'serverName') && !vm.formData.isDeployed ) {
+						console.log('pass');
+						return false;
+					} else {
+						vm.validation[fld] = 'Please enter ' + fldName[fld]; 
+						return true;
+					}
+
 				}
 			}
-
+	
 			return false;
 
 		}

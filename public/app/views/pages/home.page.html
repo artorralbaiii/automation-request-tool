@@ -26,7 +26,7 @@
 					<tr data-ng-repeat="project in vm.projects | orderBy: 'applicationName'">
 						<td>
 							<div class="project-entry">
-								<strong><h3><a class="text-primary" data-ng-href="/#/project/{{project._id}}">{{project.applicationName}}</a></h3></strong>
+								<strong><a class="text-default appname" data-ng-href="/#/project/{{project._id}}">{{project.applicationName}}</a></strong>
 								<p><small><strong>Project ID:</strong> {{project.projectId}}</small></p>
 								<p><small>{{project.description}}</small></p>
 								<hr>

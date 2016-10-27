@@ -8,6 +8,8 @@ var projectSchema = new schema({
 	projectId: {type: String, require: true, index: {unique: true}},
 	applicationName: {type: String, require: true},
 	isDeployed: {type: Boolean, default: false},
+	serverName: {type: String},
+	filePath: {type: String},
 	requester: {type: schema.Types.ObjectId , ref: 'User', require: true},
 	developers: [{type: schema.Types.ObjectId, ref: 'User'}],
 	description: {type: String},

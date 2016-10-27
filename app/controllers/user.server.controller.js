@@ -56,12 +56,14 @@ exports.getDocumentById = function(req, res) {
 		});
 	});
 }
+
 // Get user by key
 exports.getDocumentByKey = function(req, res) {
 	var pattern =  new RegExp(req.params.qry+'*', 'i'); 
 
 	userModel.find({fullname: pattern})
 	.select('_id fullname email')
+	.limit(5)
 	.exec(function(err, data){
 		if (err) {
 			common.errHandler(res, err);

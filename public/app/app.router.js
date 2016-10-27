@@ -19,7 +19,7 @@
 					resolve: {
 						Project: function(dataService, $rootScope) {
 							$rootScope.$emit('LOAD');
-							return dataService.getProjects();
+							return dataService.getProjectsByPage(0, 5, '');
 						}
 					}		
 				})

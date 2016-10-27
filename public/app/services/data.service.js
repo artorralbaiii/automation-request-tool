@@ -17,6 +17,7 @@
 				deleteDocument: deleteDocument,
 				getProjectById: getProjectById,
 				getProjects: getProjects,
+				getProjectsByPage: getProjectsByPage, 
 				getSession: getSession,
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
@@ -84,6 +85,15 @@
 			// Get projects
 			function getProjects() {
 				return $http.get('/api/projects');
+			}
+
+			// Get Partial Projects By Page
+			function getProjectsByPage(offset, limit, search) {
+				if (!search) {
+					search = '';
+				}
+				search = 'search:' + search;
+				return $http.get('/api/projects/' + search + '/' + offset + '/' + limit);
 			}
 
 			// Get current session

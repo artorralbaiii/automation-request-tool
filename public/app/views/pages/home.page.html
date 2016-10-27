@@ -13,11 +13,13 @@
 					       type="text"
 					       name="search" 
 					       required 
-					       data-ng-model="vm.searchText" >
+					       data-ng-model="vm.searchText" 
+					       data-ng-change="vm.reloadProjects();">
 				</div>	
 			</div>
 		</form>
-
+		<p data-ng-show="vm.searching"><i>Searching&nbsp;&nbsp;<i class="fa fa-spinner" aria-hidden="true"></i>
+</i></p>
 		<div class="table-responsive project-table">
 			<table class="table table-condensed">
 				<tbody>
@@ -56,7 +58,20 @@
 								</ul>
 							</div>						
 						</td>
-					</tr>				
+					</tr>	
+
+					<tfoot>
+						<tr>
+							<td>
+								<button type="button" 
+										class="btn btn-primary" 
+										data-ng-click="vm.loadMoreProjects();"
+										data-ng-show="vm.showLoadMore();" >Load More...</button>
+								<p class="text-center" data-ng-show="(vm.recordFetchCount==0)"><i>No Projects Found!</i></p>
+							</td>
+						</tr>
+					</tfoot>
+
 				</tbody>
 
 			</table>			

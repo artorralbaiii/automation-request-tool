@@ -22,7 +22,20 @@ exports.allEntries = function(req, res) {
 
 // Navigate Projects using paging.
 exports.pageEntries = function(req, res) {
-	projectModel.find({})
+
+	var search = req.params.search.replace('search:', '');
+	var pattern;
+	var searchOption = {};
+
+	if (search !== '') {
+		pattern =  new RegExp(search + '*', 'i'); 
+		searchOption = {
+			applicationName: pattern
+		};
+	}
+
+	projectModel.find(searchOption)
+		.sort('applicationName')
 		.skip(parseInt(req.params.offset))
 		.limit(parseInt(req.params.limit))
 		.populate('requester developers businessOwners supports changeRequests problemRequests')
@@ -33,14 +46,23 @@ exports.pageEntries = function(req, res) {
 				return;
 			}
 
-			var result = {};
 
-			result.count = data.length;
-			result.data = data;
+			projectModel.count(function(err, count){
+				if(err){
+					common.errHandler(res, err);
+					return;
+				}
 
-			res.json({
-				err: null,
-				data: result
+				var result = {};
+
+				result.count = count;
+				result.data = data;
+
+				res.json({
+					err: null,
+					projects: result
+				});
+
 			});
 	});	
 }

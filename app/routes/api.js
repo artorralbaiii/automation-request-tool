@@ -46,7 +46,7 @@ module.exports = function(app, express) {
 	// Project resource
 	api.get('/projects', verifySession, projectController.allEntries);
 	api.get('/projects/:id', verifySession, projectController.getDocumentById);
-	api.get('/projects/:offset/:limit', verifySession, projectController.pageEntries);	
+	api.get('/projects/:search/:offset/:limit/', verifySession, projectController.pageEntries);	
 	api.post('/projects', verifySession, projectController.newDocument);
 	api.put('/projects/:id', verifySession, projectController.updateDocumentById);
 	api.delete('/projects/:id', verifySession, verifyAdmin, projectController.remove);

@@ -6,7 +6,25 @@
 
 					<legend>Project | {{vm.formLabel}}</legend>
 
+					<div class="form-group" data-ng-show="!vm.newProject">
+						<label for="projectId" class="col-md-4 control-label">Project ID</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.projectId}}"
+							       name="projectId"
+							       data-ng-disabled="true" >
+						</div>	
+					</div>
 
+					<div class="form-group" data-ng-show="!vm.newProject">
+						<label for="requester" class="col-md-4 control-label">Requested By</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.requester.fullname}}"
+							       name="requester"
+							       data-ng-disabled="true">
+						</div>	
+					</div>
 
 					<div class="form-group" data-ng-show="vm.validate('applicationName', frmProject);" >
 						<p class="validation-message pull-right">{{vm.validation.applicationName}}</p>						

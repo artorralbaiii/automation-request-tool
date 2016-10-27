@@ -91,7 +91,7 @@ exports.newDocument = function(req, res) {
 		projectId: common.generateId('PRJ'),
 		applicationName: req.body.applicationName,
 		isDeployed: req.body.isDeployed,
-		requester: req.body.requester,
+		requester: req.session.user,
 		developers: req.body.developers,
 		description: req.body.description,
 		version: req.body.version,

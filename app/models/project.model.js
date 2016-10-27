@@ -12,7 +12,7 @@ var projectSchema = new schema({
 	developers: [{type: schema.Types.ObjectId, ref: 'User'}],
 	description: {type: String},
 	version: {type: String},
-	businessOwner: [{type: schema.Types.ObjectId, ref: 'User'}],
+	businessOwners: [{type: schema.Types.ObjectId, ref: 'User'}],
 	supports: [{type: schema.Types.ObjectId, ref: 'User'}],
 	changeRequests: [{type: schema.Types.ObjectId, ref: 'ChangeRequest'}],												 
 	problemRequests: [{type: schema.Types.ObjectId, ref: 'ProblemRequest'}],

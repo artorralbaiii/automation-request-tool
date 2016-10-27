@@ -40,10 +40,19 @@
 					controllerAs: 'vm'
 				})
 
-				.when('/project', {
-					templateUrl : 'app/views/pages/project-new.page.html',
+				.when('/project/:id', {
+					templateUrl : 'app/views/pages/project.page.html',
 					controller: 'ProjectNew',
-					controllerAs: 'vm'
+					controllerAs: 'vm',
+					resolve: {
+						Project: function(dataService, $route) {
+							if ($route.current.params.id === 'new') {
+								return null;
+							} else {
+								return dataService.getProjectById($route.current.params.id);								
+							}
+						}
+					}
 				})
 
 				.when('/users', {
@@ -71,11 +80,13 @@
 						$rootScope.$broadcast('LOGIN', response.data.session);
 					} else {
 						event.preventDefault();
+						$rootScope.$emit('UNLOAD');
 						$location.path('/login');
 					}
 				})
 				.catch(function(err){
 					if (err.status === 401) {
+						$rootScope.$emit('UNLOAD');
 						$location.path('/login');
 					}
 				});

@@ -15,11 +15,13 @@
 				createUser: createUser,
 				createProject: createProject,
 				deleteDocument: deleteDocument,
+				getProjectById: getProjectById,
 				getProjects: getProjects,
 				getSession: getSession,
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
 				logout: logout,
+				updateProject: updateProject,
 				updateUser: updateUser
 			}
 
@@ -74,6 +76,11 @@
 				});
 			}
 
+			// Get Project By Id
+			function getProjectById(id) {
+				return $http.get('/api/projects/' + id);
+			}
+
 			// Get projects
 			function getProjects() {
 				return $http.get('/api/projects');
@@ -97,6 +104,15 @@
 			// Logout | Remove Session 
 			function logout() {
 				return $http({ method: 'DELETE', url: '/api/users/logout' });
+			}
+
+			// Update Project
+			function updateProject(data) {
+				return $http({
+					method: 'PUT',
+					url: '/api/projects/' + data._id,
+					data: data
+				});
 			}
 
 			// Update user

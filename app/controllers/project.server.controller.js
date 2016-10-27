@@ -6,7 +6,7 @@ var common = require('./common.functions');
 // Get all projects
 exports.allEntries = function(req, res) {
 	projectModel.find({})
-		.populate('requester developers businessOwner supports changeRequests problemRequests')
+		.populate('requester developers businessOwners supports changeRequests problemRequests')
 	    .exec(function(err, data){
 			if (err) {
 				common.errHandler(res, err);
@@ -25,7 +25,7 @@ exports.pageEntries = function(req, res) {
 	projectModel.find({})
 		.skip(parseInt(req.params.offset))
 		.limit(parseInt(req.params.limit))
-		.populate('requester developers businessOwner supports changeRequests problemRequests')
+		.populate('requester developers businessOwners supports changeRequests problemRequests')
 		.exec(function(err, data){
 
 			if (err) {
@@ -48,7 +48,7 @@ exports.pageEntries = function(req, res) {
 // Get Project By ID
 exports.getDocumentById = function(req, res) {
 	projectModel.findOne({_id: req.params.id})
-		.populate('requester developers businessOwner supports changeRequests problemRequests')
+		.populate('requester developers businessOwners supports changeRequests problemRequests')
 	    .exec(function(err, data){
 			if (err) {
 				common.errHandler(res, err);
@@ -73,7 +73,7 @@ exports.newDocument = function(req, res) {
 		developers: req.body.developers,
 		description: req.body.description,
 		version: req.body.version,
-		businessOwner: req.body.businessOwners,
+		businessOwners: req.body.businessOwners,
 		supports: req.body.supports,
 		modifiedBy: req.session.user
 	});
@@ -103,7 +103,7 @@ exports.updateDocumentById = function(req, res) {
 		data.requester = req.body.requester;
 		data.developers = req.body.developers;
 		data.version = req.body.version;
-		data.businessOwner = req.body.businessOwner;
+		data.businessOwners = req.body.businessOwners;
 		data.supports = req.body.supports;
 		data.description = req.body.description;
 		data.applicationName = req.body.applicationName;

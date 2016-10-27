@@ -25,16 +25,15 @@
 					vm.loginCaption = 'Authenticating...';
 					vm.authenticating = true;
 					dataService.authenticate(vm.formData, function(err){
-						vm.loginCaption = 'Login';
 						vm.authenticating = false;
 
 						if (err) {
 							vm.validation.push(err);
+							vm.loginCaption = 'Login';
 							return;
 						}
 
 						$location.path('/');
-
 					});										
 				} else {
 					vm.validate(frm);

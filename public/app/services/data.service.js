@@ -13,6 +13,7 @@
 				authenticate: authenticate,
 				changePassword: changePassword,
 				createUser: createUser,
+				createProblem: createProblem,
 				createProject: createProject,
 				deleteDocument: deleteDocument,
 				getProjectById: getProjectById,
@@ -49,6 +50,13 @@
 				});
 			};
 
+			// Create Problem
+
+			function createProblem(data) {
+				console.log(data); 
+				return $http.post('/api/problems', data);
+			}
+
 			// Create Project
 
 			function createProject(data) {
@@ -75,6 +83,11 @@
 					method: 'DELETE',
 					url: '/api/' + resourceName + '/' + id
 				});
+			}
+
+			// Get Project By Id
+			function getProblemById(id) {
+				return $http.get('/api/problems/' + id);
 			}
 
 			// Get Project By Id

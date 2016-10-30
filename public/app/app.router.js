@@ -40,6 +40,21 @@
 					controllerAs: 'vm'
 				})
 
+				.when('/problem/:projectId/:problemId', {
+					templateUrl : 'app/views/pages/problem.page.html',
+					controller: 'Problem',
+					controllerAs: 'vm',
+					resolve: {
+						Problem: function(dataService, $route){
+							if ($route.current.params.problemId === 'new') {
+								return null;
+							} else {
+								return dataService.getProblemById($route.current.params.id);								
+							}							
+						}
+					}					
+				})
+
 				.when('/project/:id', {
 					templateUrl : 'app/views/pages/project.page.html',
 					controller: 'ProjectNew',

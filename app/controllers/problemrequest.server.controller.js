@@ -69,14 +69,11 @@ exports.newDocument = function(req, res) {
 		problemNumber: common.generateId('PR'),
 		status: req.body.status,
 		problemSummary: req.body.problemSummary,
-		reportedBy: req.body.reportedBy,
+		reportedBy: req.session.user,
 		dateReported: req.body.dateReported,
 		targetFixDate: req.body.targetFixDate,
 		detailedDescription: req.body.detailedDescription,
 		assignedSupport: req.body.assignedSupport,
-		problemType: req.body.problemType,
-		anlaysis: req.body.anlaysis,
-		action: req.body.action,
 		project: req.body.project
 	});
 

@@ -34,7 +34,7 @@
 									<a data-toggle="collapse" 
 									   data-target="#problem-entry-{{$index}}" 
 									   href="">(0) Problem Requests</a>&nbsp;| 
-									<a href="" class="text-danger"> New Problem*</a>
+									<a href="" data-ng-click="vm.newProblem(project);" class="text-danger"> New Problem*</a>
 								</p>
 								<ul class="list-group collapse"  id="problem-entry-{{$index}}">
 								  <li class="list-group-item">Cras justo odio</li>

@@ -1,0 +1,158 @@
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="well">
+			<form class="form-horizontal" name="frmProblem" novalidate>
+				<fieldset>
+
+					<legend>Problem | {{vm.formLabel}}</legend>
+
+					<div class="form-group">
+						<label for="status" class="col-md-4 control-label">Status</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.status}}"
+							       name="status"
+							       data-ng-readonly="true" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="!vm.newProblem">
+						<label for="problemNumber" class="col-md-4 control-label">Problem Reference #</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.problemNumber}}"
+							       name="problemNumber"
+							       data-ng-readonly="true" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="!vm.newProblem">
+						<label for="reportedBy" class="col-md-4 control-label">Reported By</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.reportedBy.fullname}}"
+							       name="reportedBy"
+							       data-ng-readonly="true" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="(vm.formData.status != 'Draft')">
+						<label for="dateReported" class="col-md-4 control-label">Date Reported</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="date" value="{{vm.formData.dateReported}}"
+							       name="dateReported"
+							       data-ng-readonly="true" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="vm.validate('targetFixDate', frmProblem);" >
+						<p class="validation-message pull-right">{{vm.validation.targetFixDate}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="targetFixDate" class="col-md-4 control-label">* Target Fix Date (YYYY-MM-DD)</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       placeholder="Please enter target fix date (YYYY-MM-DD)..."
+							       type="date"
+							       name="targetFixDate" 
+							       required 
+							       data-ng-model="vm.formData.targetFixDate" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="vm.validate('problemSummary', frmProblem);" >
+						<p class="validation-message pull-right">{{vm.validation.problemSummary}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="problemSummary" class="col-md-4 control-label">* Problem Summary</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       placeholder="Please enter problem summary..."
+							       type="text"
+							       name="problemSummary" 
+							       required 
+							       data-ng-model="vm.formData.problemSummary" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="vm.validate('detailedDescription', frmProblem);" >
+						<p class="validation-message pull-right">{{vm.validation.detailedDescription}}</p>						
+					</div>
+
+					<div class="form-group">
+						<label for="detailedDescription" class="col-md-4 control-label">* Detailed Description</label>
+						<div class="col-md-8">
+							<textarea class="form-control" rows="5" name="detailedDescription" required data-ng-model="vm.formData.detailedDescription" placeholder="Please enter detailed description..."></textarea>
+						</div>	
+					</div>
+
+					<div class="form-group">
+						<label for="assignedSupport" class="col-md-4 control-label">Assigned Support</label>
+						<div class="col-md-8">
+							<input class="form-control" 
+							       type="text"
+							       name="assignedSupport" 
+							       data-ng-model="vm.formData.assignedSupportDisplay"
+							       data-ng-readonly="true" >
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-show="(vm.formData.status != 'Draft')">
+						<label for="problemType" class="col-md-4 control-label">* Problem Type</label>
+						<div class="col-md-8">
+
+							<div class="radio">
+								<label>
+									<input data-ng-model="vm.formData.problemType" type="radio" 
+									       name="problemType" data-ng-value="'Data Problem'">Data Problem
+								</label>
+							</div>
+
+							<div class="radio">
+								<label>
+									<input data-ng-model="vm.formData.problemType" type="radio" name="problemType" data-ng-value="'Design Problem'">Design Problem
+								</label>
+							</div>
+
+						</div>	
+					</div>
+
+					<div class="form-group" data-ng-if="(vm.formData.status != 'Draft')" data-ng-show="vm.validate('analysis', frmProblem);" >
+						<p class="validation-message pull-right">{{vm.validation.analysis}}</p>						
+					</div>
+
+					<div class="form-group" data-ng-if="(vm.formData.status != 'Draft')">
+						<label for="analysis" class="col-md-4 control-label">* Analysis of Problem</label>
+						<div class="col-md-8">
+							<textarea class="form-control" rows="5" name="analysis" required data-ng-model="vm.formData.analysis" placeholder="Please enter analysis of the problem..."></textarea>
+						</div>	
+					</div>
+
+
+					<div class="form-group" data-ng-if="(vm.formData.status != 'Draft')" data-ng-show="vm.validate('action', frmProblem);" >
+						<p class="validation-message pull-right">{{vm.validation.action}}</p>						
+					</div>
+
+					<div class="form-group" data-ng-if="(vm.formData.status != 'Draft')">
+						<label for="action" class="col-md-4 control-label">* Actions / Recommendations</label>
+						<div class="col-md-8">
+							<textarea class="form-control" rows="5" name="action" required data-ng-model="vm.formData.action" placeholder="Please enter actions recommendations..."></textarea>
+						</div>	
+					</div>
+
+					<div class="form-group">
+	                    <div class="col-md-8 col-md-offset-4">
+	                      <a data-ng-href="/#/" type="reset" class="btn btn-default">Cancel</a>
+	                      <button type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Draft');">Save as Draft</button>
+	                      <button type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Ongoing');">Submit</button>
+	                    </div>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

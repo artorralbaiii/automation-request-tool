@@ -3,11 +3,11 @@
 	angular.module('app.controller')
 		.controller('Home', Home);
 
-	Home.$inject = ['Project', 'dataService', '$rootScope', 'toastr'];
+	Home.$inject = ['Project', 'dataService', '$rootScope', 'toastr', '$location', 'ParentProject'];
 
 	/////////
 
-	function Home(Project, dataService, $rootScope, toastr){
+	function Home(Project, dataService, $rootScope, toastr, $location, ParentProject){
 
 		$rootScope.$emit('UNLOAD');
 
@@ -23,6 +23,7 @@
 		vm.showLoadMore = showLoadMore;
 		vm.loadMoreProjects = loadMoreProjects;
 		vm.reloadProjects = reloadProjects;
+		vm.newProblem = newProblem;
 		vm.searching = false;
 
 		//////////
@@ -48,6 +49,11 @@
 				$rootScope.$emit('UNLOAD');
 			});
 
+		}
+
+		function newProblem(project) {
+			ParentProject.setProject(project);
+			$location.path('/problem/' + project._id + '/new');
 		}
 
 		function reloadProjects(){

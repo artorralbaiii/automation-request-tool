@@ -103,7 +103,6 @@
 
 
 					if ( (fld === 'filePath' || fld === 'serverName') && !vm.formData.isDeployed ) {
-						console.log('pass');
 						return false;
 					} else {
 						vm.validation[fld] = 'Please enter ' + fldName[fld]; 

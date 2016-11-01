@@ -65,6 +65,7 @@ exports.getDocumentById = function(req, res) {
 
 // Create Problem Request
 exports.newDocument = function(req, res) {
+
 	var problem = new problemRequestModel({
 		problemNumber: common.generateId('PR'),
 		status: req.body.status,
@@ -100,11 +101,12 @@ exports.newDocument = function(req, res) {
 							common.errHandler(res, err);
 							return;
 						}
-															
+
 						res.json({
 							err: null,
 							message: 'New record successfully created.'
 						});													
+
 					});								
 				} else {
 					common.errHandler(res, null, 'Project not found.');	
@@ -115,6 +117,7 @@ exports.newDocument = function(req, res) {
 
 // Update Problem Request by Id
 exports.updateDocumentById = function(req, res) {
+
 	problemRequestModel.findOne({_id: req.params.id}, function(err, data){
 		if (err) {
 			common.errHandler(res, err);				
@@ -133,12 +136,14 @@ exports.updateDocumentById = function(req, res) {
 			data.save(function(err) {
 				if (err) {
 					common.errHandler(res, err);
-				} else {
-					res.json({
-						err: null,
-						message: 'Record successfully updated.'
-					});					
-				}
+					return
+				} 
+
+				res.json({
+					err: null,
+					message: 'Record successfully updated.'
+				});					
+
 			});
 		}
 	});

@@ -3,20 +3,19 @@
 	angular.module('app.controller')
 		.controller('Home', Home);
 
-	Home.$inject = ['Project', 'dataService', '$rootScope', 'toastr', '$location', 'ParentProject'];
+	Home.$inject = ['Project', 'dataService', '$rootScope', 'toastr', '$location', 'ParentProject', 'RelatedRequests'];
 
 	/////////
 
-	function Home(Project, dataService, $rootScope, toastr, $location, ParentProject){
+	function Home(Project, dataService, $rootScope, toastr, $location, ParentProject, RelatedRequests){
 
 		$rootScope.$emit('UNLOAD');
 
 		var vm = this;
-		vm.awaitingMyAction = [];
-		vm.myRequests = [];
 		vm.projects = Project.data.projects.data;
 		vm.recordCount = Project.data.projects.count;
 		vm.recordFetchCount = Project.data.projects.data.length;
+		vm.relatedRequests = RelatedRequests.data.data;
 		vm.offset = 0;
 		vm.limit = 5;
 		vm.searchText = '';

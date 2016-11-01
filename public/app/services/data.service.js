@@ -16,6 +16,7 @@
 				createProblem: createProblem,
 				createProject: createProject,
 				deleteDocument: deleteDocument,
+				getMyRequests: getMyRequests, 
 				getProblemById: getProblemById,
 				getProjectById: getProjectById,
 				getProjects: getProjects,
@@ -85,6 +86,11 @@
 					method: 'DELETE',
 					url: '/api/' + resourceName + '/' + id
 				});
+			}
+
+			// Get Requests Related to the current user
+			function getMyRequests() {
+				return $http.get('/api/users/myrequests');
 			}
 
 			// Get Project By Id

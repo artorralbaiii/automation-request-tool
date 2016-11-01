@@ -20,6 +20,9 @@
 						Project: function(dataService, $rootScope) {
 							$rootScope.$emit('LOAD');
 							return dataService.getProjectsByPage(0, 5, '');
+						},
+						RelatedRequests: function(dataService){
+							return dataService.getMyRequests();
 						}
 					}		
 				})

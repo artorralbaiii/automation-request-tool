@@ -1,5 +1,8 @@
 'use strict'
 
+var poModel = require('../models/process-owner.model');
+
+
 var errHandlerFunction = function(res, err, msg, statusCode) {
 
 		if (statusCode) {
@@ -47,5 +50,82 @@ module.exports = {
 			}
 		});
 
+	},
+
+	registerProcess: function(processArr, callback) {
+		
+		/*
+			Expected: items in the processArr param should have the following properties below.
+
+			user = Current User ID
+			type = Type of the process. "myRequests or pendingActions"
+			reqType = Type of the request. "Problem Request or Change Request"
+			reqId = Problem or Change Request ID
+			reqStatus = Status of the Problem or Change Request
+			reqTitle = Problem Summary or Change Summary
+	
+		*/
+
+		processArr.forEach(function(elem){
+			poModel.findOne({user: elem.user}, function(err, data){
+				if (err) {
+					callback(err);
+					return;
+				}
+
+				if (!data) {
+					data = new poModel();
+				}
+
+				data.user = elem.user;
+				data[elem.type] = {
+					requestType: elem.reqType,
+					requestId: elem.reqId,
+					requestStatus: elem.reqStatus,
+					requestTitle: elem.reqTitle
+				};
+
+				data.save(function(err){
+					if (err) {
+						callback(err);
+						return;
+					}
+
+				}) ;
+			});
+
+		});
+
+		callback(null);
+
+	},
+
+	removeProcess: function(processArr, callback) {
+		
+		/*
+			Expected: items in the processArr param should have the following properties below.
+
+			user = Current User ID
+			type = Type of the process. "myRequests or pendingActions"
+			reqId = Problem or Change Request ID
+		
+		*/
+
+		processArr.forEach(function(elem){
+			poModel.findOne({user: elem.user}, function(err, data){
+				if (err) {
+					callback(err);
+					return;
+				}
+
+				data[elem.type].forEach(function(elemObject){
+					if (elemObject.reqId === elem.reqId) {
+						data[elem.type].pop(elemObject);
+					}
+				});
+
+			});
+		});
 	}
+
 }

@@ -11,7 +11,8 @@
     "cfenv": "1.0.x",
     "express": "4.13.x",
     "express-session": "^1.14.1",
-    "mongoose": "^4.6.1"
+    "mongoose": "^4.6.1",
+    "underscore": "^1.8.3"
   },
   "repository": {},
   "engines": {

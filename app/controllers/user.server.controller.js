@@ -1,6 +1,8 @@
 'use strict'
 
+var _ = require('underscore');
 var userModel = require('../models/user.model.js');
+var problemRequestModel = require('../models/problemrequest.model');
 var common = require('./common.functions');
 
 // Get all users
@@ -216,6 +218,59 @@ exports.logout = function(req, res) {
 		});
 
 	});
+
+}
+
+exports.relatedProcess = function(req, res){
+	
+	problemRequestModel.find({reportedBy: req.session.user})
+	.select('_id problemNumber status problemSummary project').exec(function(err, data){
+
+		var obj = {};
+
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		obj.myRequests = _.map(data, function(obj){
+			return {
+				_id: obj._id,
+				resource: 'problem',
+				description: obj.problemSummary,
+				status: obj.status,
+				id: obj.problemNumber,
+				parentId: obj.project 				
+			}
+		});
+
+		problemRequestModel.find({assignedSupport: req.session.user})
+		.select('_id problemNumber status problemSummary project').exec(function(err, data){
+
+			if(err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			obj.pendingActions = _.map(data, function(obj){
+				return {
+					_id: obj._id,
+					resource: 'problem',
+					description: obj.problemSummary,
+					status: obj.status,
+					id: obj.problemNumber,				
+					parentId: obj.project
+				}
+			});
+
+
+			res.json({
+				err: null,
+				data: obj
+			});
+
+		});		
+	});		
 
 }
 

@@ -21,6 +21,7 @@ a:hover {
 /* HOME */
 .side-panel-list li {
     display: block;
+    font-size: 12px;
 }
 
 .side-panel-list li:before {    

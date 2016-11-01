@@ -32,6 +32,7 @@ module.exports = function(app, express) {
 
 	// User Resource
 	api.get('/users', verifySession, verifyAdmin, userController.allEntries);
+	api.get('/users/myrequests', verifySession, userController.relatedProcess);
 	api.get('/users/session', userController.getSession);
 	api.get('/users/:id', verifySession, userController.getDocumentById);
 	api.get('/users/:qry/search', verifySession, userController.getDocumentByKey);

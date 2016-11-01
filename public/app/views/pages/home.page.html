@@ -33,15 +33,17 @@
 								<p>
 									<a data-toggle="collapse" 
 									   data-target="#problem-entry-{{$index}}" 
-									   href="">(0) Problem Requests</a>&nbsp;| 
+									   href="">({{project.problemRequests.length}}) Problem Requests</a>&nbsp;| 
 									<a href="" data-ng-click="vm.newProblem(project);" class="text-danger"> New Problem*</a>
 								</p>
 								<ul class="list-group collapse"  id="problem-entry-{{$index}}">
-								  <li class="list-group-item">Cras justo odio</li>
-								  <li class="list-group-item">Dapibus ac facilisis in</li>
-								  <li class="list-group-item">Morbi leo risus</li>
-								  <li class="list-group-item">Porta ac consectetur ac</li>
-								  <li class="list-group-item">Vestibulum at eros</li>
+								  <li class="list-group-item" 
+								  	  data-ng-repeat="problem in project.problemRequests" >
+								  	  <a href="" data-ng-click="vm.editProblem(project, problem._id);"
+								  	  	 data-ng-class = "{'text-success': problem.status === 'Closed'}">
+								  	  	{{problem.problemNumber}} | {{problem.status}} | {{problem.problemSummary}} 
+								  	  </a>
+								  </li>
 								</ul>
 								<p>
 									<a data-toggle="collapse" 

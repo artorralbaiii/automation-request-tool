@@ -16,6 +16,7 @@
 				createProblem: createProblem,
 				createProject: createProject,
 				deleteDocument: deleteDocument,
+				getProblemById: getProblemById,
 				getProjectById: getProjectById,
 				getProjects: getProjects,
 				getProjectsByPage: getProjectsByPage, 
@@ -23,6 +24,7 @@
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
 				logout: logout,
+				updateProblem: updateProblem,
 				updateProject: updateProject,
 				updateUser: updateUser
 			}
@@ -128,6 +130,15 @@
 			function logout() {
 				return $http({ method: 'DELETE', url: '/api/users/logout' });
 			}
+
+			// Update Problem
+			function updateProblem(data) {
+				return $http({
+					method: 'PUT',
+					url: '/api/problems/' + data._id,
+					data: data
+				});				
+			} 
 
 			// Update Project
 			function updateProject(data) {

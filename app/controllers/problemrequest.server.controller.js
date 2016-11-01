@@ -93,7 +93,7 @@ exports.newDocument = function(req, res) {
 				} 
 				
 				if (data) {
-					data.problemRequests.push(problem.project);
+					data.problemRequests.push(problem._id);
 
 					data.save(function(err){
 						if (err){
@@ -123,15 +123,12 @@ exports.updateDocumentById = function(req, res) {
 			data.previousStatus = data.status; 
 			data.status = req.body.status;
 			data.problemSummary = req.body.problemSummary;
-			data.reportedBy = req.body.reportedBy;
 			data.dateReported = req.body.dateReported;
 			data.targetFixDate = req.body.targetFixDate;
 			data.detailedDescription = req.body.detailedDescription;
-			data.assignedSupport = req.body.assignedSupport;
 			data.problemType = req.body.problemType;
 			data.analysis = req.body.analysis;
 			data.action = req.body.action;
-			data.project = req.body.projectid;
 
 			data.save(function(err) {
 				if (err) {

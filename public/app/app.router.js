@@ -49,7 +49,7 @@
 							if ($route.current.params.problemId === 'new') {
 								return null;
 							} else {
-								return dataService.getProblemById($route.current.params.id);								
+								return dataService.getProblemById($route.current.params.problemId);								
 							}							
 						}
 					}					

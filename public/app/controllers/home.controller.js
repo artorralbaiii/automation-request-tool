@@ -24,6 +24,7 @@
 		vm.loadMoreProjects = loadMoreProjects;
 		vm.reloadProjects = reloadProjects;
 		vm.newProblem = newProblem;
+		vm.editProblem = editProblem;
 		vm.searching = false;
 
 		//////////
@@ -54,6 +55,11 @@
 		function newProblem(project) {
 			ParentProject.setProject(project);
 			$location.path('/problem/' + project._id + '/new');
+		}
+
+		function editProblem(project, problemId) {
+			ParentProject.setProject(project);
+			$location.path('/problem/' + project._id + '/' + problemId);			
 		}
 
 		function reloadProjects(){

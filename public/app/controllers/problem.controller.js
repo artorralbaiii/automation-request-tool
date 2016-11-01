@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('Problem', Problem);
 
-	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr'];
+	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem'];
 
 	//////////
 
-	function Problem(dataService, ParentProject, $location, toastr) {
+	function Problem(dataService, ParentProject, $location, toastr, Problem) {
 
 		var vm = this;
 
@@ -34,16 +34,36 @@
 			}
 
 			vm.project = ParentProject.getProject();
-			vm.formData.project = vm.project._id;
-			vm.formData.assignedSupport = _.pluck(vm.project.supports,'_id');
-			vm.formData.assignedSupportDisplay = _.map(vm.project.supports, 
+
+			initProblem();
+
+		}
+
+		function initProblem() {
+
+
+			if (Problem) {
+				vm.formData = Problem.data.data;
+				vm.newProblem = false;
+				vm.formLabel = vm.project.applicationName;
+				vm.formData.assignedSupportDisplay = _.map(Problem.data.data.assignedSupport, 
 													   function(support) {
 													       return support.fullname + '<' + support.email + '>'; 
 												 	   }
 												 ).join('; ');
-
-			if (vm.newProblem) {
-				vm.formData.status = 'Draft';
+				vm.formData.assignedSupport = _.pluck(Problem.data.data.assignedSupport,'_id');
+				vm.formData.targetFixDate = new Date(Problem.data.data.targetFixDate);
+				vm.project = Problem.data.data.project;
+				vm.formData.project = vm.project._id;
+			} else {
+				vm.formData.project = vm.project._id;
+				vm.formData.assignedSupport = _.pluck(vm.project.supports,'_id');
+				vm.formData.assignedSupportDisplay = _.map(vm.project.supports, 
+														   function(support) {
+														       return support.fullname + '<' + support.email + '>'; 
+													 	   }
+													 ).join('; ');
+				vm.formData.status = 'Draft';				
 			}
 		}
 
@@ -62,7 +82,21 @@
 						toastr.error('Error!', response.data.err);
 					});
 				} else {
-
+					dataService.updateProblem(vm.formData)
+					.then(function(response){
+						if (status === 'Draft') {
+							toastr.success('Success!', 'Problem successfully updated.');
+						} else if (status === 'Ongoing') {
+							toastr.success('Success!', 'Problem successfully submitted.');
+							location.path('/');
+						} else if (status === 'Closed') {
+							toastr.success('Success!', 'Problem successfully closed.');
+							location.path('/');
+						}
+					})
+					.catch(function(response){
+						toastr.error('Error!', response.data.err);
+					});
 				}
 
 			}

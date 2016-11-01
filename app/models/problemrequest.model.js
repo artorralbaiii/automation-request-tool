@@ -14,7 +14,7 @@ var problemRequestSchema = new schema({
 	targetFixDate: {type: Date},
 	detailedDescription: {type: String, require: true},
 	assignedSupport: [{type: schema.Types.ObjectId, ref: 'User'}],
-	problemType: {type: String},
+	problemType: {type: String, default: 'Data Problem'},
 	analysis: {type: String},
 	action: {type: String},
 	project: {type: schema.Types.ObjectId, ref: 'Project'},

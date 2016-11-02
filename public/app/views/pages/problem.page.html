@@ -40,7 +40,7 @@
 						<label for="dateReported" class="col-md-4 control-label">Date Reported</label>
 						<div class="col-md-8">
 							<input class="form-control" 
-							       type="date" value="{{vm.formData.dateReported}}"
+							       type="date" value="{{vm.formData.dateReported | date: 'yyyy-MM-dd'}}"
 							       name="dateReported"
 							       data-ng-readonly="true" >
 						</div>	
@@ -171,9 +171,9 @@
 					<div class="form-group">
 	                    <div class="col-md-8 col-md-offset-4">
 	                      <a data-ng-href="/#/" type="reset" class="btn btn-default">Cancel</a>
-	                      <button data-ng-if="(vm.formData.status === 'Draft')" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Draft');">Save as Draft</button>
-	                      <button data-ng-if="(vm.formData.status === 'Draft')" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Ongoing');">Submit</button>
-	                      <button data-ng-if="(vm.formData.status === 'Ongoing')" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Closed');">Resolve</button>
+	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Draft');">Save as Draft</button>
+	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Ongoing');">Submit</button>
+	                      <button data-ng-if="vm.showResolve();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Closed');">Resolve</button>
 	                    </div>
 					</div>
 

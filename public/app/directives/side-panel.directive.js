@@ -15,7 +15,7 @@
 	 		scope: {
 	 			title: '=',
 	 			items: '='
-	 		}	
+	 		}
 	 	}
 
 	 	return directive;

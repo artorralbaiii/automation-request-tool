@@ -89,12 +89,15 @@
 				
 	};
 
-	function appRun($rootScope, $location, dataService) {
+	function appRun($rootScope, $location, dataService, sessionService) {
 		$rootScope.$on('$routeChangeStart', function(event){
 
 			dataService.getSession()
 				.then(function(response){
 					if (response.data.session.user) {
+						sessionService.setSession(response.data.session);
+						
+						// Emitting sub from Nav controller.
 						$rootScope.$broadcast('LOGIN', response.data.session);
 					} else {
 						event.preventDefault();

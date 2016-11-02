@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('Problem', Problem);
 
-	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem'];
+	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem', 'sessionService'];
 
 	//////////
 
-	function Problem(dataService, ParentProject, $location, toastr, Problem) {
+	function Problem(dataService, ParentProject, $location, toastr, Problem, sessionService) {
 
 		var vm = this;
 
@@ -21,7 +21,9 @@
 		vm.validation = [];
 		vm.validate = validate;
 		vm.submit = submit;
-
+		vm.showSaveAndSubmit = showSaveAndSubmit;
+		vm.showResolve = showResolve;
+		
 		activate();
 
 		//////////
@@ -29,11 +31,17 @@
 		function activate() {
 
 			if (!ParentProject.getProject()) {
-				$location.path('/');
-				return;
-			}
 
-			vm.project = ParentProject.getProject();
+				if (Problem) {
+					vm.project = Problem.data.data.project;
+				} else {
+					$location.path('/');
+					return;
+				}
+				
+			} else {
+				vm.project = ParentProject.getProject();
+			}
 
 			initProblem();
 
@@ -67,10 +75,31 @@
 			}
 		}
 
+		function showSaveAndSubmit() {
+			var currentuser = sessionService.getSession().user;
+
+			return vm.newProblem || 
+			       (vm.formData.status === 'Draft' && 
+			       	Problem.data.data.reportedBy._id === currentuser
+			       );   
+
+		}
+
+		function showResolve(){
+			var currentuser = sessionService.getSession().user;
+
+			return vm.formData.status === 'Ongoing' && 
+			       ( vm.formData.assignedSupport.indexOf(currentuser) != -1  );
+		}
+
 		function submit(frm, status) {
 			
 			if (frm.$valid) {
 				vm.formData.status = status;
+
+				if (status === 'Ongoing') {
+					vm.formData.dateReported = new Date();
+				}
 
 				if (vm.newProblem) {
 					dataService.createProblem(vm.formData)
@@ -88,10 +117,10 @@
 							toastr.success('Success!', 'Problem successfully updated.');
 						} else if (status === 'Ongoing') {
 							toastr.success('Success!', 'Problem successfully submitted.');
-							location.path('/');
+							$location.path('/');
 						} else if (status === 'Closed') {
 							toastr.success('Success!', 'Problem successfully closed.');
-							location.path('/');
+							$location.path('/');
 						}
 					})
 					.catch(function(response){

@@ -3,11 +3,11 @@
 	angular.module('app.service')
 		.factory('sessionService', sessionService);
 
-		sessionService.$inject = ['$window'];
-
 		//////////
 
 		function sessionService($window){
+			var currentSession = {};
+
 			var service = {
 				setSession: setSession,
 				getSession: getSession
@@ -15,16 +15,12 @@
 
 			return service;
 
-			function setSession(data) {
-				if (data) {
-					$window.localStorage.setItem('art.session',data);
-				} else {
-					$window.localStorage.removeItem('art.session');					
-				}
+			function setSession(user) {
+				this.currentSession = user;
 			}
 
 			function getSession() {
-				return JSON.parse($window.localStorage.getItem('art.session'));
+				return this.currentSession;
 			}
 		}
 

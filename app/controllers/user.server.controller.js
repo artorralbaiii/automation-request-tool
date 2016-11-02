@@ -244,7 +244,7 @@ exports.relatedProcess = function(req, res){
 			}
 		});
 
-		problemRequestModel.find({assignedSupport: req.session.user})
+		problemRequestModel.find({assignedSupport: req.session.user, status : {$ne: 'Closed'} })
 		.select('_id problemNumber status problemSummary project').exec(function(err, data){
 
 			if(err) {

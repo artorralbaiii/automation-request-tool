@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<label>Search: <input ng-model="vm.searchText"></label>
+		<div class="table-responsive">
+			<table class="table table-striped table-condensed project-tbl">
+			
+				<thead>
+					<th>ID</th>
+					<th>Application Name</th>
+					<th>Server Address</th>
+					<th>Requester</th>
+					<th>Business Owner</th>
+					<th>Date Created</th>
+					<th colspan="2"></th>
+				</thead>
+
+				<tbody>
+
+					<tr data-ng-repeat="project in vm.projects | orderBy: 'projectId' | filter: vm.searchText | startFrom: (vm.currentPage - 1) * vm.pageSize | limitTo: vm.pageSize">
+						<td><a data-ng-href="/#/project/{{project._id}}">
+							{{project.projectId}}</a>
+						</td>
+						<td>{{project.applicationName}}</td>
+						<td>{{project.serverName}}</td>
+						<td>{{project.requester.fullname}}</td>
+						<td>{{vm.getNames(project.businessOwners)}}</td>
+						<td>{{project.createdAt | date: MM-DD-YYYY}}</td>
+						<td><button data-ng-click="vm.createPR(project);" class="btn btn-default btn-xs">Create PR</button></td>
+						<td><a data-ng-href="" class="btn btn-success btn-xs">Create CR</a></td>
+					</tr>
+
+				</tbody>
+
+			</table>	
+
+		</div>
+
+		<pagination total-items="vm.projects.length" 
+					page="vm.currentPage" 
+					items-per-page="vm.pageSize" >
+		</pagination>
+	</div>
+</div>

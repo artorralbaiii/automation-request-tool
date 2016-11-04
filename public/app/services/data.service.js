@@ -15,6 +15,7 @@
 				createUser: createUser,
 				createProblem: createProblem,
 				createProject: createProject,
+				createSettings: createSettings,
 				deleteDocument: deleteDocument,
 				getMyRequests: getMyRequests, 
 				getProblemById: getProblemById,
@@ -22,11 +23,13 @@
 				getProjects: getProjects,
 				getProjectsByPage: getProjectsByPage, 
 				getSession: getSession,
+				getSettings: getSettings,
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
 				logout: logout,
 				updateProblem: updateProblem,
 				updateProject: updateProject,
+				updateSettings: updateSettings,
 				updateUser: updateUser
 			}
 
@@ -64,6 +67,11 @@
 
 			function createProject(data) {
 				return $http.post('/api/projects', data);
+			}
+
+			// Create Settings
+			function createSettings(data) {
+				return $http.post('/api/settings', data);
 			}
 
 			// Create User
@@ -117,6 +125,11 @@
 				return $http.get('/api/projects/' + search + '/' + offset + '/' + limit);
 			}
 
+			// Get Settings
+			function getSettings() {
+				return $http.get('/api/settings');
+			}
+
 			// Get current session
 			function getSession() {
 				return $http.get('/api/users/session');
@@ -151,6 +164,15 @@
 				return $http({
 					method: 'PUT',
 					url: '/api/projects/' + data._id,
+					data: data
+				});
+			}
+
+			// Update Settings
+			function updateSettings(data) {
+				return $http({
+					method: 'PUT',
+					url: '/api/settings/' + data._id,
 					data: data
 				});
 			}

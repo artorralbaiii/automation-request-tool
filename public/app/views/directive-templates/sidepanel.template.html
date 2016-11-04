@@ -6,7 +6,7 @@
 
 				<ul data-ng-if="(items.length > 0)" class="side-panel-list">
 					<li class="list-unstyled" data-ng-repeat="item in items">
-						<a data-ng-href="/#/{{item.resource}}/{{item.parentId}}/{{item._id}}" data-ng-class="{'text-success': item.status === 'Closed'}">
+						<a data-ng-href="/#/{{item.resource}}/{{item._id}}" data-ng-class="{'text-success': item.status === 'Closed'}">
 							({{item.id}}) - {{item.status}} - {{item.description | limitTo: 20}}{{(item.description.length > 15 ? '...' : '')}}
 						</a>
 					</li>

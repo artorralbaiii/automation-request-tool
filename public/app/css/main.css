@@ -96,6 +96,12 @@ pre {
   word-wrap: break-word;
 }
 
+/*VIEWS*/
+
+table.project-tbl {
+  font-size: 14px;
+}
+
 /*LOADING*/
 
 /* Absolute Center Spinner */

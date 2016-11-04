@@ -53,12 +53,12 @@
 
 		function newProblem(project) {
 			ParentProject.setProject(project);
-			$location.path('/problem/' + project._id + '/new');
+			$location.path('/problem/new');
 		}
 
 		function editProblem(project, problemId) {
 			ParentProject.setProject(project);
-			$location.path('/problem/' + project._id + '/' + problemId);			
+			$location.path('/problem/' + problemId);			
 		}
 
 		function reloadProjects(){

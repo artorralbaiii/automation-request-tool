@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('ProjectNew', ProjectNew);
 
-	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project'];
+	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window'];
 
 	//////////
 
-	function ProjectNew(dataService, toastr, $location, Project) {
+	function ProjectNew(dataService, toastr, $location, Project, $window) {
 		var vm = this;
 
 		vm.formData = {};
@@ -21,6 +21,7 @@
 		vm.submit = submit;
 		vm.newProject = true;
 		vm.formLabel = 'New';
+		vm.back = back;
 
 		initProject(Project);
 
@@ -44,6 +45,18 @@
 			});
 		}
 
+		function back() {
+
+			var prevPath = $window.localStorage.getItem('prevPath');
+
+			if (prevPath) {
+				$location.path(prevPath);
+			} else {
+				$location.path('/');							
+			}
+
+		}
+
 		function submit(frm) {
 			if (frm.$valid) {				
 				var data = _.clone(vm.formData);
@@ -52,12 +65,13 @@
 				data.developers = _.pluck(data.developers, '_id');
 				data.supports = _.pluck(data.supports, '_id');
 
-
 				if (vm.newProject) {
 					dataService.createProject(data)
 					.then(function(response){
-						$location.path('/');
+						
+						back();
 						toastr.success('Success!', 'New project successfully created.')
+					
 					})
 					.catch(function(response){
 						toastr.error('Error!', response.data.err);

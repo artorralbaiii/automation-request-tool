@@ -34,7 +34,7 @@ exports.newDocument = function(req, res) {
 exports.getDocument = function(req, res){
 	settingsModel.find({})
 		.limit(1)
-		.populate('technicalLeads serviceLineLeads developers supports', 'fullname')
+		.populate('technicalLeads serviceLineLeads developers supports', 'fullname email')
 		.exec(function(err, data){
 			if (err) {
 				common.errHanlder(res, err);

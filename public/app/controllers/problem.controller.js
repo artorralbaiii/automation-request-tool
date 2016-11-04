@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('Problem', Problem);
 
-	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem', 'sessionService'];
+	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem', 'sessionService', '$window'];
 
 	//////////
 
-	function Problem(dataService, ParentProject, $location, toastr, Problem, sessionService) {
+	function Problem(dataService, ParentProject, $location, toastr, Problem, sessionService, $window) {
 
 		var vm = this;
 
@@ -34,8 +34,8 @@
 
 				if (Problem) {
 					vm.project = Problem.data.data.project;
-				} else {
-					$location.path('/');
+				} else {					
+					back();
 					return;
 				}
 				
@@ -44,6 +44,19 @@
 			}
 
 			initProblem();
+
+		}
+
+
+		function back() {
+
+			var prevPath = $window.localStorage.getItem('prevPath');
+
+			if (prevPath) {
+				$location.path(prevPath);
+			} else {
+				$location.path('/');							
+			}
 
 		}
 
@@ -105,7 +118,7 @@
 					dataService.createProblem(vm.formData)
 					.then(function(response){
 						toastr.success('Success!', 'New problem successfully created.');
-						$location.path('/');
+						back();
 					})
 					.catch(function(response){
 						toastr.error('Error!', response.data.err);
@@ -117,10 +130,10 @@
 							toastr.success('Success!', 'Problem successfully updated.');
 						} else if (status === 'Ongoing') {
 							toastr.success('Success!', 'Problem successfully submitted.');
-							$location.path('/');
+							back();
 						} else if (status === 'Closed') {
 							toastr.success('Success!', 'Problem successfully closed.');
-							$location.path('/');
+							back();
 						}
 					})
 					.catch(function(response){

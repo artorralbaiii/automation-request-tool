@@ -5,7 +5,7 @@
 		.config(getRoutes)
 		.run(appRun);
 
-	appRun.$inject = ['$rootScope', '$location', 'dataService', 'sessionService' ];
+	appRun.$inject = ['$rootScope', '$location', 'dataService', 'sessionService', '$window' ];
 	getRoutes.$inject = ['$routeProvider', '$locationProvider'];
 
 	////////// 
@@ -43,7 +43,7 @@
 					controllerAs: 'vm'
 				})
 
-				.when('/problem/:projectId/:problemId', {
+				.when('/problem/:problemId', {
 					templateUrl : 'app/views/pages/problem.page.html',
 					controller: 'Problem',
 					controllerAs: 'vm',
@@ -73,6 +73,17 @@
 					}
 				})
 
+				.when('/settings', {
+					templateUrl: 'app/views/pages/settings.page.html',
+					controller: 'Settings',
+					controllerAs: 'vm',
+					resolve: {
+						settingsData: function(dataService) {
+							return dataService.getSettings();
+						}
+					}
+				})
+
 				.when('/users', {
 					templateUrl: 'app/views/pages/users.page.html',
 					controller: 'User',
@@ -85,11 +96,23 @@
 					}
 				})
 
+				.when('/projects', {
+					templateUrl: 'app/views/pages/view-projects.page.html',
+					controller: 'ViewProject',
+					controllerAs: 'vm',
+					resolve: {
+						Projects: function($rootScope, dataService) {
+							$rootScope.$emit('LOAD');
+							return dataService.getProjects();
+						}
+					}					
+				})
+
 				.otherwise({redirectTo : '/'});
 				
 	};
 
-	function appRun($rootScope, $location, dataService, sessionService) {
+	function appRun($rootScope, $location, dataService, sessionService, $window) {
 		$rootScope.$on('$routeChangeStart', function(event){
 
 			dataService.getSession()
@@ -111,7 +134,20 @@
 						$location.path('/login');
 					}
 				});
-		})
+		});
+
+		$rootScope.$on('$routeChangeSuccess', function(){
+			// if ($window.localStorage.getItem('currPath')) {
+				if ($window.localStorage.getItem('currPath') != $location.path()) {
+					$window.localStorage.setItem('prevPath', $window.localStorage.getItem('currPath'));
+				}
+			// } else {
+				// $window.localStorage.setItem('prevPath', null);	
+			// }
+			
+			$window.localStorage.setItem('currPath', $location.path());
+		});
+
 	};
 
 })();

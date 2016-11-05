@@ -20,6 +20,24 @@ exports.allEntries = function(req, res) {
 		});
 }
 
+// All Entries Lite
+exports.allEntriesLite = function(req, res) {
+	projectModel.find({})
+		.select(req.params.cols)
+	    .exec(function(err, data){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			} 
+							
+			res.json({
+				err: null,
+				data: data
+			});
+		});
+}
+
+
 // Navigate Projects using paging.
 exports.pageEntries = function(req, res) {
 

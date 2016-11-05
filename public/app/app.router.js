@@ -96,6 +96,19 @@
 					}
 				})
 
+				.when('/problems', {
+					templateUrl: 'app/views/pages/view-problems.page.html',
+					controller: 'ViewProblem',
+					controllerAs: 'vm',
+					resolve: {
+						Problems: function($rootScope, dataService) {
+							$rootScope.$emit('LOAD');
+							return dataService.getProblems();
+						}
+					}					
+
+				})
+
 				.when('/projects', {
 					templateUrl: 'app/views/pages/view-projects.page.html',
 					controller: 'ViewProject',

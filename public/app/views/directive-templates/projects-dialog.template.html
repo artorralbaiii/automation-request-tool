@@ -1,0 +1,46 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Create PR</h4>
+		</div>
+
+		<div class="modal-body">
+
+			<label>Search: <input ng-model="searchText"></label>
+			
+			<div class="table-responsive">
+				<table class="table table-condensed">
+					
+					<thead>
+						<th>ID</th>
+						<th>Application Name</th>
+					</thead>
+
+					<tbody>
+						<tr data-ng-repeat="project in projects | orderBy: 'applicationName' 
+															    | filter: searchText 
+															    | startFrom: (currentPage - 1) * pageSize 
+															    | limitTo: pageSize " >
+						    <td><a href="" data-dismiss="modal" data-ng-click="newRequest(project, resource);">{{project.projectId}}</a></td>
+						    <td>{{project.applicationName}}</td>
+						</tr>						
+					</tbody>
+
+				</table>
+			</div>
+
+			<pagination total-items="projects.length" 
+						page="currentPage" 
+						items-per-page="pageSize" >
+			</pagination>
+
+		</div>
+
+		<div class="modal-footer">
+		       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+
+	</div>
+</div>

@@ -17,10 +17,12 @@
 				createProject: createProject,
 				createSettings: createSettings,
 				deleteDocument: deleteDocument,
-				getMyRequests: getMyRequests, 
+				getMyRequests: getMyRequests, 				
 				getProblemById: getProblemById,
+				getProblems: getProblems,
 				getProjectById: getProjectById,
 				getProjects: getProjects,
+				getProjectsLite: getProjectsLite,
 				getProjectsByPage: getProjectsByPage, 
 				getSession: getSession,
 				getSettings: getSettings,
@@ -106,6 +108,11 @@
 				return $http.get('/api/problems/' + id);
 			}
 
+			// Get Problems
+			function getProblems(){
+				return $http.get('/api/problems');
+			}
+
 			// Get Project By Id
 			function getProjectById(id) {
 				return $http.get('/api/projects/' + id);
@@ -123,6 +130,11 @@
 				}
 				search = 'search:' + search;
 				return $http.get('/api/projects/' + search + '/' + offset + '/' + limit);
+			}
+
+			// Get projects parameterized
+			function getProjectsLite(cols) {
+				return $http.get('/api/projects/lite/' + cols);
 			}
 
 			// Get Settings

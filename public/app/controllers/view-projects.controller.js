@@ -14,6 +14,7 @@
 
 		$rootScope.$emit('UNLOAD');
 
+		vm.searchText = '';
 		vm.currentPage = 1;
 		vm.pageSize = 10;
 		vm.projects = Projects.data.data;

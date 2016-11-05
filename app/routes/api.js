@@ -46,6 +46,7 @@ module.exports = function(app, express) {
 
 	// Project resource
 	api.get('/projects', verifySession, projectController.allEntries);
+	api.get('/projects/lite/:cols', verifySession, projectController.allEntriesLite);	
 	api.get('/projects/:id', verifySession, projectController.getDocumentById);
 	api.get('/projects/:search/:offset/:limit/', verifySession, projectController.pageEntries);	
 	api.post('/projects', verifySession, projectController.newDocument);

@@ -23,6 +23,7 @@
 		vm.submit = submit;
 		vm.showSaveAndSubmit = showSaveAndSubmit;
 		vm.showResolve = showResolve;
+		vm.back = back;
 		
 		activate();
 

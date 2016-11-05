@@ -13,7 +13,8 @@
 			restrict: 'E',
 			templateUrl: 'app/views/directive-templates/projects-dialog.template.html',
 			scope: {
-				resource: '='
+				dialog_title: '=',
+				dialog_resource: '='
 			},
 			controller: ['dataService', '$scope', '$location','ParentProject', function(dataService, $scope, $location, ParentProject){
 
@@ -38,9 +39,9 @@
 					});
 				}
 
-				function newRequest(project, resource) {
+				function newRequest(project) {
 					ParentProject.setProject(project);		
-					$location.path('/' + resource + '/new');			
+					$location.path('/' + $scope.$parent.vm.dialogResource + '/new');			
 				}
 
 			}]

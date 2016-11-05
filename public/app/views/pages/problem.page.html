@@ -26,7 +26,7 @@
 						</div>	
 					</div>
 
-					<div class="form-group" data-ng-show="!vm.newProblem">
+					<div class="form-group" data-ng-if="!vm.newProblem">
 						<label for="reportedBy" class="col-md-4 control-label">Reported By</label>
 						<div class="col-md-8">
 							<input class="form-control" 
@@ -36,7 +36,7 @@
 						</div>	
 					</div>
 
-					<div class="form-group" data-ng-show="(vm.formData.status != 'Draft')">
+					<div class="form-group" data-ng-if="(vm.formData.status != 'Draft')">
 						<label for="dateReported" class="col-md-4 control-label">Date Reported</label>
 						<div class="col-md-8">
 							<input class="form-control" 

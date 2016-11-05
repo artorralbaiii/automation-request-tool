@@ -35,9 +35,13 @@
 
 					<ul class="dropdown-menu">
 						<li><a data-ng-href="/#/project/new">Request New Tool</a></li>
-						<li><a>File Enhancement (CR)</a></li>
 						<li><a data-toggle="modal" 
-						       data-target="#projectDialog">Raise Tool Issue (PR)</a></li>
+						       data-target="#projectDialog"
+						       data-ng-click="vm.setResource('project', 'Create CR');">File Enhancement (CR)</a></li>
+						<li><a data-ng-click="vm.setResource('problem', 'Create PR');"
+							   data-toggle="modal" 
+						       data-target="#projectDialog"
+						       >Raise Tool Issue (PR)</a></li>
 					</ul>
 
 				<!-- Summary Views -->
@@ -100,3 +104,10 @@
 
 	</div>
 </nav>
+
+<art-projects-dialog id="projectDialog" 
+					 class="modal fade" 
+					 role="dialog"
+					 dialog_title="vm.dialogTitle"
+					 dialog_resource="vm.dialogResource" >
+</art-projects-dialog>

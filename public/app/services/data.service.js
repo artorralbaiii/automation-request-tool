@@ -61,7 +61,6 @@
 			// Create Problem
 
 			function createProblem(data) {
-				console.log(data); 
 				return $http.post('/api/problems', data);
 			}
 

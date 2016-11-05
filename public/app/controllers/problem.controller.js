@@ -85,7 +85,7 @@
 														       return support.fullname + '<' + support.email + '>'; 
 													 	   }
 													 ).join('; ');
-				vm.formData.status = 'Draft';				
+				vm.formData.status = 'Draft';	
 			}
 		}
 

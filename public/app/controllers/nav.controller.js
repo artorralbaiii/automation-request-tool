@@ -13,6 +13,9 @@
 			vm.showMenu = false;
 			vm.session = null;
 			vm.logout = logout;
+			vm.dialogResource = '';
+			vm.dialogTitle = '';
+			vm.setResource = setResource; 
 
 			activate();
 
@@ -44,6 +47,14 @@
 							vm.showMenu = false;
 						}
 					});
+			}
+
+			function setResource(resource, title){
+				vm.dialogResource = resource;
+				vm.dialogTitle = title;
+
+				console.log(vm.dialogResource);
+				console.log(vm.dialogTitle);
 			}
 
 			$rootScope.$on('LOGIN', function(event, data){

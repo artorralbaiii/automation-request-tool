@@ -52,9 +52,6 @@
 			function setResource(resource, title){
 				vm.dialogResource = resource;
 				vm.dialogTitle = title;
-
-				console.log(vm.dialogResource);
-				console.log(vm.dialogTitle);
 			}
 
 			$rootScope.$on('LOGIN', function(event, data){

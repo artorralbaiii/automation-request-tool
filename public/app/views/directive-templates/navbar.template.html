@@ -37,7 +37,7 @@
 						<li><a data-ng-href="/#/project/new">Request New Tool</a></li>
 						<li><a data-toggle="modal" 
 						       data-target="#projectDialog"
-						       data-ng-click="vm.setResource('project', 'Create CR');">File Enhancement (CR)</a></li>
+						       data-ng-click="vm.setResource('change', 'Create CR');">File Enhancement (CR)</a></li>
 						<li><a data-ng-click="vm.setResource('problem', 'Create PR');"
 							   data-toggle="modal" 
 						       data-target="#projectDialog"
@@ -109,5 +109,6 @@
 					 class="modal fade" 
 					 role="dialog"
 					 dialog_title="vm.dialogTitle"
-					 dialog_resource="vm.dialogResource" >
+					 dialog_resource="vm.dialogResource" 
+					 data-ng-if="vm.showMenu" >
 </art-projects-dialog>

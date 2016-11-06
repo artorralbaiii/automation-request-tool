@@ -111,11 +111,7 @@
 					} else {
 						frm[fld].$setValidity('unique', true);
 					}
-					true;
 				} else if(frm[fld].$error.required) {
-
-
-
 					if ( (fld === 'filePath' || fld === 'serverName') && !vm.formData.isDeployed ) {
 						return false;
 					} else {

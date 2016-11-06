@@ -40,7 +40,8 @@
 						<label for="dateReported" class="col-md-4 control-label">Date Reported</label>
 						<div class="col-md-8">
 							<input class="form-control" 
-							       type="date" value="{{vm.formData.dateReported | date: 'yyyy-MM-dd'}}"
+							       type="date"
+							       data-ng-model="vm.formData.dateReported" 
 							       name="dateReported"
 							       data-ng-readonly="true" >
 						</div>	
@@ -170,7 +171,7 @@
 
 					<div class="form-group">
 	                    <div class="col-md-8 col-md-offset-4">
-	                      <button data-ng-click="vm.back()" type="reset" class="btn btn-default">Cancel</a>
+	                      <button data-ng-click="vm.back()" type="reset" class="btn btn-default">Cancel</button>
 	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Draft');">Save as Draft</button>
 	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Ongoing');">Submit</button>
 	                      <button data-ng-if="vm.showResolve();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Closed');">Resolve</button>

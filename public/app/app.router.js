@@ -31,6 +31,25 @@
 					templateUrl: 'app/views/pages/about.page.html'
 				})
 
+				.when('/change/:changeId', {
+					templateUrl : 'app/views/pages/change.page.html',
+					controller: 'Change',
+					controllerAs: 'vm',
+					resolve: {
+						Change: function(dataService, $route){
+							if ($route.current.params.changeId === 'new') {
+								return null;
+							} else {
+								return dataService.getChangeById($route.current.params.changeId);								
+							}							
+						},
+
+						Settings : function(dataService){
+							return dataService.getSettings();							
+						}
+					}					
+				})
+
 				.when('/changepassword/:userid', {
 					templateUrl: 'app/views/pages/changepassword.page.html',
 					controller: 'ChangePassword',
@@ -150,14 +169,9 @@
 		});
 
 		$rootScope.$on('$routeChangeSuccess', function(){
-			// if ($window.localStorage.getItem('currPath')) {
-				if ($window.localStorage.getItem('currPath') != $location.path()) {
-					$window.localStorage.setItem('prevPath', $window.localStorage.getItem('currPath'));
-				}
-			// } else {
-				// $window.localStorage.setItem('prevPath', null);	
-			// }
-			
+			if ($window.localStorage.getItem('currPath') != $location.path()) {
+				$window.localStorage.setItem('prevPath', $window.localStorage.getItem('currPath'));
+			}
 			$window.localStorage.setItem('currPath', $location.path());
 		});
 

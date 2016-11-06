@@ -98,7 +98,11 @@ exports.newDocument = function(req, res){
 						});
 					} else {
 
-						data.changeRequests.push(changeRequest._id);
+						if (data.hasOwnProperty('changeRequests')) {
+							data.changeRequests.push(changeRequest._id);
+						} else {
+							data.changeRequests = [changeRequest._id];
+						}
 						
 						data.save(function(err){
 							if (err) {

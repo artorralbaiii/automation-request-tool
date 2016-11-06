@@ -117,7 +117,9 @@ exports.newDocument = function(req, res) {
 		supports: req.body.supports,
 		modifiedBy: req.session.user,
 		serverName: req.body.serverName,
-		filePath: req.body.filePath
+		filePath: req.body.filePath,
+		changeRequests: [],
+		problemRequests: []
 	});
 
 	project.save(function(err){

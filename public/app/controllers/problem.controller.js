@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('Problem', Problem);
 
-	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem', 'sessionService', '$window'];
+	Problem.$inject = ['dataService', 'ParentProject', '$location', 'toastr', 'Problem', 'sessionService', '$window', '$filter'];
 
 	//////////
 
-	function Problem(dataService, ParentProject, $location, toastr, Problem, sessionService, $window) {
+	function Problem(dataService, ParentProject, $location, toastr, Problem, sessionService, $window, $filter) {
 
 		var vm = this;
 
@@ -77,6 +77,8 @@
 				vm.formData.targetFixDate = new Date(Problem.data.data.targetFixDate);
 				vm.project = Problem.data.data.project;
 				vm.formData.project = vm.project._id;
+				vm.formData.dateReported = new Date(vm.formData.dateReported);
+				
 			} else {
 				vm.formData.project = vm.project._id;
 				vm.formData.assignedSupport = _.pluck(vm.project.supports,'_id');

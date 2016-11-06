@@ -1,0 +1,221 @@
+<div class="row">
+	<di class="col-md-10 col-md-offset-1">
+		<form class="form-horizontal" novalidate name="frmChange">
+			<fieldset>
+				<legend>Change | {{vm.formLabel}}</legend>
+
+				<div data-ng-if="!vm.newChange" class="panel panel-default" >
+					<div class="panel-heading">
+						Request Info
+					</div>
+
+					<div class="panel-body">
+						
+						<div class="form-group">
+							<label for="changeNumber" class="col-md-4 control-label">Reference #</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.changeNumber}}"
+								       name="changeNumber"
+								       data-ng-readonly="true" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="status" class="col-md-4 control-label">Status</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.status}}"
+								       name="status"
+								       data-ng-readonly="true" >
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Enhancement Details
+					</div>
+
+					<div class="panel-body">
+						
+						<div data-ng-if="!vm.newChange" class="form-group">
+							<label for="dateRequested" class="col-md-4 control-label">Date Requested</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.dateRequested}}"
+								       name="dateRequested"
+								       data-ng-readonly="true" >
+							</div>
+						</div>
+
+						<div data-ng-if="!vm.newChange" class="form-group">
+							<label for="requestedBy" class="col-md-4 control-label">Requested By</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.requestedBy.fullname}}"
+								       name="requestedBy"
+								       data-ng-readonly="true" >
+							</div>
+						</div>
+
+						<div class="form-group" data-ng-show="vm.validate('requestSummary', frmChange);" >
+							<p class="validation-message pull-right">{{vm.validation.requestSummary}}</p>						
+						</div>
+
+						<div class="form-group">
+							<label for="requestSummary" class="col-md-4 control-label">* Request Summary</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       placeholder="Please enter request summary..."
+								       type="text"
+								       name="requestSummary" 
+								       required 
+								       data-ng-model="vm.formData.requestSummary" > 
+							</div>	
+						</div>
+
+						<div class="form-group" data-ng-show="vm.validate('targetDeployment', frmChange);" >
+							<p class="validation-message pull-right">{{vm.validation.targetDeployment}}</p>						
+						</div>
+
+						<div class="form-group">
+							<label for="targetDeployment" class="col-md-4 control-label">* Target Deploy Date</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       placeholder="Please enter target deploy date (YYYY-MM-DD)..."
+								       type="date"
+								       name="targetDeployment" 
+								       required 
+								       data-ng-model="vm.formData.targetDeployment" >
+							</div>	
+						</div>
+
+						<div class="form-group" data-ng-show="vm.validate('detailedDescription', frmChange);" >
+							<p class="validation-message pull-right">{{vm.validation.detailedDescription}}</p>						
+						</div>
+
+						<div class="form-group">
+							<label for="detailedDescription" class="col-md-4 control-label">* Detailed Description</label>
+							<div class="col-md-8">
+								<textarea class="form-control" rows="10" 
+										  name="detailedDescription" required data-ng-model="vm.formData.detailedDescription" 
+										  placeholder="Please enter detailed description..." ></textarea>
+							</div>	
+						</div>
+
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						User Acceptance Testing
+					</div>
+
+					<div class="panel-body">
+
+						<div class="form-group" data-ng-show="vm.validate('tester', frmChange);">
+							<p class="validation-message pull-right">{{vm.validation.tester}}</p>						
+						</div>
+
+						<div class="form-group">
+							<label for="tester" class="col-md-4 control-label">* Tester</label>
+							<div class="col-md-8">
+								<ui-select ng-model="vm.formData.tester" name="tester" theme="bootstrap">
+								    <ui-select-match placeholder="Select tester...">
+								    	{{$select.selected.fullname}} &lt;{{$select.selected.email}}&gt;
+								    </ui-select-match>
+								    <ui-select-choices refresh="vm.pullUsers($select.search)" refresh-delay="0" repeat="user in vm.users | filter: $select.search track by user.fullname">
+								        <div ng-bind-html="user.fullname | highlight: $select.search"></div>
+								        <div class="text-muted" ng-bind-html="user.email"></div>
+								    </ui-select-choices>
+								</ui-select>
+							</div>	
+						</div>
+
+						<div data-ng-if="(vm.formData.status === 'Completed')" class="form-group">
+							<label for="uatCompletionDate" class="col-md-4 control-label">Date Completed</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.uatCompletionDate}}"
+								       name="uatCompletionDate"
+								       data-ng-readonly="true" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="uatResult" class="col-md-4 control-label">UAT Result</label>
+							<div class="col-md-8">
+								<input class="form-control" 
+								       placeholder="Please enter uat result..."
+								       type="text"
+								       name="uatResult" 
+								       data-ng-model="vm.formData.uatResult" > 
+							</div>	
+						</div>
+
+						<div class="form-group">
+							<label for="comments" class="col-md-4 control-label">Comments</label>
+							<div class="col-md-8">
+								<textarea class="form-control" rows="10" 
+										  name="comments"  
+										  data-ng-model="vm.formData.comments" 
+										  placeholder="Please enter comments..." ></textarea>
+							</div>	
+						</div>
+
+					</div>
+				</div>
+
+				<div data-ng-if="vm.formData.status !== 'Draft'" class="table-responsive">
+					<table class="table table-condensed">
+						<thead>
+							<th></th>
+							<th>Status</th>
+							<th>Name</th>
+							<th>Date Approved</th>
+							<th>Comments</th>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td><strong>Business Owner</strong></td>
+								<td>{{formData.approvals.BusinessOwner.status}}</td>
+								<td>Name</td>
+								<td>{{formData.approvals.BusinessOwner.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{formData.approvals.BusinessOwner.comments}}</td>					
+							</tr>
+							<tr>
+								<td><strong>Technical Lead</strong></td>
+								<td>{{formData.approvals.TechnicalLead.status}}</td>
+								<td>Name</td>
+								<td>{{formData.approvals.TechnicalLead.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{formData.approvals.TechnicalLead.comments}}</td>					
+							</tr>
+							<tr>
+								<td><strong>Service Line</strong></td>
+								<td>{{formData.approvals.ServiceLine.status}}</td>
+								<td>Name</td>
+								<td>{{formData.approvals.ServiceLine.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{formData.approvals.ServiceLine.comments}}</td>					
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+
+
+				<div class="form-group">
+                    <div class="col-md-8 col-md-offset-4">
+                    	<button data-ng-click="vm.back()" class="btn btn-default">Cancel</button>
+                    	<button type="submit" 
+                    			class="btn btn-primary" 
+                    			data-ng-click="vm.submit(frmChange, 'Draft')">Save as Draft</button>
+                    </div>
+				</div>
+
+			</fieldset>
+		</form>
+	</di>
+</div>

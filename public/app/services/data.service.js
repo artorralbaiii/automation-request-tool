@@ -8,15 +8,17 @@
 		dataService.$inject = ['$http'];
 
 		function dataService($http) {
-
+ 
 			var service = {
 				authenticate: authenticate,
 				changePassword: changePassword,
-				createUser: createUser,
+				createChange: createChange,  
 				createProblem: createProblem,
 				createProject: createProject,
+				createUser: createUser,
 				createSettings: createSettings,
 				deleteDocument: deleteDocument,
+				getChangeById: getChangeById,
 				getMyRequests: getMyRequests, 				
 				getProblemById: getProblemById,
 				getProblems: getProblems,
@@ -58,6 +60,12 @@
 				});
 			};
 
+
+			// Create Change
+			function createChange(data) {
+				return $http.post('/api/changes', data);
+			}
+
 			// Create Problem
 
 			function createProblem(data) {
@@ -95,6 +103,16 @@
 					method: 'DELETE',
 					url: '/api/' + resourceName + '/' + id
 				});
+			}
+
+			// Get Change By Id
+			function getChangeById() {
+				return $http.get('/api/changes/' + id);				
+			}
+
+			// Get Project By Id
+			function getProblemById(id) {
+				return $http.get('/api/problems/' + id);
 			}
 
 			// Get Requests Related to the current user

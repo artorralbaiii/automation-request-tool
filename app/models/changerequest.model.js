@@ -33,7 +33,7 @@ var changeRequestSchema = new schema({
 	approvals: approvals,
 	requestSummary: {type: String},
 	requestedBy: {type: schema.Types.ObjectId, ref: 'User'},
-	dateRequested: {type: Date, default: Date.now},
+	dateRequested: {type: Date},
 	targetDeployment: {type: Date},
 	detailedDescription: {type: String},
 	tester: {type: schema.Types.ObjectId, ref: 'User'},

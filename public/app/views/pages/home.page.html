@@ -34,12 +34,12 @@
 									<a data-toggle="collapse" 
 									   data-target="#problem-entry-{{$index}}" 
 									   href="">({{project.problemRequests.length}}) Problem Requests</a>&nbsp;| 
-									<a href="" data-ng-click="vm.newProblem(project);" class="text-danger"> New Problem*</a>
+									<a href="" data-ng-click="vm.newRequest('problem', project);" class="text-danger"> New Problem*</a>
 								</p>
 								<ul class="list-group collapse"  id="problem-entry-{{$index}}">
 								  <li class="list-group-item" 
 								  	  data-ng-repeat="problem in project.problemRequests" >
-								  	  <a href="" data-ng-click="vm.editProblem(project, problem._id);"
+								  	  <a href="" data-ng-click="vm.editRequest(project, 'problem', problem._id);"
 								  	  	 data-ng-class = "{'text-success': problem.status === 'Closed'}">
 								  	  	{{problem.problemNumber}} | {{problem.status}} | {{problem.problemSummary}} 
 								  	  </a>
@@ -48,15 +48,18 @@
 								<p>
 									<a data-toggle="collapse" 
 									   data-target="#change-entry-{{$index}}" 
-									   href="">(0) Change Requests</a>&nbsp;&nbsp;&nbsp;| 
-									<a href="" class="text-danger"> New Change*</a>
+									   href="">({{project.changeRequests.length}}) Change Requests</a>&nbsp;&nbsp;&nbsp;| 
+									<a href="" data-ng-click="vm.newRequest('change', project);" class="text-danger" > New Change*</a>
 								</p>
 								<ul class="list-group collapse" id="change-entry-{{$index}}">
-								  <li class="list-group-item">Cras justo odio</li>
-								  <li class="list-group-item">Dapibus ac facilisis in</li>
-								  <li class="list-group-item">Morbi leo risus</li>
-								  <li class="list-group-item">Porta ac consectetur ac</li>
-								  <li class="list-group-item">Vestibulum at eros</li>
+								  <li class="list-group-item"
+								  	  data-ng-repeat="change in project.changeRequests" >
+								  	<a href=""
+								  	   data-ng-click="vm.editRequest(project, 'change', change._id);"
+								  	   data-ng-class="{'text-success': change.status === 'Closed'}" >
+								  		{{change.changeNumber}} | {{change.status}} | {{change.requestSummary}}
+								  	</a>
+								  </li>
 								</ul>
 							</div>						
 						</td>

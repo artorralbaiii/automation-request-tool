@@ -22,8 +22,8 @@
 		vm.showLoadMore = showLoadMore;
 		vm.loadMoreProjects = loadMoreProjects;
 		vm.reloadProjects = reloadProjects;
-		vm.newProblem = newProblem;
-		vm.editProblem = editProblem;
+		vm.newRequest = newRequest;
+		vm.editRequest = editRequest;
 		vm.searching = false;
 
 		//////////
@@ -51,14 +51,14 @@
 
 		}
 
-		function newProblem(project) {
+		function newRequest(resource, project) {
 			ParentProject.setProject(project);
-			$location.path('/problem/new');
+			$location.path('/' + resource + '/new');
 		}
 
-		function editProblem(project, problemId) {
+		function editRequest(project, resource, id) {
 			ParentProject.setProject(project);
-			$location.path('/problem/' + problemId);			
+			$location.path('/' + resource + '/' + id);			
 		}
 
 		function reloadProjects(){

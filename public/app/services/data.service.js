@@ -31,6 +31,7 @@
 				getUsers: getUsers,
 				getUsersByKey: getUsersByKey,
 				logout: logout,
+				updateChange: updateChange,
 				updateProblem: updateProblem,
 				updateProject: updateProject,
 				updateSettings: updateSettings,
@@ -106,7 +107,7 @@
 			}
 
 			// Get Change By Id
-			function getChangeById() {
+			function getChangeById(id) {
 				return $http.get('/api/changes/' + id);				
 			}
 
@@ -178,6 +179,15 @@
 			function logout() {
 				return $http({ method: 'DELETE', url: '/api/users/logout' });
 			}
+
+			//Update Change
+			function updateChange(data) {
+				return $http({
+					method: 'PUT',
+					url: '/api/changes/' + data._id,
+					data: data
+				});				
+			} 
 
 			// Update Problem
 			function updateProblem(data) {

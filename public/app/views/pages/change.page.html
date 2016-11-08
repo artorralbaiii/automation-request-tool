@@ -17,7 +17,8 @@
 								<input class="form-control" 
 								       type="text" value="{{vm.formData.changeNumber}}"
 								       name="changeNumber"
-								       data-ng-readonly="true" >
+								       data-ng-readonly="true" 
+								       >
 							</div>
 						</div>
 
@@ -45,9 +46,10 @@
 							<label for="dateRequested" class="col-md-4 control-label">Date Requested</label>
 							<div class="col-md-8">
 								<input class="form-control" 
-								       type="text" value="{{vm.formData.dateRequested}}"
+								       type="text"
 								       name="dateRequested"
-								       data-ng-readonly="true" >
+								       data-ng-readonly="true" 
+								       data-ng-value="vm.formData.dateRequested | date: 'MM/dd/yyyy'">
 							</div>
 						</div>
 
@@ -73,7 +75,8 @@
 								       type="text"
 								       name="requestSummary" 
 								       required 
-								       data-ng-model="vm.formData.requestSummary" > 
+								       data-ng-model="vm.formData.requestSummary" 
+								       data-ng-readonly="!vm.isEditable();"> 
 							</div>	
 						</div>
 
@@ -89,7 +92,8 @@
 								       type="date"
 								       name="targetDeployment" 
 								       required 
-								       data-ng-model="vm.formData.targetDeployment" >
+								       data-ng-model="vm.formData.targetDeployment" 
+								       data-ng-readonly="!vm.isEditable();" >
 							</div>	
 						</div>
 
@@ -102,7 +106,8 @@
 							<div class="col-md-8">
 								<textarea class="form-control" rows="10" 
 										  name="detailedDescription" required data-ng-model="vm.formData.detailedDescription" 
-										  placeholder="Please enter detailed description..." ></textarea>
+										  placeholder="Please enter detailed description..." 
+										  data-ng-readonly="!vm.isEditable();" ></textarea>
 							</div>	
 						</div>
 
@@ -123,7 +128,8 @@
 						<div class="form-group">
 							<label for="tester" class="col-md-4 control-label">* Tester</label>
 							<div class="col-md-8">
-								<ui-select ng-model="vm.formData.tester" name="tester" theme="bootstrap">
+								<ui-select ng-model="vm.formData.tester" name="tester" theme="bootstrap" 
+								           data-ng-readonly="!vm.isEditable();">
 								    <ui-select-match placeholder="Select tester...">
 								    	{{$select.selected.fullname}} &lt;{{$select.selected.email}}&gt;
 								    </ui-select-match>
@@ -152,7 +158,8 @@
 								       placeholder="Please enter uat result..."
 								       type="text"
 								       name="uatResult" 
-								       data-ng-model="vm.formData.uatResult" > 
+								       data-ng-model="vm.formData.uatResult" 
+								       data-ng-readonly="!vm.isEditable();" > 
 							</div>	
 						</div>
 
@@ -162,7 +169,8 @@
 								<textarea class="form-control" rows="10" 
 										  name="comments"  
 										  data-ng-model="vm.formData.comments" 
-										  placeholder="Please enter comments..." ></textarea>
+										  placeholder="Please enter comments..." 
+										  data-ng-readonly="!vm.isEditable();" ></textarea>
 							</div>	
 						</div>
 
@@ -182,24 +190,24 @@
 						<tbody>
 							<tr>
 								<td><strong>Business Owner</strong></td>
-								<td>{{formData.approvals.BusinessOwner.status}}</td>
-								<td>Name</td>
-								<td>{{formData.approvals.BusinessOwner.dateAction | date: 'yyyy-MM-dd'}}</td>
-								<td>{{formData.approvals.BusinessOwner.comments}}</td>					
+								<td>{{vm.formData.approvals.BusinessOwner.status}}</td>
+								<td>{{vm.getNames(vm.formData.approvals.BusinessOwner.approver);}}</td>
+								<td>{{vm.formData.approvals.BusinessOwner.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{vm.formData.approvals.BusinessOwner.comments}}</td>					
 							</tr>
 							<tr>
 								<td><strong>Technical Lead</strong></td>
-								<td>{{formData.approvals.TechnicalLead.status}}</td>
-								<td>Name</td>
-								<td>{{formData.approvals.TechnicalLead.dateAction | date: 'yyyy-MM-dd'}}</td>
-								<td>{{formData.approvals.TechnicalLead.comments}}</td>					
+								<td>{{vm.formData.approvals.TechnicalLead.status}}</td>
+								<td>{{vm.getNames(vm.formData.approvals.BusinessOwner.approver);}}</td>
+								<td>{{vm.formData.approvals.TechnicalLead.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{vm.formData.approvals.TechnicalLead.comments}}</td>					
 							</tr>
 							<tr>
 								<td><strong>Service Line</strong></td>
-								<td>{{formData.approvals.ServiceLine.status}}</td>
-								<td>Name</td>
-								<td>{{formData.approvals.ServiceLine.dateAction | date: 'yyyy-MM-dd'}}</td>
-								<td>{{formData.approvals.ServiceLine.comments}}</td>					
+								<td>{{vm.formData.approvals.ServiceLine.status}}</td>
+								<td>{{vm.getNames(vm.formData.approvals.BusinessOwner.approver);}}</td>
+								<td>{{vm.formData.approvals.ServiceLine.dateAction | date: 'yyyy-MM-dd'}}</td>
+								<td>{{vm.formData.approvals.ServiceLine.comments}}</td>					
 							</tr>
 						</tbody>
 					</table>					
@@ -208,10 +216,23 @@
 
 				<div class="form-group">
                     <div class="col-md-8 col-md-offset-4">
-                    	<button data-ng-click="vm.back()" class="btn btn-default">Cancel</button>
+                    	<button data-ng-click="vm.back()" class="btn btn-default" >Cancel</button>
                     	<button type="submit" 
                     			class="btn btn-primary" 
-                    			data-ng-click="vm.submit(frmChange, 'Draft')">Save as Draft</button>
+                    			data-ng-click="vm.submit(frmChange, 'Draft')" 
+                    			data-ng-if="vm.newChange || vm.isButtonAvailable('save')" >Save as Draft</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'Request Assessment')" 
+            					data-ng-if="vm.newChange || vm.isButtonAvailable('submit')" >Submit</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'Approve')" 
+            					data-ng-if="vm.isButtonAvailable('approve') && vm.isCurrentApprover()" >Approve</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'Requesting Additional Information')" 
+            					data-ng-if="vm.isButtonAvailable('return_for_revision') && vm.isCurrentApprover();" >Return For Revision</button>
                     </div>
 				</div>
 

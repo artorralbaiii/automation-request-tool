@@ -26,7 +26,8 @@ exports.pageEntries = function(req, res) {
 	changeRequestModel.find({})
 		.skip(parseInt(req.params.offset))
 		.limit(parseInt(req.params.limit))
-		.populate('requestedBy tester project approvals.approver')
+		.populate('requestedBy tester project approvals.BusinessOwner.approver ' +
+				  'approvals.TechnicalLead.approver approvals.ServiceLine.approver')
 		.exec(function(err, data){
 
 			if (err) {
@@ -49,7 +50,8 @@ exports.pageEntries = function(req, res) {
 // Get Change Request by ID
 exports.getDocumentById = function(req, res) {
 	changeRequestModel.findOne({_id: req.params.id})
-		.populate('requestedBy tester project approvals.approver')
+		.populate('requestedBy tester project approvals.BusinessOwner.approver ' +
+				  'approvals.TechnicalLead.approver approvals.ServiceLine.approver')
 		.exec(function(err, data){
 			if (err) {
 				common.errHandler(res, err);
@@ -80,6 +82,8 @@ exports.newDocument = function(req, res){
 	changeRequest.approvals['TechnicalLead'].approver = req.body.technicalLead;
 	changeRequest.approvals['ServiceLine'].approver = req.body.serviceLine;
 	changeRequest.developers = req.body.developers;
+	changeRequest.uatResult = req.body.uatResult;
+	changeRequest.comments = req.body.comments;
 
 	changeRequestWorkflow(changeRequest, function(changeRequest){
 		changeRequest.save(function(err){
@@ -98,24 +102,26 @@ exports.newDocument = function(req, res){
 						});
 					} else {
 
-						if (data.hasOwnProperty('changeRequests')) {
+
+						if (data) {
 							data.changeRequests.push(changeRequest._id);
+							
+							data.save(function(err){
+								if (err) {
+									res.json({
+										err: err.message
+									});
+								} else {
+									res.json({
+										err: null,
+										message: 'New record successfully created.'
+									});
+								}
+							});
 						} else {
-							data.changeRequests = [changeRequest._id];
+							common.errHandler(res, null, 'Project not found.', 409);
 						}
-						
-						data.save(function(err){
-							if (err) {
-								res.json({
-									err: err.message
-								});
-							} else {
-								res.json({
-									err: null,
-									message: 'New record successfully created.'
-								});
-							}
-						});
+
 					}
 			});
 		});													
@@ -139,6 +145,7 @@ exports.updateDocumentById = function(req, res) {
 		data.detailedDescription= req.body.detailedDescription;
 		data.tester= req.body.tester;
 		data.comments= req.body.comments;
+		data.uatResult = req.body.uatResult;
 
 		changeRequestWorkflow(data, function(data){
 			data.save(function(err){
@@ -281,6 +288,32 @@ var changeRequestWorkflow = function(data, callback){
 					data.approvals.TechnicalLead.status = 'Pending';
 					data.approvals.TechnicalLead.dateAction = '';
 				}
+			} else {
+				data.processOwner = data.requestedBy;
+				data.availableAction = ['edit', 'save', 'submit'];
+			}
+
+			break;
+		}
+
+		case 'Requesting Additional Information': {
+
+			if (data.previousStatus === 'Request Assessment') {
+				data.processOwner = data.requestedBy;
+				data.availableAction = ['edit', 'save', 'submit'];
+				
+				if (data.approvals.BusinessOwner.status === 'Approved') {
+					data.approvals.BusinessOwner.status = 'Pending';
+					data.approvals.BusinessOwner.dateAction = '';
+				}
+
+				if (data.approvals.TechnicalLead.status === 'Approved') {
+					data.approvals.TechnicalLead.status = 'Pending';
+					data.approvals.TechnicalLead.dateAction = '';
+				}
+			} else {
+				data.processOwner = data.requestedBy;
+				data.availableAction = ['edit', 'save', 'submit'];
 			}
 
 			break;

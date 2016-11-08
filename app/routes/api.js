@@ -73,7 +73,7 @@ module.exports = function(app, express) {
 	api.delete('/problems/:id', verifySession, verifyAdmin, problemRequestController.remove);
 
 	//Settings Resource
-	api.get('/settings', verifySession, verifyAdmin, settingsController.getDocument); 
+	api.get('/settings', verifySession, settingsController.getDocument); 
 	api.post('/settings', verifySession, verifyAdmin, settingsController.newDocument); 
 	api.put('/settings/:id', verifySession, verifyAdmin, settingsController.updateDocumentById); 
 	

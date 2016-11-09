@@ -10,8 +10,10 @@
 		function dataService($http) {
  
 			var service = {
+				approveChange: approveChange,
 				authenticate: authenticate,
 				changePassword: changePassword,
+				changeStatus: changeStatus,
 				createChange: createChange,  
 				createProblem: createProblem,
 				createProject: createProject,
@@ -42,6 +44,15 @@
 
 			//////////
 
+			// Approve Change
+			function approveChange(data){
+				return $http({
+					method: 'PUT',
+					url: '/api/changes/' + data.id + '/approval',
+					data: data
+				});				
+			}
+
 			// User Authentication
 			function authenticate(creds, callback) {
 				$http.post('/api/users/authenticate', {
@@ -61,6 +72,16 @@
 				});
 			};
 
+
+			// Change Status
+
+			function changeStatus(data){
+				return $http({
+					method: 'PUT',
+					url: '/api/changes/' + data.id + '/status/' + data.status,
+					data: data
+				});				
+			}
 
 			// Create Change
 			function createChange(data) {

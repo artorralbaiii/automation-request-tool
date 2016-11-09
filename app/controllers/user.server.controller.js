@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var userModel = require('../models/user.model.js');
 var problemRequestModel = require('../models/problemrequest.model');
+var changeRequestModel = require('../models/changerequest.model');
 var common = require('./common.functions');
 
 // Get all users
@@ -273,4 +274,7 @@ exports.relatedProcess = function(req, res){
 	});		
 
 }
+
+
+
 

@@ -22,13 +22,18 @@
 		vm.submit = submit;
 		vm.back = back;
 		vm.getNames = getNames;
+		vm.isAssignedDeveloper = isAssignedDeveloper;
+		vm.isAssignedTester = isAssignedTester;
 		vm.isButtonAvailable = isButtonAvailable;
 		vm.isCurrentApprover = isCurrentApprover;
+		vm.isRequester = isRequester;
 		vm.isEditable = isEditable;
 		vm.pullUsers = pullUsers;
 		vm.settings = Settings.data.data;
 		
 		activate();
+
+		console.log(vm.isAssignedTester());
 
 		//////////
 
@@ -99,20 +104,35 @@
 			}
 		}
 
+		function isAssignedDeveloper(){
+			var currentuser = sessionService.getSession();
+			return ( currentuser.admin || vm.formData.developers.indexOf(currentuser.user) != -1); 
+		}
+
+		function isAssignedTester(){
+			if (vm.formData.tester) {
+				var currentuser = sessionService.getSession();
+				return ( currentuser.admin || vm.formData.tester._id === currentuser.user ); 					
+			} else {
+				return false;
+			}
+		}
+
 		function isCurrentApprover() {
-			var currentuser = sessionService.getSession().user;
+			var currentuser = sessionService.getSession();
 			var action = getAction();
 			
 			
 			if (vm.formData.approvals) {
 				if (action) {
 					var approvers = _.pluck(_.clone(vm.formData.approvals[action].approver), '_id');
-					return (approvers.indexOf(currentuser) != -1); 
+					return ( currentuser.admin || approvers.indexOf(currentuser.user) != -1); 
 				}
 			} 
 
 			return false;
 		}
+
 
 		function isEditable() {
 			var currentuser = sessionService.getSession().user;
@@ -120,10 +140,15 @@
 			if ( vm.newChange || 
 				((vm.formData.status === 'Draft' ||
 			    vm.formData.status === 'Requesting Additional Information') &&
-			    vm.formData.requestedBy._id === currentuser) ) {
+			    vm.formData.requestedBy._id === currentuser) && vm.formData.status != 'Completed' ) {
 				return true;
 			}
 
+		}
+
+		function isRequester() {
+			var currentuser = sessionService.getSession();
+			return currentuser.admin || vm.formData.requestedBy._id === currentuser.user;
 		}
 
 		function pullUsers(qry) {
@@ -161,10 +186,44 @@
 				} else {
 
 					if (status === 'Approve') {
-					
-						dataService.approveChange(getAction())
+		
+						bootbox.prompt({
+						    title: "Please enter your comments.",
+						    inputType: 'textarea',
+						    callback: function (comments) {
+						    	if (comments) {
+							        var approvalData = {
+	        							action: getAction(),
+	        							comments: comments,
+	        							status: data.status,
+	        							id: data._id
+	        						};
+
+	        						dataService.approveChange(approvalData)
+	        						.then(function(response){
+	        							toastr.success('Success!', 'Change successfully approved.');
+	        							back();
+	        						})
+	        						.catch(function(response){
+	        							toastr.error('Error!', response.data.err);
+	        						});						    		
+						    	}
+						    }
+						});
+
+					} else if (status === 'Requesting Additional Information' || status === 'UAT' || status === 'Ongoing' || status === 'Completed') {
+
+						var uatData = {
+							id: data._id,
+							status: status,
+							uatResult: data.uatResult,
+							comments: data.comments
+						}
+
+						dataService.changeStatus(uatData)
 						.then(function(response){
-							toastr.success('Success!', 'Change successfully approved.');
+							toastr.success('Success!', 'Change successfully moved to ' + status + '.');
+							back();
 						})
 						.catch(function(response){
 							toastr.error('Error!', response.data.err);
@@ -174,11 +233,11 @@
 						dataService.updateChange(data)
 						.then(function(response){
 
-							if (status === 'Draft') {
-								toastr.success('Success!', 'Change successfully updated.');
-							} else if (status === 'Request Assessment') {
+							if (status === 'Request Assessment') {
 								toastr.success('Success!', 'Change successfully submitted.');
 								back();
+							} else {
+								toastr.success('Success!', 'Change successfully updated.');
 							}
 
 						})

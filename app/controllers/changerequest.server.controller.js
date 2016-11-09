@@ -211,9 +211,10 @@ exports.changeStatus = function(req, res) {
 		data.previousStatus = data.status;
 		data.status = req.params.status;
 
-		if (req.params.status === 'Completed') {
+		if (req.params.status === 'Completed' || req.params.status === 'Ongoing') {
 			data.uatCompletionDate = new Date();
 			data.uatResult = req.body.uatResult;
+			data.comments = req.body.comments;
 		}
 
 		changeRequestWorkflow(data, function(data){
@@ -354,6 +355,7 @@ var changeRequestWorkflow = function(data, callback){
 		}
 
 		case 'Completed': {
+			data.availableAction = [];
 			data.processOwner = data.developers;
 			break;
 		}

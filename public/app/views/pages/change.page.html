@@ -159,7 +159,7 @@
 								       type="text"
 								       name="uatResult" 
 								       data-ng-model="vm.formData.uatResult" 
-								       data-ng-readonly="!vm.isEditable();" > 
+								       data-ng-readonly="( !vm.isEditable() && (vm.formData.status != 'UAT' || (vm.formData.status === 'UAT' && !vm.isAssignedTester())) );" > 
 							</div>	
 						</div>
 
@@ -170,7 +170,7 @@
 										  name="comments"  
 										  data-ng-model="vm.formData.comments" 
 										  placeholder="Please enter comments..." 
-										  data-ng-readonly="!vm.isEditable();" ></textarea>
+										  data-ng-readonly="( !vm.isEditable() && (vm.formData.status != 'UAT' || (vm.formData.status === 'UAT' && !vm.isAssignedTester())) );"  ></textarea>
 							</div>	
 						</div>
 
@@ -198,14 +198,14 @@
 							<tr>
 								<td><strong>Technical Lead</strong></td>
 								<td>{{vm.formData.approvals.TechnicalLead.status}}</td>
-								<td>{{vm.getNames(vm.formData.approvals.BusinessOwner.approver);}}</td>
+								<td>{{vm.getNames(vm.formData.approvals.TechnicalLead.approver);}}</td>
 								<td>{{vm.formData.approvals.TechnicalLead.dateAction | date: 'yyyy-MM-dd'}}</td>
 								<td>{{vm.formData.approvals.TechnicalLead.comments}}</td>					
 							</tr>
 							<tr>
 								<td><strong>Service Line</strong></td>
 								<td>{{vm.formData.approvals.ServiceLine.status}}</td>
-								<td>{{vm.getNames(vm.formData.approvals.BusinessOwner.approver);}}</td>
+								<td>{{vm.getNames(vm.formData.approvals.ServiceLine.approver);}}</td>
 								<td>{{vm.formData.approvals.ServiceLine.dateAction | date: 'yyyy-MM-dd'}}</td>
 								<td>{{vm.formData.approvals.ServiceLine.comments}}</td>					
 							</tr>
@@ -220,11 +220,11 @@
                     	<button type="submit" 
                     			class="btn btn-primary" 
                     			data-ng-click="vm.submit(frmChange, 'Draft')" 
-                    			data-ng-if="vm.newChange || vm.isButtonAvailable('save')" >Save as Draft</button>
+                    			data-ng-if="vm.newChange || (vm.isButtonAvailable('save') && vm.formData.status != 'Draft'  )" >Save as Draft</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Request Assessment')" 
-            					data-ng-if="vm.newChange || vm.isButtonAvailable('submit')" >Submit</button>
+            					data-ng-if="vm.newChange || (vm.isButtonAvailable('submit') && vm.isRequester())" >Submit</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Approve')" 
@@ -233,6 +233,18 @@
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Requesting Additional Information')" 
             					data-ng-if="vm.isButtonAvailable('return_for_revision') && vm.isCurrentApprover();" >Return For Revision</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'UAT')" 
+            					data-ng-if="vm.isButtonAvailable('proceed_to_uat') && vm.isAssignedDeveloper();" >Proceed To UAT</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'Completed')" 
+            					data-ng-if="vm.isButtonAvailable('proceed_for_deployment') && vm.isAssignedTester();" >Proceed to Deployment</button>
+            			<button type="submit" 
+            					class="btn btn-primary" 
+            					data-ng-click="vm.submit(frmChange, 'Ongoing')" 
+            					data-ng-if="vm.isButtonAvailable('return_to_developer') && vm.isAssignedTester();" >Return To Developer</button>
                     </div>
 				</div>
 

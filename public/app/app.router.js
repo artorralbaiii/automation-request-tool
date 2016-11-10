@@ -88,6 +88,10 @@
 							} else {
 								return dataService.getProjectById($route.current.params.id);								
 							}
+						},
+
+						Settings : function(dataService){
+							return dataService.getSettings();							
 						}
 					}
 				})

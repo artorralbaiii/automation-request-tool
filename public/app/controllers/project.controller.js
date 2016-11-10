@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('ProjectNew', ProjectNew);
 
-	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window'];
+	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window', 'Settings'];
 
 	//////////
 
-	function ProjectNew(dataService, toastr, $location, Project, $window) {
+	function ProjectNew(dataService, toastr, $location, Project, $window, Settings) {
 		var vm = this;
 
 		vm.formData = {};
@@ -22,6 +22,7 @@
 		vm.newProject = true;
 		vm.formLabel = 'New';
 		vm.back = back;
+		vm.setDefaults = setDefaults;
 
 		initProject(Project);
 
@@ -55,6 +56,11 @@
 				$location.path('/');							
 			}
 
+		}
+
+		function setDefaults(){
+			vm.formData.developers = Settings.data.data.developers;
+			vm.formData.supports = Settings.data.data.supports;
 		}
 
 		function submit(frm) {

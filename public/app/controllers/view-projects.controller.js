@@ -20,6 +20,7 @@
 		vm.projects = Projects.data.data;
 		vm.getNames = getNames;
 		vm.createPR = createPR;
+		vm.createCR = createCR;
 
 		////////// 
 
@@ -30,6 +31,11 @@
 		function createPR(project) {
 			ParentProject.setProject(project);
 			$location.path('/problem/new');
+		}
+
+		function createCR(project) {
+			ParentProject.setProject(project);
+			$location.path('/change/new');
 		}
 
 	}

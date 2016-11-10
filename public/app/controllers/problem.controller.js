@@ -65,6 +65,7 @@
 
 
 			if (Problem) {
+				vm.formLabel =  vm.project.applicationName;
 				vm.formData = Problem.data.data;
 				vm.newProblem = false;
 				vm.formLabel = vm.project.applicationName;
@@ -80,6 +81,7 @@
 				vm.formData.dateReported = new Date(vm.formData.dateReported);
 				
 			} else {
+				vm.formLabel =  vm.project.applicationName + ' | New';
 				vm.formData.project = vm.project._id;
 				vm.formData.assignedSupport = _.pluck(vm.project.supports,'_id');
 				vm.formData.assignedSupportDisplay = _.map(vm.project.supports, 

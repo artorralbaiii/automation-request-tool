@@ -98,7 +98,7 @@ pre {
 
 /*VIEWS*/
 
-table.project-tbl, table.problem-tbl {
+table.project-tbl, table.problem-tbl, table.change-tbl {
   font-size: 14px;
 }
 

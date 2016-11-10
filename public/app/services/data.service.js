@@ -20,6 +20,7 @@
 				createUser: createUser,
 				createSettings: createSettings,
 				deleteDocument: deleteDocument,
+				getChanges: getChanges, 
 				getChangeById: getChangeById,
 				getMyRequests: getMyRequests, 				
 				getProblemById: getProblemById,
@@ -130,6 +131,11 @@
 			// Get Change By Id
 			function getChangeById(id) {
 				return $http.get('/api/changes/' + id);				
+			}
+
+			// Get Changes
+			function getChanges() {
+				return $http.get('/api/changes');				
 			}
 
 			// Get Project By Id

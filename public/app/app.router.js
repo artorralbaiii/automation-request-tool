@@ -128,6 +128,19 @@
 
 				})
 
+				.when('/changes', {
+					templateUrl: 'app/views/pages/view-changes.page.html',
+					controller: 'ViewChange',
+					controllerAs: 'vm',
+					resolve: {
+						Changes: function($rootScope, dataService) {
+							$rootScope.$emit('LOAD');
+							return dataService.getChanges();
+						}
+					}					
+
+				})
+
 				.when('/projects', {
 					templateUrl: 'app/views/pages/view-projects.page.html',
 					controller: 'ViewProject',

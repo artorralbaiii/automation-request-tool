@@ -7,7 +7,8 @@ var common = require('./common.functions');
 // Get all Change Requests
 exports.allEntries = function(req, res) {
 	changeRequestModel.find({})
-		.populate('requestedBy tester project approvals.approver')
+		.populate('requestedBy tester project approvals.BusinessOwner.approver ' +
+				  'approvals.TechnicalLead.approver approvals.ServiceLine.approver processOwner')
 		.exec(function(err, data){
 			if (err) {
 				common.errHandler(res, err);

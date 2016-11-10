@@ -222,19 +222,143 @@ exports.logout = function(req, res) {
 
 }
 
-exports.relatedProcess = function(req, res){
-	
-	problemRequestModel.find({reportedBy: req.session.user})
-	.select('_id problemNumber status problemSummary project').exec(function(err, data){
+exports.getMyRequests = function(req, res) {
+	var requests = {};
 
-		var obj = {};
+	problemRequestModel
+	.find({reportedBy: req.session.user})
+	.select('_id problemNumber status problemSummary project')
+	.exec(function(err, data){
+
+		if (!err) {
+			requests.myRequests = _.map(data, function(obj){
+				return {
+					_id: obj._id,
+					resource: 'problem',
+					description: obj.problemSummary,
+					status: obj.status,
+					id: obj.problemNumber,
+					parentId: obj.project 				
+				}
+			});
+		}
+
+
+		getMyChanges(req.session.user, requests, function(requests){
+			getMyRespProblem(req.session.user, requests, function(requests){
+				getMyRespChange(req.session.user, requests, function(requests){
+
+					res.json({
+						err: null,
+						data: requests
+					});
+
+				})
+			})
+		})
+	});
+
+}
+
+function getMyChanges(id, requests, callback) {
+
+	changeRequestModel
+	.find({requestedBy: id})
+	.select('_id changeNumber status requestSummary project')
+	.exec(function(err, data){
+
+		var myRequests = [];
+
+		if (!err) {
+			myRequests = _.map(data, function(obj){
+				return {
+					_id: obj._id,
+					resource: 'change',
+					description: obj.requestSummary,
+					status: obj.status,
+					id: obj.changeNumber,
+					parentId: obj.project 				
+				}
+			});
+		}
+
+		requests.myRequests = _.union(requests.myRequests, myRequests);
+
+		callback(requests)
+
+	});
+
+}
+
+function getMyRespProblem(id, requests, callback) {
+
+	problemRequestModel
+	.find({assignedSupport: id, status : {$ne: 'Closed'} })
+	.select('_id problemNumber status problemSummary project')
+	.exec(function(err, data){
+
+		if(!err) {
+			requests.pendingActions = _.map(data, function(obj){
+				return {
+					_id: obj._id,
+					resource: 'problem',
+					description: obj.problemSummary,
+					status: obj.status,
+					id: obj.problemNumber,				
+					parentId: obj.project
+				}
+			});			
+		}
+
+		callback(requests);
+
+	});
+}
+
+function getMyRespChange(id, requests, callback) {
+
+	var myRequests = [];
+
+	changeRequestModel
+	.find({processOwner: id, status : {$ne: 'Closed'}, status : {$ne: 'Draft'} })
+	.select('_id changeNumber status requestSummary project')
+	.exec(function(err, data){
+
+		if (!err) {
+			myRequests = _.map(data, function(obj){
+				return {
+					_id: obj._id,
+					resource: 'change',
+					description: obj.requestSummary,
+					status: obj.status,
+					id: obj.changeNumber,
+					parentId: obj.project 				
+				}
+			});
+		}
+
+		requests.pendingActions = _.union(requests.pendingActions, myRequests);
+		callback(requests);
+
+	});
+}
+
+
+exports.getMyProblems = function(req, res, next) {
+
+	var requests = {};
+
+	problemRequestModel
+	.find({reportedBy: req.session.user})
+	.select('_id problemNumber status problemSummary project')
+	.exec(function(err, data){
 
 		if (err) {
-			common.errHandler(res, err);
+			next(req, res, requests);
 			return;
 		}
 
-		obj.myRequests = _.map(data, function(obj){
+		requests.myRequests = _.map(data, function(obj){
 			return {
 				_id: obj._id,
 				resource: 'problem',
@@ -245,36 +369,11 @@ exports.relatedProcess = function(req, res){
 			}
 		});
 
-		problemRequestModel.find({assignedSupport: req.session.user, status : {$ne: 'Closed'} })
-		.select('_id problemNumber status problemSummary project').exec(function(err, data){
+		console.log(next);
 
-			if(err) {
-				common.errHandler(res, err);
-				return;
-			}
-
-			obj.pendingActions = _.map(data, function(obj){
-				return {
-					_id: obj._id,
-					resource: 'problem',
-					description: obj.problemSummary,
-					status: obj.status,
-					id: obj.problemNumber,				
-					parentId: obj.project
-				}
-			});
+		next(req, res, requests);
 
 
-			res.json({
-				err: null,
-				data: obj
-			});
-
-		});		
-	});		
+	});
 
 }
-
-
-
-

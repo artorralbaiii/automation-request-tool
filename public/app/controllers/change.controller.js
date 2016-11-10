@@ -276,7 +276,12 @@
 				} else if(frm[fld].$error.required) {
 					vm.validation[fld] = 'Please enter ' + fldName[fld]; 
 					return true;
-				}
+				} else if (fld === 'targetDeployment') {
+					if (frm[fld].$error.date) {
+						vm.validation[fld] = 'Please enter a valid date.'; 
+						return true;						
+					}
+				} 
 			}
 
 			return false;

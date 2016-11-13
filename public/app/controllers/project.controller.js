@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('ProjectNew', ProjectNew);
 
-	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window', 'Settings'];
+	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window', 'Settings', '$rootScope'];
 
 	//////////
 
-	function ProjectNew(dataService, toastr, $location, Project, $window, Settings) {
+	function ProjectNew(dataService, toastr, $location, Project, $window, Settings, $rootScope) {
 		var vm = this;
 
 		vm.formData = {};
@@ -74,7 +74,7 @@
 				if (vm.newProject) {
 					dataService.createProject(data)
 					.then(function(response){
-						
+						$rootScope.$emit('APPEND_PROJECT', response.data.data);
 						back();
 						toastr.success('Success!', 'New project successfully created.')
 					

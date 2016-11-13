@@ -130,7 +130,8 @@ exports.newDocument = function(req, res) {
 
 		res.json({
 			err: null,
-			message: 'New project is created.'
+			message: 'New project is created.',
+			data: project
 		});
 	});		
 }

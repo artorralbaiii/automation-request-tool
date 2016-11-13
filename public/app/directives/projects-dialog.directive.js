@@ -16,7 +16,8 @@
 				dialog_title: '=',
 				dialog_resource: '='
 			},
-			controller: ['dataService', '$scope', '$location','ParentProject', function(dataService, $scope, $location, ParentProject){
+			controller: ['dataService', '$scope', '$location','ParentProject', '$rootScope', 
+			function(dataService, $scope, $location, ParentProject, $rootScope){
 
 				$scope.projects = [];
 				$scope.searchText = '';
@@ -43,6 +44,13 @@
 					ParentProject.setProject(project);		
 					$location.path('/' + $scope.$parent.vm.dialogResource + '/new');			
 				}
+
+				$rootScope.$on('APPEND_PROJECT', function(event, data){
+					$scope.searchText = '';
+					$scope.currentPage = 1;
+					$scope.pageSize = 5;
+					$scope.projects.push(data);
+				});
 
 			}]
 		};

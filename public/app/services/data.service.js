@@ -23,6 +23,8 @@
 				deleteDocument: deleteDocument,
 				getChanges: getChanges, 
 				getChangeById: getChangeById,
+				getMyProjects: getMyProjects,
+				getMyProjectsByPage: getMyProjectsByPage,
 				getMyRequests: getMyRequests, 				
 				getProblemById: getProblemById,
 				getProblems: getProblems,
@@ -179,6 +181,11 @@
 				return $http.get('/api/projects');
 			}
 
+			// Get My Projects
+			function getMyProjects() {
+				return $http.get('/api/projects/myprojects');
+			}
+
 			// Get Partial Projects By Page
 			function getProjectsByPage(offset, limit, search) {
 				if (!search) {
@@ -186,6 +193,15 @@
 				}
 				search = 'search:' + search;
 				return $http.get('/api/projects/' + search + '/' + offset + '/' + limit);
+			}
+
+			// Get My Partial Projects By Page
+			function getMyProjectsByPage(offset, limit, search) {
+				if (!search) {
+					search = '';
+				}
+				search = 'search:' + search;
+				return $http.get('/api/projects/' + search + '/' + offset + '/' + limit + '/myprojects');
 			}
 
 			// Get projects parameterized

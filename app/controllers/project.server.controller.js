@@ -85,6 +85,57 @@ exports.pageEntries = function(req, res) {
 	});	
 }
 
+// Navigate Projects using paging.
+exports.pageEntriesMyProject = function(req, res) {
+
+	var search = req.params.search.replace('search:', '');
+	var pattern;
+	var searchOption = {};
+
+	if (search !== '') {
+		pattern =  new RegExp(search + '*', 'i'); 
+		searchOption = {
+			requester: req.session.user,
+			applicationName: pattern
+		};
+	} else {
+		searchOption = {
+			requester: req.session.user
+		};
+	}
+
+	projectModel.find(searchOption)
+		.sort('applicationName')
+		.skip(parseInt(req.params.offset))
+		.limit(parseInt(req.params.limit))
+		.populate('requester developers businessOwners supports changeRequests problemRequests')
+		.exec(function(err, data){
+
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			projectModel.count({requester: req.session.user}, function(err, count){
+				if(err){
+					common.errHandler(res, err);
+					return;
+				}
+
+				var result = {};
+
+				result.count = count;
+				result.data = data;
+
+				res.json({
+					err: null,
+					projects: result
+				});
+
+			});
+	});	
+}
+
 // Get Project By ID
 exports.getDocumentById = function(req, res) {
 	projectModel.findOne({_id: req.params.id})
@@ -172,5 +223,21 @@ exports.updateDocumentById = function(req, res) {
 // Delete Project
 exports.remove = function(req, res) {
 	common.removeDocument(req, res, projectModel);
+}
+
+exports.myProjects = function(req, res) {
+	projectModel.find({requester: req.session.user})
+		.populate('requester developers businessOwners supports changeRequests problemRequests')
+	    .exec(function(err, data){
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			} 
+							
+			res.json({
+				err: null,
+				data: data
+			});
+	});
 }
 

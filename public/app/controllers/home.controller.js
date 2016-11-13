@@ -33,7 +33,7 @@
 			vm.offset += vm.limit;
 			$rootScope.$emit('LOAD');
 
-			dataService.getProjectsByPage(vm.offset, vm.limit, vm.searchText)
+			dataService.getMyProjectsByPage(vm.offset, vm.limit, vm.searchText)
 			.then(function(response){
 
 				if (vm.recordCount != response.data.projects.count) {
@@ -64,7 +64,7 @@
 
 		function reloadProjects(){
 			vm.searching = true;
-			dataService.getProjectsByPage(0, vm.offset + vm.limit, vm.searchText) 
+			dataService.getMyProjectsByPage(0, vm.offset + vm.limit, vm.searchText) 
 			.then(function(response){
 				vm.projects = response.data.projects.data;
 				vm.recordCount = response.data.projects.count;

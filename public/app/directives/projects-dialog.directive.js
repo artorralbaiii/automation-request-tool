@@ -52,6 +52,13 @@
 					$scope.projects.push(data);
 				});
 
+				$rootScope.$on('REMOVE_PROJECT', function(event, data){
+					$scope.searchText = '';
+					$scope.currentPage = 1;
+					$scope.pageSize = 5;
+					$scope.projects.splice(_.findIndex($scope.projects, {_id: data}) ,1);
+				});
+
 			}]
 		};
 

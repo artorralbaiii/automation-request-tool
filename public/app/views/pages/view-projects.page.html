@@ -12,6 +12,7 @@
 					<th>Business Owner</th>
 					<th>Date Created</th>
 					<th colspan="2"></th>
+					<th data-ng-if="vm.isAdmin"></th>
 				</thead>
 
 				<tbody>
@@ -27,6 +28,8 @@
 						<td>{{project.createdAt | date: MM-DD-YYYY}}</td>
 						<td><button data-ng-click="vm.createPR(project);" class="btn btn-default btn-xs">Create PR</button></td>
 						<td><button data-ng-click="vm.createCR(project);" class="btn btn-success btn-xs">Create CR</button></td>
+						<td data-ng-if="vm.isAdmin"><button data-ng-click="vm.deleteProject(project);" 
+						            class="btn btn-danger btn-xs">Delete</button></td>
 					</tr>
 
 				</tbody>

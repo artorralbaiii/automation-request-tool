@@ -11,6 +11,7 @@
 					<th>Status</th>
 					<th>Target Date</th>
 					<th>Assigned Support</th>				
+					<th data-ng-if="vm.isAdmin"></th>
 				</thead>
 
 				<tbody>
@@ -25,6 +26,8 @@
 						<td>{{problem.status}}</td>
 						<td>{{problem.targetFixDate | date: MM-DD-YYYY}}</td>
 						<td>{{vm.getNames(problem.assignedSupport)}}</td>
+						<td data-ng-if="vm.isAdmin"><button data-ng-click="vm.deleteProblem(problem);" 
+						            class="btn btn-danger btn-xs">Delete</button></td>
 					</tr>
 
 				</tbody>

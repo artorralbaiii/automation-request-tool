@@ -10,7 +10,8 @@
 					<th>Request Summary</th>
 					<th>Status</th>
 					<th>Target Date</th>
-					<th>Current Approver</th>				
+					<th>Current Approver</th>
+					<th data-ng-if="vm.isAdmin"></th>				
 				</thead>
 
 				<tbody>
@@ -25,6 +26,8 @@
 						<td>{{change.status}}</td>
 						<td>{{change.targetDeployment | date: MM-DD-YYYY}}</td>
 						<td>{{vm.getNames(change.processOwner)}}</td>
+						<td data-ng-if="vm.isAdmin"><button data-ng-click="vm.deleteChange(change);" 
+						            class="btn btn-danger btn-xs">Delete</button></td>
 					</tr>
 
 				</tbody>

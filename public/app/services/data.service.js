@@ -11,6 +11,7 @@
  
 			var service = {
 				approveChange: approveChange,
+				disapproveChange: disapproveChange,
 				authenticate: authenticate,
 				changePassword: changePassword,
 				changeStatus: changeStatus,
@@ -127,6 +128,16 @@
 					url: '/api/' + resourceName + '/' + id
 				});
 			}
+
+			// Disapprove Change
+			function disapproveChange(data){
+				return $http({
+					method: 'PUT',
+					url: '/api/changes/' + data.id + '/disapproval',
+					data: data
+				});				
+			}
+
 
 			// Get Change By Id
 			function getChangeById(id) {

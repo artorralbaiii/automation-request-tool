@@ -30,10 +30,9 @@
 		vm.isEditable = isEditable;
 		vm.pullUsers = pullUsers;
 		vm.settings = Settings.data.data;
+		vm.disableButton = false;
 		
 		activate();
-
-		console.log(vm.isAssignedTester());
 
 		//////////
 
@@ -163,6 +162,8 @@
 
 		function submit(frm, status) {
 
+			vm.disableButton = true;
+
 			if (frm.$valid) {
 				var data = _.clone(vm.formData);
 
@@ -182,36 +183,34 @@
 					})
 					.catch(function(response){
 						toastr.error('Error!', response.data.err);
+						vm.disableButton = false;
 					});
 				} else {
 
 					if (status === 'Approve') {
 		
-						bootbox.prompt({
-						    title: "Please enter your comments.",
-						    inputType: 'textarea',
-						    callback: function (comments) {
-						    	if (comments) {
-							        var approvalData = {
-	        							action: getAction(),
-	        							comments: comments,
-	        							status: data.status,
-	        							id: data._id
-	        						};
+				        var approvalData = {
+							action: getAction(),
+							status: data.status,
+							id: data._id
+						};
 
-	        						dataService.approveChange(approvalData)
-	        						.then(function(response){
-	        							toastr.success('Success!', 'Change successfully approved.');
-	        							back();
-	        						})
-	        						.catch(function(response){
-	        							toastr.error('Error!', response.data.err);
-	        						});						    		
-						    	}
-						    }
-						});
+						dataService.approveChange(approvalData)
+						.then(function(response){
+							toastr.success('Success!', 'Change successfully approved.');
+							back();
+						})
+						.catch(function(response){
+							toastr.error('Error!', response.data.err);
+							vm.disableButton = false;
+						});	
 
-					} else if (status === 'Requesting Additional Information' || status === 'UAT' || status === 'Ongoing' || status === 'Completed') {
+					} else if (status === 'Requesting Additional Information' ) {
+		
+						promptComment(disapprove);
+						vm.disableButton = false;
+
+					} else if (status === 'UAT' || status === 'Ongoing' || status === 'Completed') {
 
 						var uatData = {
 							id: data._id,
@@ -227,6 +226,7 @@
 						})
 						.catch(function(response){
 							toastr.error('Error!', response.data.err);
+							vm.disableButton = false;
 						});
 
 					} else {
@@ -238,11 +238,13 @@
 								back();
 							} else {
 								toastr.success('Success!', 'Change successfully updated.');
+								vm.disableButton = false;
 							}
 
 						})
 						.catch(function(response){
 							toastr.error('Error!', response.data.err);
+							vm.disableButton = false;
 						});						
 					}
 
@@ -250,6 +252,43 @@
 			}
 
 			
+		}
+
+		function promptComment(func) {
+			bootbox.prompt({
+			    title: "Please enter your comments.",
+			    inputType: 'textarea',
+			    callback: func
+			});
+		}
+
+		function disapprove(comments) {
+			if (comments !== null) {
+				if (comments !== '') {
+			        var approvalData = {
+						action: getAction(),
+						comments: comments,
+						status: vm.formData.status,
+						id: vm.formData._id
+					};
+
+					dataService.disapproveChange(approvalData)
+					.then(function(response){
+						toastr.success('Success!', 'Change successfully rejected.');
+						back();
+					})
+					.catch(function(response){
+						toastr.error('Error!', response.data.err);
+					});						
+				} else {
+					bootbox.alert({
+						message: 'Comment is required',
+						callback: function(){
+							promptComment(disapprove);							
+						}
+					})
+				}
+			} 
 		}
 
 		function validate(fld, frm) {

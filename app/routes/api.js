@@ -61,6 +61,7 @@ module.exports = function(app, express) {
 	api.put('/changes/:id', verifySession, changeRequestController.updateDocumentById);
 	api.put('/changes/:id/status/:status', verifySession, changeRequestController.changeStatus);
 	api.put('/changes/:id/approval', verifySession, changeRequestController.approval);
+	api.put('/changes/:id/disapproval', verifySession, changeRequestController.disapproval);
 	api.delete('/changes/:id', verifySession, verifyAdmin, changeRequestController.remove);
 
 	// Problem Request resource

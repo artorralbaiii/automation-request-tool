@@ -216,35 +216,43 @@
 
 				<div class="form-group">
                     <div class="col-md-8 col-md-offset-4">
-                    	<button data-ng-click="vm.back()" class="btn btn-default" >Cancel</button>
+                    	<button data-ng-click="vm.back()" class="btn btn-default" 
+                    			data-ng-disabled="vm.disableButton">Cancel</button>
                     	<button type="submit" 
                     			class="btn btn-primary" 
                     			data-ng-click="vm.submit(frmChange, 'Draft')" 
-                    			data-ng-if="vm.newChange || (vm.isButtonAvailable('save') && vm.formData.status != 'Draft'  )" >Save as Draft</button>
+                    			data-ng-if="vm.newChange || (vm.isButtonAvailable('save') && vm.formData.status != 'Draft'  )" 
+                    			data-ng-disabled="vm.disableButton">Save as Draft</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Request Assessment')" 
-            					data-ng-if="vm.newChange || (vm.isButtonAvailable('submit') && vm.isRequester())" >Submit</button>
+            					data-ng-if="vm.newChange || (vm.isButtonAvailable('submit') && vm.isRequester())" 
+            					data-ng-disabled="vm.disableButton">Submit</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Approve')" 
-            					data-ng-if="vm.isButtonAvailable('approve') && vm.isCurrentApprover()" >Approve</button>
+            					data-ng-if="vm.isButtonAvailable('approve') && vm.isCurrentApprover()" 
+            					data-ng-disabled="vm.disableButton">Approve</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Requesting Additional Information')" 
-            					data-ng-if="vm.isButtonAvailable('return_for_revision') && vm.isCurrentApprover();" >Return For Revision</button>
+            					data-ng-if="vm.isButtonAvailable('return_for_revision') && vm.isCurrentApprover();" 
+            					data-ng-disabled="vm.disableButton">Return For Revision</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'UAT')" 
-            					data-ng-if="vm.isButtonAvailable('proceed_to_uat') && vm.isAssignedDeveloper();" >Proceed To UAT</button>
+            					data-ng-if="vm.isButtonAvailable('proceed_to_uat') && vm.isAssignedDeveloper();" 
+            					data-ng-disabled="vm.disableButton">Proceed To UAT</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Completed')" 
-            					data-ng-if="vm.isButtonAvailable('proceed_for_deployment') && vm.isAssignedTester();" >Proceed to Deployment</button>
+            					data-ng-if="vm.isButtonAvailable('proceed_for_deployment') && vm.isAssignedTester();" 
+            					data-ng-disabled="vm.disableButton">Proceed to Deployment</button>
             			<button type="submit" 
             					class="btn btn-primary" 
             					data-ng-click="vm.submit(frmChange, 'Ongoing')" 
-            					data-ng-if="vm.isButtonAvailable('return_to_developer') && vm.isAssignedTester();" >Return To Developer</button>
+            					data-ng-if="vm.isButtonAvailable('return_to_developer') && vm.isAssignedTester();" 
+            					data-ng-disabled="vm.disableButton">Return To Developer</button>
                     </div>
 				</div>
 

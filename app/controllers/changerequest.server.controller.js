@@ -247,7 +247,6 @@ exports.approval = function(req, res) {
 		data.previousStatus = data.status;
 		data.approvals[req.body.action].status = 'Approved';
 		data.approvals[req.body.action].dateAction = new Date();
-		data.approvals[req.body.action].comments = req.body.comments;
 
 		if (req.body.action === 'ServiceLine') {
 			data.status = 'Ongoing'
@@ -263,6 +262,35 @@ exports.approval = function(req, res) {
 				res.json({
 					err: null,
 					message: 'Approval saved.'
+				});
+			});
+		});
+
+	});
+}
+
+exports.disapproval = function(req, res) {
+	changeRequestModel.findOne({_id: req.params.id}, function(err, data){
+
+		if (err) {
+			common.errHandler(res, err);
+			return;
+		}
+
+		data.previousStatus = data.status;
+		data.approvals[req.body.action].comments = req.body.comments;
+		data.status = 'Requesting Additional Information';
+
+		changeRequestWorkflow(data, function(data){		
+			data.save(function(err){
+				if (err) {
+					common.errHandler(res, err);
+					return;
+				}
+
+				res.json({
+					err: null,
+					message: 'Rejected saved.'
 				});
 			});
 		});

@@ -352,6 +352,12 @@ var changeRequestWorkflow = function(data, callback){
 		case 'Request Assessment': {
 			data.availableAction = ['approve', 'return_for_revision'];
 
+			if (data.previousStatus === 'Requesting Additional Information') {
+				data.approvals.BusinessOwner.comments = '';
+				data.approvals.TechnicalLead.comments = '';
+				data.approvals.ServiceLine.comments = '';
+			}
+
 			if (data.approvals.BusinessOwner.status !== 'Approved') {
 				if (data.approvals.BusinessOwner.approver.indexOf(data.requestedBy) >= 0 ) {
 					data.approvals.BusinessOwner.status = 'Approved';

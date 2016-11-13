@@ -1,5 +1,26 @@
 <div class="row">
 	<div class="col-md-4">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a data-ng-href="/#/project/new" class="btn btn-primary home-buttons">Request New Tool</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a data-toggle="modal" 
+				   data-target="#projectDialog" 
+				   class="btn btn-success home-buttons"
+				   data-ng-click="vm.setResource('change', 'Create CR')" >File Enhancement (CR)</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a data-toggle="modal" 
+				   data-target="#projectDialog" 
+				   class="btn btn-danger home-buttons"
+				   data-ng-click="vm.setResource('problem', 'Create PR')" >Raise Tool Issue (PR)</a>
+			</div>
+		</div>
 		<art-side-panel title="'My Requests'" items="vm.relatedRequests.myRequests"></art-side-panel>	
 		<art-side-panel title="'Awaiting My Action'" items="vm.relatedRequests.pendingActions"></art-side-panel>	
 	</div>

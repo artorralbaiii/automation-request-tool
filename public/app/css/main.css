@@ -30,15 +30,6 @@ a:hover {
   margin:0 5px 0 -15px;
 }
 
-/*.side-panel-list a {
-  color: #0099ff;
-  text-decoration: none;
-}  
-
-.side-panel-list a:hover {
-  color: #ff6600;
-}  */
-
 .project-entry {
   padding: 0 10px;
   /*border-radius: 5px;*/
@@ -52,6 +43,11 @@ a:hover {
 
 .project-entry .appname {
   font-size: 30px;
+}
+
+.home-buttons {
+  width: 100%;
+  margin-bottom: 5px; 
 }
 
 /*LOGIN*/

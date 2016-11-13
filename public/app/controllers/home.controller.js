@@ -3,11 +3,11 @@
 	angular.module('app.controller')
 		.controller('Home', Home);
 
-	Home.$inject = ['Project', 'dataService', '$rootScope', 'toastr', '$location', 'ParentProject', 'RelatedRequests'];
+	Home.$inject = ['$scope', 'Project', 'dataService', '$rootScope', 'toastr', '$location', 'ParentProject', 'RelatedRequests'];
 
 	/////////
 
-	function Home(Project, dataService, $rootScope, toastr, $location, ParentProject, RelatedRequests){
+	function Home($scope, Project, dataService, $rootScope, toastr, $location, ParentProject, RelatedRequests){
 
 		$rootScope.$emit('UNLOAD');
 
@@ -25,6 +25,7 @@
 		vm.newRequest = newRequest;
 		vm.editRequest = editRequest;
 		vm.searching = false;
+		vm.setResource = setResource;
 
 		//////////
 
@@ -85,6 +86,10 @@
 				     (vm.recordFetchCount == vm.limit) 
 				     ? true : false 
 				   );
+		}
+
+		function setResource(resource, title){
+			$scope.$parent.vm.setResource(resource, title);
 		}
 
 	};

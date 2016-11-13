@@ -217,7 +217,7 @@
 				<div class="form-group">
                     <div class="col-md-8 col-md-offset-4">
                     	<button data-ng-click="vm.back()" class="btn btn-default" 
-                    			data-ng-disabled="vm.disableButton">Cancel</button>
+                    			data-ng-disabled="vm.disableButton">{{vm.formData.status ==='Completed' ? 'Close' : 'Cancel'}}</button>
                     	<button type="submit" 
                     			class="btn btn-primary" 
                     			data-ng-click="vm.submit(frmChange, 'Draft')" 

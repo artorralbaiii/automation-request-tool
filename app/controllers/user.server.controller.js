@@ -320,7 +320,7 @@ function getMyRespChange(id, requests, callback) {
 	var myRequests = [];
 
 	changeRequestModel
-	.find({processOwner: id, status : {$ne: 'Completed'}, status : {$ne: 'Draft'} })
+	.find({ processOwner: id, $and: [{status : {$ne: 'Completed'}}, {status : {$ne: 'Draft'}} ]})
 	.select('_id changeNumber status requestSummary project')
 	.exec(function(err, data){
 

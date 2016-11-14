@@ -24,6 +24,8 @@
 		vm.showSaveAndSubmit = showSaveAndSubmit;
 		vm.showResolve = showResolve;
 		vm.back = back;
+		vm.isEditable = isEditable;
+		vm.isAssignedSupport = isAssignedSupport;
 		
 		activate();
 
@@ -93,21 +95,38 @@
 			}
 		}
 
+		function isEditable() {
+			var currentuser = sessionService.getSession();
+
+			if ( vm.newProblem || 
+				((vm.formData.status === 'Draft') && (vm.formData.reportedBy._id === currentuser.user || currentuser.admin )  )) {
+				return true;
+			} else {
+				return false;
+			}
+
+		}
+
+		function isAssignedSupport(){
+			var currentuser = sessionService.getSession();
+			return ( currentuser.admin || vm.formData.assignedSupport.indexOf(currentuser.user) != -1); 
+		}
+
 		function showSaveAndSubmit() {
-			var currentuser = sessionService.getSession().user;
+			var currentuser = sessionService.getSession();
 
 			return vm.newProblem || 
 			       (vm.formData.status === 'Draft' && 
-			       	Problem.data.data.reportedBy._id === currentuser
+			       	(Problem.data.data.reportedBy._id === currentuser.user || currentuser.admin)
 			       );   
 
 		}
 
 		function showResolve(){
-			var currentuser = sessionService.getSession().user;
+			var currentuser = sessionService.getSession();
 
 			return vm.formData.status === 'Ongoing' && 
-			       ( vm.formData.assignedSupport.indexOf(currentuser) != -1  );
+			       ( vm.formData.assignedSupport.indexOf(currentuser.user) != -1  || currentuser.admin);
 		}
 
 		function submit(frm, status) {

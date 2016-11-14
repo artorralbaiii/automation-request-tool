@@ -38,7 +38,9 @@
 							       type="text"
 							       name="applicationName" 
 							       required 
-							       data-ng-model="vm.formData.applicationName" >
+							       data-ng-model="vm.formData.applicationName" 
+							       data-ng-readonly="(!vm.newProject && !vm.isRequester());"
+							       >
 						</div>	
 					</div>
 
@@ -49,7 +51,8 @@
 					<div class="form-group">
 						<label for="description" class="col-md-4 control-label">* App Purpose / Description</label>
 						<div class="col-md-8">
-							<textarea class="form-control" rows="5" name="description" required data-ng-model="vm.formData.description" placeholder="Please enter app urpose / description..."></textarea>
+							<textarea class="form-control" rows="5" name="description" required data-ng-model="vm.formData.description" placeholder="Please enter app urpose / description..."
+							data-ng-readonly="(!vm.newProject && !vm.isRequester());"></textarea>
 						</div>	
 					</div>
 
@@ -65,13 +68,14 @@
 							       type="text"
 							       name="version" 
 							       required 
-							       data-ng-model="vm.formData.version" >
+							       data-ng-model="vm.formData.version" 
+							       data-ng-readonly="(!vm.newProject && !vm.isRequester());" >
 						</div>	
 					</div>
 
 					<div class="form-group">
-						<label for="version" class="col-md-4 control-label">Currently Deployed?</label>
-						<div class="col-md-8">
+						<label for="isDeployed" class="col-md-4 control-label">Currently Deployed?</label>
+						<div class="col-md-8" data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())">
 
 							<div class="radio">
 								<label>
@@ -82,11 +86,22 @@
 
 							<div class="radio">
 								<label>
-									<input data-ng-model="vm.formData.isDeployed" type="radio" name="isDeployed" data-ng-value="false">No
+									<input data-ng-model="vm.formData.isDeployed" 
+										   type="radio" name="isDeployed" 
+										   data-ng-value="false">No
 								</label>
 							</div>
 
 						</div>	
+
+
+						<div class="col-md-8" data-ng-if="!vm.newProject && !vm.isRequester()">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.isDeployed ? 'Yes' : 'No'}}"
+							       name="isDeployed"
+							       data-ng-readonly="true">
+						</div>	
+
 					</div>
 
 					<div class="form-group" data-ng-show="vm.validate('serverName', frmProject);" 
@@ -102,7 +117,8 @@
 							       type="text"
 							       name="serverName" 
 							       required 
-							       data-ng-model="vm.formData.serverName" >
+							       data-ng-model="vm.formData.serverName" 
+							       data-ng-readonly="(!vm.newProject && !vm.isRequester());" >
 						</div>	
 					</div>
 
@@ -119,17 +135,21 @@
 							       type="text"
 							       name="filePath" 
 							       required 
-							       data-ng-model="vm.formData.filePath" >
+							       data-ng-model="vm.formData.filePath" 
+							       data-ng-readonly="(!vm.newProject && !vm.isRequester());" >
 						</div>	
 					</div>
 
-					<div class="form-group" data-ng-show="vm.validate('businessOwners', frmProject);">
+					<div class="form-group" 
+						 data-ng-show="vm.validate('businessOwners', frmProject);"
+						 data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())" >
 						<p class="validation-message pull-right">{{vm.validation.businessOwners}}</p>						
 					</div>
 
 					<div class="form-group">
 						<label for="businessOwners" class="col-md-4 control-label">* Business Owner(s)</label>
-						<div class="col-md-8">
+
+						<div class="col-md-8" data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())">
 							<ui-select multiple ng-model="vm.formData.businessOwners" name="businessOwners" theme="bootstrap">
 							    <ui-select-match placeholder="Select business owner...">
 							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
@@ -140,15 +160,26 @@
 							    </ui-select-choices>
 							</ui-select>
 						</div>	
+
+						<div class="col-md-8" data-ng-if="!vm.newProject && !vm.isRequester()">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.businessOwnersDisplay}}"
+							       name="businessOwners"
+							       data-ng-readonly="true">
+						</div>	
+
 					</div>
 
-					<div class="form-group" data-ng-show="vm.validate('developers', frmProject);">
+					<div class="form-group" 
+						 data-ng-show="vm.validate('developers', frmProject);"
+						 data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())" >
 						<p class="validation-message pull-right">{{vm.validation.developers}}</p>						
 					</div>
 
 					<div class="form-group">
 						<label for="developers" class="col-md-4 control-label">* Developer(s)</label>
-						<div class="col-md-8">
+
+						<div class="col-md-8" data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())">
 							<ui-select multiple ng-model="vm.formData.developers" name="developers" theme="bootstrap">
 							    <ui-select-match placeholder="Select developers...">
 							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
@@ -159,15 +190,27 @@
 							    </ui-select-choices>
 							</ui-select>
 						</div>	
+
+						<div class="col-md-8" data-ng-if="!vm.newProject && !vm.isRequester()">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.developersDisplay}}"
+							       name="developers"
+							       data-ng-readonly="true">
+						</div>	
+
+
 					</div>
 
-					<div class="form-group" data-ng-show="vm.validate('supports', frmProject);">
+					<div class="form-group" 
+						 data-ng-show="vm.validate('supports', frmProject);"
+						 data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())" >
 						<p class="validation-message pull-right">{{vm.validation.supports}}</p>						
 					</div>
 
 					<div class="form-group">
 						<label for="supports" class="col-md-4 control-label">* Support(s)</label>
-						<div class="col-md-8">
+
+						<div class="col-md-8" data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())">
 							<ui-select multiple ng-model="vm.formData.supports" name="supports" theme="bootstrap">
 							    <ui-select-match placeholder="Select supports...">
 							    	{{$item.fullname}} &lt;{{$item.email}}&gt;
@@ -178,13 +221,28 @@
 							    </ui-select-choices>
 							</ui-select>
 						</div>	
+
+						<div class="col-md-8" data-ng-if="!vm.newProject && !vm.isRequester()">
+							<input class="form-control" 
+							       type="text" value="{{vm.formData.supportsDisplay}}"
+							       name="supports"
+							       data-ng-readonly="true">
+						</div>	
+
 					</div>
 
 					<div class="form-group">
 	                    <div class="col-md-8 col-md-offset-4">
-	                      <button type="reset" class="btn btn-default" data-ng-click="vm.back()">Cancel</button>
-	                      <button type="submit" class="btn btn-primary">Save</button>
-	                      <a href="" data-ng-click="vm.setDefaults();" class="btn btn-primary">Set Default Names</a>
+	                      <button type="reset" 
+	                      		  class="btn btn-default" 
+	                      		  data-ng-click="vm.back()">Cancel</button>
+	                      <button type="submit" 
+	                      		  class="btn btn-primary"
+	                      		  data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())" >Save</button>
+	                      <a href="" 
+	                      	 data-ng-click="vm.setDefaults();" 
+	                      	 class="btn btn-primary"
+	                      	 data-ng-if="vm.newProject || (!vm.newProject && vm.isRequester())" >Set Default Names</a>
 	                    </div>
 					</div>
 

@@ -320,7 +320,7 @@ function getMyRespChange(id, requests, callback) {
 	var myRequests = [];
 
 	changeRequestModel
-	.find({processOwner: id, status : {$ne: 'Closed'}, status : {$ne: 'Draft'} })
+	.find({processOwner: id, status : {$ne: 'Completed'}, status : {$ne: 'Draft'} })
 	.select('_id changeNumber status requestSummary project')
 	.exec(function(err, data){
 
@@ -368,8 +368,6 @@ exports.getMyProblems = function(req, res, next) {
 				parentId: obj.project 				
 			}
 		});
-
-		console.log(next);
 
 		next(req, res, requests);
 

@@ -121,13 +121,16 @@
 
 					<div class="panel-body">
 
-						<div class="form-group" data-ng-show="vm.validate('tester', frmChange);">
+						<div class="form-group" 
+							 data-ng-show="vm.validate('tester', frmChange);"
+							 data-ng-if="vm.isEditable()">
 							<p class="validation-message pull-right">{{vm.validation.tester}}</p>						
 						</div>
 
 						<div class="form-group">
 							<label for="tester" class="col-md-4 control-label">* Tester</label>
-							<div class="col-md-8">
+
+							<div class="col-md-8" data-ng-if="vm.isEditable()">
 								<ui-select ng-model="vm.formData.tester" name="tester" theme="bootstrap" 
 								           data-ng-readonly="!vm.isEditable();">
 								    <ui-select-match placeholder="Select tester...">
@@ -139,6 +142,16 @@
 								    </ui-select-choices>
 								</ui-select>
 							</div>	
+
+
+							<div class="col-md-8" data-ng-if="!vm.isEditable()">
+								<input class="form-control" 
+								       type="text" value="{{vm.formData.tester.fullname}}<{{vm.formData.tester.email}}>"
+								       name="tester"
+								       data-ng-readonly="true">
+							</div>	
+
+
 						</div>
 
 						<div data-ng-if="(vm.formData.status === 'Completed')" class="form-group">

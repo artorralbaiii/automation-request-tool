@@ -59,7 +59,7 @@
 				vm.formLabel = vm.project.applicationName + ' | New';
 				vm.formData.status =  'Draft';
 				vm.formData.project = vm.project._id;
-				vm.formData.businessOwner = _.pluck(vm.project.businessOwners, '_id');
+				vm.formData.businessOwners = _.pluck(vm.project.businessOwners, '_id');
 				vm.formData.developers = _.pluck(vm.project.developers, '_id');
 				vm.formData.technicalLead = _.pluck(vm.settings.technicalLeads , '_id');
 				vm.formData.serviceLine = _.pluck(vm.settings.serviceLineLeads, '_id');
@@ -141,6 +141,8 @@
 			    vm.formData.status === 'Requesting Additional Information') &&
 			    vm.formData.requestedBy._id === currentuser) && vm.formData.status != 'Completed' ) {
 				return true;
+			} else {
+				return false;
 			}
 
 		}
@@ -293,6 +295,10 @@
 
 		function validate(fld, frm) {
 			
+			if (!frm[fld]) {
+				return false;
+			}
+
 			var fldName = {
 				requestSummary: 'Request Summary',
 				targetDeployment: 'Target Deploy Date',

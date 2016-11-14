@@ -60,7 +60,7 @@
 							       name="targetFixDate" 
 							       required 
 							       data-ng-model="vm.formData.targetFixDate" 
-							       data-ng-readonly="(vm.formData.status !== 'Draft')" >
+							       data-ng-readonly="!vm.isEditable() || (vm.isEditable() && vm.formData.status !== 'Draft') " >
 						</div>	
 					</div>
 
@@ -77,7 +77,7 @@
 							       name="problemSummary" 
 							       required 
 							       data-ng-model="vm.formData.problemSummary" 
-							       data-ng-readonly="(vm.formData.status !== 'Draft')" >
+							       data-ng-readonly="!vm.isEditable() || (vm.isEditable() && vm.formData.status !== 'Draft') " >
 						</div>	
 					</div>
 
@@ -91,7 +91,7 @@
 							<textarea class="form-control" rows="5" 
 									  name="detailedDescription" required data-ng-model="vm.formData.detailedDescription" 
 									  placeholder="Please enter detailed description..." 
-									  data-ng-readonly="(vm.formData.status !== 'Draft')" ></textarea>
+									  data-ng-readonly="!vm.isEditable() || (vm.isEditable() && vm.formData.status !== 'Draft')" ></textarea>
 						</div>	
 					</div>
 
@@ -106,7 +106,7 @@
 						</div>	
 					</div>
 
-					<div class="form-group" data-ng-show="(vm.formData.status === 'Closed')">
+					<div class="form-group" data-ng-show="(!vm.isAssignedSupport() || vm.formData.status === 'Closed')">
 						<label for="problemTypeDisplay" class="col-md-4 control-label">Problem Type</label>
 						<div class="col-md-8">
 							<input class="form-control" 
@@ -117,7 +117,7 @@
 						</div>	
 					</div>
 
-					<div class="form-group" data-ng-show="(vm.formData.status === 'Ongoing')">
+					<div class="form-group" data-ng-show="(vm.formData.status === 'Ongoing' && vm.isAssignedSupport())">
 						<label for="problemType" class="col-md-4 control-label">Problem Type</label>
 						<div class="col-md-8">
 
@@ -150,7 +150,7 @@
 							<textarea class="form-control" rows="5" 
 									  name="analysis" required data-ng-model="vm.formData.analysis" 
 									  placeholder="Please enter analysis of the problem..."
-									  data-ng-readonly="(vm.formData.status === 'Closed')" ></textarea>
+									  data-ng-readonly="!vm.isAssignedSupport() || vm.formData.status === 'Closed'" ></textarea>
 						</div>	
 					</div>
 
@@ -165,13 +165,13 @@
 							<textarea class="form-control" rows="5" 
 								      name="action" required data-ng-model="vm.formData.action" 
 								      placeholder="Please enter actions recommendations..."
-								      data-ng-readonly="(vm.formData.status === 'Closed')" ></textarea>
+								      data-ng-readonly="(!vm.isAssignedSupport() || vm.formData.status === 'Closed')" ></textarea>
 						</div>	
 					</div>
 
 					<div class="form-group">
 	                    <div class="col-md-8 col-md-offset-4">
-	                      <button data-ng-click="vm.back()" type="reset" class="btn btn-default">Cancel</button>
+	                      <button data-ng-click="vm.back()" type="reset" class="btn btn-default">{{vm.formData.status === 'Closed' ? 'Close' : 'Cancel'}}</button>
 	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Draft');">Save as Draft</button>
 	                      <button data-ng-if="vm.showSaveAndSubmit();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Ongoing');">Submit</button>
 	                      <button data-ng-if="vm.showResolve();" type="submit" class="btn btn-primary" data-ng-click="vm.submit(frmProblem,'Closed');">Resolve</button>

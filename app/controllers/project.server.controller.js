@@ -179,11 +179,24 @@ exports.newDocument = function(req, res) {
 			return;
 		} 
 
-		res.json({
-			err: null,
-			message: 'New project is created.',
-			data: project
+		projectModel
+			.populate(project, 
+					 {path: 'requester developers businessOwners supports changeRequests problemRequests'},
+					 function(err, data){
+
+			if (err) {
+				common.errHandler(res, err);
+				return;
+			}
+
+			res.json({
+				err: null,
+				message: 'New project is created.',
+				data: data
+			});
+
 		});
+
 	});		
 }
 

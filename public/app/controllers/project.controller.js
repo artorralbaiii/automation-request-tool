@@ -5,11 +5,11 @@
 	angular.module('app.controller')
 		.controller('ProjectNew', ProjectNew);
 
-	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window', 'Settings', '$rootScope'];
+	ProjectNew.$inject = ['dataService', 'toastr', '$location', 'Project', '$window', 'Settings', '$rootScope', 'sessionService'];
 
 	//////////
 
-	function ProjectNew(dataService, toastr, $location, Project, $window, Settings, $rootScope) {
+	function ProjectNew(dataService, toastr, $location, Project, $window, Settings, $rootScope, sessionService) {
 		var vm = this;
 
 		vm.formData = {};
@@ -23,6 +23,7 @@
 		vm.formLabel = 'New';
 		vm.back = back;
 		vm.setDefaults = setDefaults;
+		vm.isRequester = isRequester;
 
 		initProject(Project);
 
@@ -33,7 +34,16 @@
 				vm.formData = Prj.data.data;
 				vm.newProject = false;
 				vm.formLabel = Prj.data.data.applicationName;
+				vm.formData.businessOwnersDisplay = getDisplayNames(Prj.data.data.businessOwners);
+				vm.formData.developersDisplay = getDisplayNames(Prj.data.data.developers);
+				vm.formData.supportsDisplay = getDisplayNames(Prj.data.data.supports);
 			}
+		}
+
+		function getDisplayNames(names){
+			return _.map(names,function(name) {
+				return name.fullname + '<' + name.email + '>'; 
+			 }).join('; ');
 		}
 
 		function pullUsers(qry) {
@@ -56,6 +66,11 @@
 				$location.path('/');							
 			}
 
+		}
+
+		function isRequester() {
+			var currentuser = sessionService.getSession();
+			return currentuser.admin || vm.formData.requester._id === currentuser.user;
 		}
 
 		function setDefaults(){
@@ -96,6 +111,10 @@
 		}
 
 		function validate(fld, frm) {
+
+			if (!frm[fld]) {
+				return false;
+			}
 
 			var fldName = {
 				applicationName: 'Application Name',

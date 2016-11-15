@@ -17,6 +17,14 @@ a:hover {
     padding-top: 2.5px;
 }
 
+.navbar-brand img
+{
+    width: 99px;
+    height: 44px;
+}
+
+
+
 
 /* HOME */
 .side-panel-list li {
